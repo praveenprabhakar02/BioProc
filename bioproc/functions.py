@@ -1,4 +1,3 @@
-
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
@@ -387,18 +386,24 @@ def integrate(array):
     return narray
 
 
-def rms(array):
+def rms(signal):
     """
-    This function 
+    This function returns the Root Mean Square of the signal.
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        the input signal whose RMS is to be determined
     
     Output
     ------
+    Output will be in the format --> rmsq
+    
+    rmsq: int or float
+        the root mean square of the signal
     
     """
     
+    rmsq = np.sqrt(np.sum(signal**2)/signal.size)
     
-    return narray
+    return rmsq
