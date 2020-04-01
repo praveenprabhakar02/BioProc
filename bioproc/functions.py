@@ -149,25 +149,75 @@ def fft(sinwave, fs = 1000, n=None, axis= -1, plot='yes'):
     
     elif plot == 'no' or plot == 'No':
         
-        return fourier
+        return fourier     
+        
 
-
-def padding(wave):
+def padding(signal, size=0):
     """
     
-    This function 
+    This function adds zero padding to a signal. 
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        the input signal for zero padding
+    size: int, optional
+        number of zeros to be added to the signal
     
     Output
     ------
+    Output will be in the format --> padarray
+    
+    padarray: ndarray
+        zero padded signal
     
     """
     
+    padarray = np.concatenate((signal, np.zeros(size)))
     
-    return nwave
+    
+    return padarray
+
+
+def padsize(signal, retarr = 'Yes'):
+    """
+    
+    This function determines the size of the input signal, suggests sizes for zero padding such that total size is a power of 2.
+    
+    Input parameters
+    ----------------
+    signal: ndarray
+        the input signal 
+    retarr: yes or no, optional
+        return a zero padded signal array or not; default set to yes
+    
+    Output
+    ------
+    Output will be in the format --> padarray
+    
+    padarray: ndarray
+        zero padded array; size will be a power of 2
+    
+    """
+    
+    siz = signal.size
+    bin = np.binary_repr(siz)
+    if bin.count("1") == 1:
+        temp = np.log(siz)//np.log(2)
+        print("""The size of the signal is {}, which is a power of 2 (2^{} = {}.
+        Suggestion: Add {} more zeros using the padding function""".format(siz,int(temp), int(2**(temp)), siz))
+        if retarr == 'Yes' or retarr == 'yes':
+            return padding(signal,size = int(siz))
+        
+    else:
+        temp = np.log(siz)//np.log(2)
+        diff = (2**(temp+1)) - siz
+        
+        print("""The size of the signal is {}. The closest power of 2 is 2^{} = {}.
+        Suggestion: Add {} more zeros to bring it to closest power of 2. Better solution is to add {} zeros."""
+              .format(siz, int(temp+1), int(2**(temp+1)), diff, diff+2**(temp+1)))
+        if retarr == 'Yes' or retarr == 'yes':
+            return padding(signal,size = int(diff+2**(temp+1))) 
 
 
 def window(wave):
