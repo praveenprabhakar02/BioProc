@@ -1,9 +1,10 @@
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
-
+from scipy import signal
+import biosppy as bsp
     
-def sinewave(amp=1, freq=1, time = 10, fs=100, phi=0, offset=0, plot='yes', tarr='no'):
+def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='yes', tarr='no'):
     """ 
     
     This function is used to generate sine waves without any noise.
@@ -22,9 +23,9 @@ def sinewave(amp=1, freq=1, time = 10, fs=100, phi=0, offset=0, plot='yes', tarr
         phase (angle); set to 0 degrees by default
     offset: int or float, optional
         bias; set to 1 by default
-    plot: string - yes or no, optional
+    plot: str - yes or no, optional
         plot the sine wave or not; default set to yes
-    tarr: string - yes or no, optional
+    tarr: str - yes or no, optional
         return the time array or not; default set to no
         
     Output
@@ -53,7 +54,7 @@ def sinewave(amp=1, freq=1, time = 10, fs=100, phi=0, offset=0, plot='yes', tarr
     elif tarr == 'no' or tarr == 'No':
         return sine
     
-def sinenoise(amp=1, freq=1, time = 10, fs=100, phi=0, offset=0, noise = 1, plot='yes', tarr='no'):
+def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='yes', tarr='no'):
     """
     
     This function is used to generate a sine wave with random noise.
@@ -74,9 +75,9 @@ def sinenoise(amp=1, freq=1, time = 10, fs=100, phi=0, offset=0, noise = 1, plot
         bias; set to 1 by default
     noise: int or float, optional
         control the level of noise; increasing the value reduces the noise and vice versa
-    plot: string - yes or no, optional
+    plot: str - yes or no, optional
         plot the sine wave or not; default set to yes
-    tarr: string - yes or no, optional
+    tarr: str - yes or no, optional
         return the time array or not; default set to no 
         
     Output
@@ -106,7 +107,7 @@ def sinenoise(amp=1, freq=1, time = 10, fs=100, phi=0, offset=0, noise = 1, plot
         return sine
 
 
-def fft(sinwave, fs = 1000, n=None, axis= -1, plot='yes'):
+def fft(sinwave, fs =1000, n=None, axis= -1, plot='yes'):
     """
     
     This function is used to calculate the discrete fourier transform of the sine wave.
@@ -121,7 +122,7 @@ def fft(sinwave, fs = 1000, n=None, axis= -1, plot='yes'):
         length of the transformed axis of the output; default set to None
     axis: int, optional
         axis over which to compute FFT; default set to -1
-    plot: string - yes or no, optional
+    plot: str - yes or no, optional
         plot the fourier or not; default set to yes
     
     
@@ -179,7 +180,7 @@ def padding(signal, size=0):
     return padarray
 
 
-def padsize(signal, retarr = 'Yes'):
+def padsize(signal, retarr='Yes'):
     """
     
     This function determines the size of the input signal, suggests sizes for zero padding such that total size is a power of 2.
@@ -237,21 +238,48 @@ def window(wave):
     return nwave
 
 
-def iir(wave):
+def iir(signal, fs=1000, order=2, cutoff=[5,500], ripple='None', att='None', type='bandpass', filter='butter' ):
     """
-    This function 
+    This function applies an analog IIR filter to the input signal and returns the filtered signal.
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        the input signal to be filter
+    order: int, optional
+        the order of the filter; default set to 2
+    cutoff: scalar (int or float) or 2 length sequence (for band-pass and band-stop filter)
+        the critical frequency; default set to [5,500]
+    ripple: float, optional
+        maximum ripple in the passband (for Chebyshev and Elliptical filters); default set to None
+    att: float, optional
+        minimum attenuation in the stop band (for Chebyshev and Elliptical filters); default set to None
+    type: str, optional
+        type of filter to be used; default set to 'bandpass'
+        types: 'lowpass','highpass', 'bandpass', 'bandstop' 
+    filter: str, optional
+        type of IIR filter; default set to butter
+        types: 'butter' (Butterworth), ‘cheby1’ (Chebyshev I), ‘cheby2’ (Chebyshev II), 
+                ‘ellip’ (Cauer/elliptic), ‘bessel’ (Bessel/Thomson) 
     
     Output
     ------
+    Output will be in the format --> filtersig
+    
+    filtersig: ndarray
+        the filtered signal
     
     """
+    if type(cutoff) == 'int' or type(cutoff) == float or type(cutoff) == 'numpy.ndarray':
+        freq = 2*(fs/cutoff)
+        
+    elif type(cutoff) == 'list':
+        cutoff = np.array(cutoff)
+        freq = 2*(fs/cutoff)
+        
+    cutoff = np.array()
     
-    
-    return nwave
+    return filtersig
 
 
 def fir(wave):
