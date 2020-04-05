@@ -3,6 +3,7 @@ import scipy as sp
 import matplotlib.pyplot as plt
 from scipy import signal
 import biosppy as bsp
+from biosppy.signals import tools
     
 def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='yes', tarr='no'):
     """ 
@@ -107,7 +108,7 @@ def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='ye
         return sine
 
 
-def fft(sinwave, fs =1000, n=None, axis= -1, plot='yes'):
+def fft(sinwave, fs=1000, n=None, axis= -1, plot='yes'):
     """
     
     This function is used to calculate the discrete fourier transform of the sine wave.
@@ -238,7 +239,7 @@ def window(wave):
     return nwave
 
 
-def iir(signal, fs=1000, order=2, cutoff=[5,500], ripple='None', att='None', type='bandpass', filter='butter' ):
+def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ripple='None', att='None', ftype='bandpass', filter='butter' ):
     """
     This function applies an analog IIR filter to the input signal and returns the filtered signal.
     
@@ -254,7 +255,7 @@ def iir(signal, fs=1000, order=2, cutoff=[5,500], ripple='None', att='None', typ
         maximum ripple in the passband (for Chebyshev and Elliptical filters); default set to None
     att: float, optional
         minimum attenuation in the stop band (for Chebyshev and Elliptical filters); default set to None
-    type: str, optional
+    ftype: str, optional
         type of filter to be used; default set to 'bandpass'
         types: 'lowpass','highpass', 'bandpass', 'bandstop' 
     filter: str, optional
@@ -270,14 +271,17 @@ def iir(signal, fs=1000, order=2, cutoff=[5,500], ripple='None', att='None', typ
         the filtered signal
     
     """
-    if type(cutoff) == 'int' or type(cutoff) == float or type(cutoff) == 'numpy.ndarray':
-        freq = 2*(fs/cutoff)
-        
-    elif type(cutoff) == 'list':
+    try:
+        cutoff = float(cutoff)
+    except:
         cutoff = np.array(cutoff)
-        freq = 2*(fs/cutoff)
-        
-    cutoff = np.array()
+    
+    cutoff = (2*cutoff)/fs
+    filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs)
+    filtersig = filtersig['signal']
+    time = np.arange(0,len(signal)/fs, 1/fs)
+    
+    plt.plot(time, filtersig)
     
     return filtersig
 
