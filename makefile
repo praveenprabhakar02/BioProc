@@ -28,7 +28,7 @@ lint:
 	pylint $(MODULENAME)
 
 test:
-	pytest 
+	pytest $(MODULENAME) 
 
 .PHONY: init doc lint test 
 
