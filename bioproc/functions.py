@@ -384,21 +384,37 @@ def fourierfit(wave):
     
     return nwave
 
-def ccorr(array):
+def ccorr(sig1, sig2, plot='Yes'):
     """
-    This function 
+    Return the cross correlation of two signals.
     
     Input parameters
     ----------------
-    
+    sig1: ndarray
+        first signal for cross correlation
+    sig2: ndarray
+        second signal for cross correlation
+    plot: str, optional
+        return a correlation plot or not; default set to yes
     
     Output
     ------
+    Output will be in the format --> lag, corrarray
+    
+    lag: ndarray
+        lag indices
+    corrarray: ndarray
+        cross correlation
     
     """
     
+    corr = plt.xcorr(sig1,sig2, maxlags=None)
+    corr = np.array(corr)
+    lag = corr[0,]
+    corrarray = corr[1,]
     
-    return corrarray
+    
+    return lag, corrarray
 
 
 def acorr(array):
