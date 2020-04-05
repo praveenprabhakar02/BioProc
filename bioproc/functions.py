@@ -28,7 +28,7 @@ def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='yes', tarr='
         plot the sine wave or not; default set to yes
     tarr: str - yes or no, optional
         return the time array or not; default set to no
-        
+      
     Output
     ------
     Output will be in the format --> t,sine
@@ -126,7 +126,6 @@ def fft(sinwave, fs=1000, n=None, axis= -1, plot='yes'):
     plot: str - yes or no, optional
         plot the fourier or not; default set to yes
     
-    
     Output
     ------
     Output will be in the format --> fourier
@@ -206,20 +205,23 @@ def padsize(signal, retarr='Yes'):
     bin = np.binary_repr(siz)
     if bin.count("1") == 1:
         temp = np.log(siz)//np.log(2)
-        print("""The size of the signal is {}, which is a power of 2 (2^{} = {}.
-        Suggestion: Add {} more zeros using the padding function""".format(siz,int(temp), int(2**(temp)), siz))
-        if retarr == 'Yes' or retarr == 'yes':
-            return padding(signal,size = int(siz))
+        print("""The size of the signal is {}, which is a power of 2 (2^{} = {}. Suggestion: Add {} more zeros using the padding function"""
+              .format(siz,int(temp), int(2**(temp)), siz))
+        inp = input("Do you want to add {} more zeros using the padding function? Y/N".format(siz))
+        if inp == 'Y' or inp == 'y':
+            if retarr == 'Yes' or retarr == 'yes':
+                return padding(signal,size = int(siz))
         
     else:
         temp = np.log(siz)//np.log(2)
         diff = (2**(temp+1)) - siz
         
-        print("""The size of the signal is {}. The closest power of 2 is 2^{} = {}.
-        Suggestion: Add {} more zeros to bring it to closest power of 2. Better solution is to add {} zeros."""
+        print("""The size of the signal is {}. The closest power of 2 is 2^{} = {}. Suggestion: Add {} more zeros to bring it to closest power of 2. Better solution is to add {} zeros."""
               .format(siz, int(temp+1), int(2**(temp+1)), diff, diff+2**(temp+1)))
-        if retarr == 'Yes' or retarr == 'yes':
-            return padding(signal,size = int(diff+2**(temp+1))) 
+        inp = input("Do you want to add {} more zeros using the padding function? Y/N".format(diff+2**(temp+1)))
+        if inp == 'Y' or inp == 'y':
+            if retarr == 'Yes' or retarr == 'yes':
+                return padding(signal,size = int(diff+2**(temp+1))) 
 
 
 def window(wave):
@@ -239,29 +241,33 @@ def window(wave):
     return nwave
 
 
-def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ripple='None', att='None', ftype='bandpass', filter='butter' ):
+def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='butter', ripple='None', att='None', plot='Yes' ):
     """
-    This function applies an analog IIR filter to the input signal and returns the filtered signal.
+    This function applies a digital IIR filter to the input signal and returns the filtered signal.
     
     Input parameters
     ----------------
     signal: ndarray
         the input signal to be filter
-    order: int, optional
+    fs: int or float, optional
+        sampling rate
+    ordern: int, optional
         the order of the filter; default set to 2
     cutoff: scalar (int or float) or 2 length sequence (for band-pass and band-stop filter)
-        the critical frequency; default set to [5,500]
-    ripple: float, optional
-        maximum ripple in the passband (for Chebyshev and Elliptical filters); default set to None
-    att: float, optional
-        minimum attenuation in the stop band (for Chebyshev and Elliptical filters); default set to None
+        the critical frequency; default set to [50,500]
     ftype: str, optional
         type of filter to be used; default set to 'bandpass'
         types: 'lowpass','highpass', 'bandpass', 'bandstop' 
     filter: str, optional
         type of IIR filter; default set to butter
         types: 'butter' (Butterworth), ‘cheby1’ (Chebyshev I), ‘cheby2’ (Chebyshev II), 
-                ‘ellip’ (Cauer/elliptic), ‘bessel’ (Bessel/Thomson) 
+        ‘ellip’ (Cauer/elliptic), ‘bessel’ (Bessel/Thomson) 
+    ripple: float, optional
+        maximum ripple in the passband (for Chebyshev and Elliptical filters); default set to None
+    att: float, optional
+        minimum attenuation in the stop band (for Chebyshev and Elliptical filters); default set to None
+    plot:  str - yes or no, optional
+        plot the filtered signal or not; default set to yes
     
     Output
     ------
@@ -279,28 +285,53 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ripple='None', att='None', f
     cutoff = (2*cutoff)/fs
     filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs)
     filtersig = filtersig['signal']
-    time = np.arange(0,len(signal)/fs, 1/fs)
     
-    plt.plot(time, filtersig)
+    if plot=='Yes' or plot=='yes':
+        time = np.arange(0,len(signal)/fs, 1/fs)
+        plt.plot(time, filtersig)
     
     return filtersig
 
 
-def fir(wave):
+def fir(signal, order, cutoff, ftype):
     """
-    This function 
+    This function applies a FIR filter to the input signal and returns the filtered signal.
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        the input signal to be filter
+    order: int, optional
+        the order of the filter; default set to 2
+    cutoff: scalar (int or float) or 2 length sequence (for band-pass and band-stop filter)
+        the critical frequency; default set to [5,500]
+    ftype: str, optional
+        type of filter to be used; default set to 'bandpass'
+        types: 'lowpass','highpass', 'bandpass', 'bandstop' 
     
     Output
     ------
+    Output will be in the format --> filtersig
+    
+    filtersig: ndarray
+        the filtered signal
     
     """
+    try:
+        cutoff = float(cutoff)
+    except:
+        cutoff = np.array(cutoff)
     
+    cutoff = (2*cutoff)/fs
+    filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=ordern, frequency=cutoff)
+    filtersig = filtersig['signal']
     
-    return nwave
+    if plot=='Yes' or plot=='yes':
+        time = np.arange(0,len(signal)/fs, 1/fs)
+        plt.plot(time, filtersig)
+    
+    return filtersig
+
 
 def movavg(signal, n=3):
     """
@@ -384,9 +415,9 @@ def fourierfit(wave):
     
     return nwave
 
-def ccorr(sig1, sig2, plot='Yes'):
+def ccorr(sig1, sig2):
     """
-    Return the cross correlation of two signals.
+    Calculate the cross correlation of two signals.
     
     Input parameters
     ----------------
@@ -394,8 +425,6 @@ def ccorr(sig1, sig2, plot='Yes'):
         first signal for cross correlation
     sig2: ndarray
         second signal for cross correlation
-    plot: str, optional
-        return a correlation plot or not; default set to yes
     
     Output
     ------
@@ -413,25 +442,35 @@ def ccorr(sig1, sig2, plot='Yes'):
     lag = corr[0,]
     corrarray = corr[1,]
     
-    
     return lag, corrarray
 
 
-def acorr(array):
+def acorr(signal):
     """
-    This function 
+    Calculate the auto-correlation of a signal.
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        signal whose auto-correlation is to be calculated
     
     Output
     ------
+    Output will be in the format --> lag, acorrarray
+    
+    lag: ndarray
+        lag indices
+    acorrarray: ndarray
+        auto correlation
     
     """
     
-
-    return acorrarray
+    corr = plt.xcorr(signal,signal, maxlags=None)
+    corr = np.array(corr)
+    lag = corr[0,]
+    acorrarray = corr[1,]
+    
+    return lag, acorrarray
 
 
 def psd(array):
