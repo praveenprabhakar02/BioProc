@@ -293,9 +293,9 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='bu
     return filtersig
 
 
-def fir(signal, order, cutoff, ftype):
+def fir(signal, ordern=2, cutoff=[50,500], ftype='bandpass', fs=1000.0, plot='Yes'):
     """
-    This function applies a FIR filter to the input signal and returns the filtered signal.
+    Apply a FIR filter to the input signal.
     
     Input parameters
     ----------------
@@ -304,10 +304,14 @@ def fir(signal, order, cutoff, ftype):
     order: int, optional
         the order of the filter; default set to 2
     cutoff: scalar (int or float) or 2 length sequence (for band-pass and band-stop filter)
-        the critical frequency; default set to [5,500]
+        the critical frequency; default set to [50,500]
     ftype: str, optional
         type of filter to be used; default set to 'bandpass'
         types: 'lowpass','highpass', 'bandpass', 'bandstop' 
+    fs: int or float, optional
+        sampling rate
+    plot: str - yes or no, optional
+        plot the filtered signal or not; default set to yes
     
     Output
     ------
@@ -323,9 +327,9 @@ def fir(signal, order, cutoff, ftype):
         cutoff = np.array(cutoff)
     
     cutoff = (2*cutoff)/fs
-    filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=ordern, frequency=cutoff)
+    filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs)
     filtersig = filtersig['signal']
-    
+
     if plot=='Yes' or plot=='yes':
         time = np.arange(0,len(signal)/fs, 1/fs)
         plt.plot(time, filtersig)
@@ -490,21 +494,35 @@ def psd(array):
     return narray
 
 
-def rectify(array):
+def rectify(signal, fs=1000, plot='Yes'):
     """
-    This function 
+    Full wave rectification of the input signal.
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        input signal
+    fs: int or float, optional
+        sampling frequency; set to 1000 Hz by default
+    plt: str - yes or no, optional
+        plot the rectified signal or not; default set to yes
     
     Output
     ------
+    Output will be in the format --> rectifiedsig
+    
+    rectifiedsig: ndarray
+        rectified signal array
     
     """
     
+    rectifiedsig = np.abs(signal)
     
-    return narray
+    if plot == 'Yes' or plot == 'yes':
+        time = np.arange(0,len(signal)/fs, 1/fs)
+        plt.plot(time, rectifiedsig)
+    
+    return rectifiedsig
 
 def integrate(array):
     """
