@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import biosppy as bsp
 from biosppy.signals import tools
+from biosppy.signals import emg
     
 def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='yes', tarr='no'):
     """ 
@@ -295,7 +296,7 @@ def window(kernel, size, **kwargs):
     return windows
 
 
-def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='butter', ripple='None', att='None', plot='Yes', **kwargs):
+def iir(signal, fs=1000, ordern=2, cutoff=[50,450], ftype='bandpass', filter='butter', ripple='None', att='None', plot='Yes', **kwargs):
     """
     This function applies a digital IIR filter to the input signal and returns the filtered signal.
     
@@ -308,7 +309,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='bu
     ordern: int, optional
         the order of the filter; default set to 2
     cutoff: scalar (int or float) or 2 length sequence (for band-pass and band-stop filter)
-        the critical frequency; default set to [50,500]
+        the critical frequency; default set to [50,450]
     ftype: str, optional
         type of filter to be used; default set to 'bandpass'
         types: 'lowpass','highpass', 'bandpass', 'bandstop' 
@@ -480,7 +481,7 @@ def splinefit(time, signal, res=2000, **kwargs):
         resolution, number of points; default set to 2000
     **kwargs : dict, optional
         Additional keyword arguments are passed to the underlying
-        scipy.interpolate.UnivariateSpline function.
+        scipy.interpolate.UnivariateSpline function
     
     Output
     ------
@@ -578,21 +579,39 @@ def acorr(signal):
     return lag, acorrarray
 
 
-def psd(array):
+def psd(signal, fs=1000.0, plot='Yes', **kwargs):
     """
-    This function 
+    Estimate Power Spectral Density using Welch's method. 
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        input signal to compute PSD
+    fs: int or float, optional
+        sampling rate; default set to 1000 Hz 
+    plot: str - yes or no, optional
+        plot the PSD or not; default set to yes
+    **kwargs : dict, optional
+        Additional keyword arguments are passed to the underlying
+        scipy.interpolate.UnivariateSpline function
     
     Output
     ------
+    Output will be in the format --> freq, pxx
+    
+    freq: ndarray
+        array of sample frequencies
+    pxx: ndarray
+        power spectral density of signal
     
     """
+    freq, pxx = sp.signal.welch(signal, fs=fs, **kwargs)
     
+    if plot == 'Yes' or plot == 'yes':
+        plt.semilogy(freq,pxx)
+        plt.show()
     
-    return narray
+    return freq, pxx
 
 
 def rectify(signal, fs=1000, plot='Yes'):
@@ -687,3 +706,46 @@ def rms(signal):
     rmsq = np.sqrt(np.sum(signal**2)/signal.size)
     
     return rmsq
+
+
+def find_onset(signal, fs=1000.0, filt='No',plot='Yes',**kwargs):
+    """
+    Find onset of EMG signals.
+    
+    Input parameters
+    ----------------
+    signal: ndarray
+        filtered input signal 
+    fs: int or float, optional
+        sampling rate; default set to 1000 Hz
+    filt: str - yes or no, optional
+        whether the input signal is filtered or not; default set to No
+    plot: str - yes or no, optional
+        plot the onsets or not; default set to yes
+    **kwargs : dict, optional
+        Additional keyword arguments are passed to the underlying
+        biosppy.signals.emg.find_onsets function.
+        
+    
+    Output
+    ------
+    Output will be in the format --> onsets
+    
+    onsets: ndarray
+        the onset of the EMG signal
+    
+    """
+    
+    if filt == 'No' or filt == 'no':
+        signal = iir(signal, plot='No')
+    
+    onsets = emg.find_onsets(signal=signal, sampling_rate=fs, **kwargs)
+    onset = np.array(onsets[0])/fs
+    
+    if plot == 'Yes' or plot == 'yes':
+        t = np.arange(0,(len(signal)/fs),1/fs)
+        for i in onset:
+            plt.axvline(i,c='red')
+        plt.plot(t,signal)
+        
+    return onset
