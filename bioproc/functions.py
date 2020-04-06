@@ -108,6 +108,45 @@ def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='ye
         return sine
 
 
+def emgsig(seed=None, plot='Yes'):
+    """
+    
+    Simulate an EMG signal for time = 3.5 secs.
+    
+    Input parameters
+    ----------------
+    seed: int, optional
+        initialize seed of random number generator
+    plot: str - yes or no, optional
+        plot the EMG wave or not; default set to yes
+        
+    Output
+    ------
+    Output will be in the format --> emg
+    
+    t: ndarray
+        simulated emg signal
+        
+    """
+    
+    if seed is not None:
+        np.random.seed(seed)
+        
+    burst1 = np.random.uniform(-1, 1, size=1000) + 0.08
+    burst2 = np.random.uniform(-1, 1, size=1000) + 0.08
+    quiet = np.random.uniform(-0.05, 0.05, size=500) + 0.08
+    emg = np.concatenate([quiet, burst1, quiet, burst2, quiet])
+    
+    if plot == 'yes' or plot == 'Yes':
+        t = np.arange(0,3.5,1/1000)
+        plt.plot(t,emg)
+        plt.title("EMG Simulated Signal")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Amplitude (m)")
+    
+    return emg
+
+
 def fft(sinwave, fs=1000, n=None, axis= -1, plot='yes'):
     """
     
@@ -282,7 +321,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='bu
     except:
         cutoff = np.array(cutoff)
     
-    cutoff = (2*cutoff)/fs
+    
     filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs)
     filtersig = filtersig['signal']
     
@@ -524,7 +563,7 @@ def rectify(signal, fs=1000, plot='Yes'):
     
     return rectifiedsig
 
-def envelope(signal, fs=1000, order=2, cutoff=20, filter='butter', plot='Yes'):
+def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes'):
     """
     Linear envelope of the input signal, computed by low pass fitering the rectified signal.
     
@@ -555,7 +594,7 @@ def envelope(signal, fs=1000, order=2, cutoff=20, filter='butter', plot='Yes'):
     """
     
     temp = rectify(signal, plot='No')
-    linenv = iir(temp, fs=fs, ordern=order, cutoff=cutoff, ftype='lowpass', filter='butter', ripple='None', att='None', plot='No' )
+    linenv = iir(temp, fs=fs, ordern=order, cutoff=cutoff/2, ftype='lowpass', filter='butter', ripple='None', att='None', plot='No' )
     
     if plot == 'Yes' or plot == 'yes':
         time = np.arange(0,len(signal)/fs, 1/fs)
