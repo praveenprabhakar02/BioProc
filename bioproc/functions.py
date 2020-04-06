@@ -85,8 +85,8 @@ def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='ye
     ------
     Output will be in the format --> t,sine
     
-    t: int or float
-       time of sine wave in secs
+    t: ndarray
+       time array
     sine: sine wave
         amplitude of the sine wave
         
@@ -108,7 +108,7 @@ def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='ye
         return sine
 
 
-def emgsig(seed=None, plot='Yes'):
+def emgsig(seed=None, plot='Yes', tarr='No'):
     """
     
     Simulate an EMG signal for time = 3.5 secs.
@@ -119,12 +119,16 @@ def emgsig(seed=None, plot='Yes'):
         initialize seed of random number generator
     plot: str - yes or no, optional
         plot the EMG wave or not; default set to yes
+    tarr: str - yes or no, optional
+        return the time array or not; default set to no 
         
     Output
     ------
-    Output will be in the format --> emg
+    Output will be in the format --> t,emg
     
     t: ndarray
+       time array
+    emg: ndarray
         simulated emg signal
         
     """
@@ -144,7 +148,10 @@ def emgsig(seed=None, plot='Yes'):
         plt.xlabel("Time (s)")
         plt.ylabel("Amplitude (m)")
     
-    return emg
+    if tarr == 'Yes' or tarr == 'yes':
+        return t,emg
+    else:
+        return emg
 
 
 def fft(sinwave, fs=1000, n=None, axis= -1, plot='yes'):
@@ -215,7 +222,6 @@ def padding(signal, size=0):
     
     padarray = np.concatenate((signal, np.zeros(size)))
     
-    
     return padarray
 
 
@@ -263,24 +269,33 @@ def padsize(signal, retarr='Yes'):
                 return padding(signal,size = int(diff+2**(temp+1))) 
 
 
-def window(wave):
+def window(kernel, size, **kwargs):
     """
-    This function 
+    Return a window for the given parameters.
     
     Input parameters
     ----------------
-    
+    kernel : str
+        Type of window to create.
+    size : int
+        Size of the window.
+    **kwargs : dict, optional
+        Additional keyword arguments are passed to the underlying
+        scipy.signal.windows function.
     
     Output
     ------
+    windows : array
+        Created window.
     
     """
     
+    windows = tools._get_window(kernel, size, **kwargs)
     
-    return nwave
+    return windows
 
 
-def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='butter', ripple='None', att='None', plot='Yes' ):
+def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='butter', ripple='None', att='None', plot='Yes', **kwargs):
     """
     This function applies a digital IIR filter to the input signal and returns the filtered signal.
     
@@ -307,6 +322,9 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='bu
         minimum attenuation in the stop band (for Chebyshev and Elliptical filters); default set to None
     plot:  str - yes or no, optional
         plot the filtered signal or not; default set to yes
+    **kwargs: dict, optional
+        Additional keyword arguments are passed to the underlying
+        scipy.signal function
     
     Output
     ------
@@ -322,7 +340,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='bu
         cutoff = np.array(cutoff)
     
     
-    filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs)
+    filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs, **kwargs)
     filtersig = filtersig['signal']
     
     if plot=='Yes' or plot=='yes':
@@ -332,7 +350,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50,500], ftype='bandpass', filter='bu
     return filtersig
 
 
-def fir(signal, ordern=2, cutoff=[50,500], ftype='bandpass', fs=1000.0, plot='Yes'):
+def fir(signal, ordern=2, cutoff=[50,500], ftype='bandpass', fs=1000.0, plot='Yes', **kwargs):
     """
     Apply a FIR filter to the input signal.
     
@@ -351,6 +369,9 @@ def fir(signal, ordern=2, cutoff=[50,500], ftype='bandpass', fs=1000.0, plot='Ye
         sampling rate
     plot: str - yes or no, optional
         plot the filtered signal or not; default set to yes
+    **kwargs: dict, optional
+        Additional keyword arguments are passed to the underlying
+        scipy.signal function
     
     Output
     ------
@@ -365,8 +386,7 @@ def fir(signal, ordern=2, cutoff=[50,500], ftype='bandpass', fs=1000.0, plot='Ye
     except:
         cutoff = np.array(cutoff)
     
-    cutoff = (2*cutoff)/fs
-    filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs)
+    filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=ordern, frequency=cutoff, sampling_rate=fs, **kwargs)
     filtersig = filtersig['signal']
 
     if plot=='Yes' or plot=='yes':
@@ -410,37 +430,78 @@ def movavg(signal, n=3):
     return movaverage
 
 
-def polyfit(wave):
+def polyfit(time, signal, degree, plot='Yes', **kwargs):
     """
-    This function 
+    Polynomial regression. 
     
     Input parameters
     ----------------
-    
+    time: ndarray
+        independent variable
+    signal: ndarray
+        dependent variable  
+    plot: str - yes or no, optional
+        plot the polyfit or not; default set to yes
+    **kwargs: dict, optional
+        Additional keyword arguments are passed to the underlying
+        np.polyfit function
     
     Output
     ------
+    Output will be in the format --> regression
+    
+    regression: ndarray
+        polynomial regression array
     
     """
     
+    parameters = np.polyfit(time, signal, degree)
+    poly_function = np.poly1d(parameters)
+    regression = poly_function(time)
     
-    return nwave
+    if plot == 'Yes' or plot == 'yes':
+        plt.plot(time,signal)
+        plt.plot(time,regression)
+    
+    return regression
 
-def splinefit(wave):
+
+def splinefit(time, signal, res=2000, **kwargs):
     """
-    This function 
+    One dimensional smoothing spline fit.
     
     Input parameters
     ----------------
-    
+    time: ndarray
+        time array, independent variable
+    signal: ndarray
+        signal array, dependent variable
+    res: int, optional
+        resolution, number of points; default set to 2000
+    **kwargs : dict, optional
+        Additional keyword arguments are passed to the underlying
+        scipy.interpolate.UnivariateSpline function.
     
     Output
     ------
+    Output will be in the format --> times, spline(times)
+    
+    times: ndarray
+        time array
+    spline(times): ndarray
+        spline fitted array
     
     """
     
+    spline = sp.interpolate.UnivariateSpline(time, signal, **kwargs)
+    plt.plot(time,signal)
+    times = np.linspace(np.min(time), np.max(time), res)
+    spline.set_smoothing_factor(0.5)
+    plt.plot(times, spline(times), lw=3)
+    plt.show()
     
-    return nwave
+    return times, spline(times)
+
 
 def fourierfit(wave):
     """
@@ -457,6 +518,7 @@ def fourierfit(wave):
     
     
     return nwave
+
 
 def ccorr(sig1, sig2):
     """
@@ -562,6 +624,7 @@ def rectify(signal, fs=1000, plot='Yes'):
         plt.plot(time, rectifiedsig)
     
     return rectifiedsig
+
 
 def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes'):
     """
