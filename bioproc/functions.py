@@ -524,21 +524,44 @@ def rectify(signal, fs=1000, plot='Yes'):
     
     return rectifiedsig
 
-def integrate(array):
+def envelope(signal, fs=1000, order=2, cutoff=20, filter='butter', plot='Yes'):
     """
-    This function 
+    Linear envelope of the input signal, computed by low pass fitering the rectified signal.
     
     Input parameters
     ----------------
-    
+    signal: ndarray
+        input signal
+    fs: int or float, optional
+        sampling rate; default set to 1000 Hz
+    order: int, optional
+        the order of the filter; default set to 2
+    cutoff: int or float, optional
+        the critical frequency; default set to 20 Hz 
+    filter: str, optional
+        type of IIR filter; default set to butter
+        types: 'butter' (Butterworth), ‘cheby1’ (Chebyshev I), ‘cheby2’ (Chebyshev II), 
+        ‘ellip’ (Cauer/elliptic), ‘bessel’ (Bessel/Thomson) 
+    plot:  str - yes or no, optional
+        plot the linear envelope or not; default set to yes
     
     Output
     ------
+    Output will be in the format --> linenv
+    
+    linenv: ndarray
+        linear envelope of the input signal
     
     """
     
+    temp = rectify(signal, plot='No')
+    linenv = iir(temp, fs=fs, ordern=order, cutoff=cutoff, ftype='lowpass', filter='butter', ripple='None', att='None', plot='No' )
     
-    return narray
+    if plot == 'Yes' or plot == 'yes':
+        time = np.arange(0,len(signal)/fs, 1/fs)
+        plt.plot(time, linenv)
+    
+    return linenv
 
 
 def rms(signal):
