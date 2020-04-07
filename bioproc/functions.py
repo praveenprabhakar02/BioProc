@@ -153,6 +153,7 @@ def emgsig(seed=None, plot='no', tarr='no'):
     #plotting
     if plot in ['yes', 'Yes']:
         time = np.arange(0, 3.5, 1/1000)
+        plt.figure(figsize=(12, 4))
         plt.plot(time, emg_signal)
         plt.title("EMG Simulated Signal")
         plt.xlabel("Time")
