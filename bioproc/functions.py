@@ -252,7 +252,7 @@ def padsize(signal, retarr='Yes'):
     if bin.count("1") == 1:
         temp = np.log(siz)//np.log(2)
         print("""The size of the signal is {}, which is a power of 2 (2^{} = {}. Suggestion: Add {} more zeros using the padding function"""
-              .format(siz,int(temp), int(2**(temp)), siz))
+              .format(siz,int(temp), int(2**int(temp)), siz))
         inp = input("Do you want to add {} more zeros using the padding function? Y/N".format(siz))
         if inp == 'Y' or inp == 'y':
             if retarr == 'Yes' or retarr == 'yes':
@@ -260,14 +260,24 @@ def padsize(signal, retarr='Yes'):
         
     else:
         temp = np.log(siz)//np.log(2)
-        diff = (2**(temp+1)) - siz
+        diff_1 = int((2**(temp+1)) - (2**(temp)))
+        diff = int(2**(temp+1)) - siz
         
-        print("""The size of the signal is {}. The closest power of 2 is 2^{} = {}. Suggestion: Add {} more zeros to bring it to closest power of 2. Better solution is to add {} zeros."""
-              .format(siz, int(temp+1), int(2**(temp+1)), diff, diff+2**(temp+1)))
-        inp = input("Do you want to add {} more zeros using the padding function? Y/N".format(diff+2**(temp+1)))
-        if inp == 'Y' or inp == 'y':
+        if diff >= diff_1//2:
+            print("""The size of the signal is {}. The closest power of 2 is 2^{} = {}. Suggestion: Add {} more zeros to bring it to closest power of 2."""
+              .format(siz, int(temp+1), int(2**(temp+1)), diff))
+            inp = input("Do you want to add {} more zeros using the padding function? Y/N".format(diff))
+            if inp == 'Y' or inp == 'y':
             if retarr == 'Yes' or retarr == 'yes':
-                return padding(signal,size = int(diff+2**(temp+1))) 
+                return padding(signal,size = int(diff))
+        
+        else:
+            print("""The size of the signal is {}. The closest power of 2 is 2^{} = {}. Suggestion: Add {} more zeros to bring it to closest power of 2. Better solution is to add {} zeros."""
+                  .format(siz, int(temp+1), int(2**(temp+1)), diff, diff+2**(temp+1)))
+            inp = input("Do you want to add {} more zeros using the padding function? Y/N".format(diff+2**(temp+1)))
+            if inp == 'Y' or inp == 'y':
+                if retarr == 'Yes' or retarr == 'yes':
+                    return padding(signal,size = int(diff+2**(temp+1))) 
 
 
 def window(kernel, size, **kwargs):
