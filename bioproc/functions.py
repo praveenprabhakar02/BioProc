@@ -650,7 +650,11 @@ def rectify(signal, fs=1000, plot='Yes'):
     
     if plot == 'Yes' or plot == 'yes':
         time = np.arange(0,len(signal)/fs, 1/fs)
-        plt.plot(time, rectifiedsig)
+        plt.figure(figsize=(12,3))
+        plt.plot(time, rectifiedsig, label="Rectified signal")
+        plt.xlabel("Time")
+        plt.ylabel("Amplitude")
+        plt.legend()
     
     return rectifiedsig
 
@@ -690,7 +694,11 @@ def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes'):
     
     if plot == 'Yes' or plot == 'yes':
         time = np.arange(0,len(signal)/fs, 1/fs)
-        plt.plot(time, linenv)
+        plt.figure(figsize=(12,3))
+        plt.plot(time, linenv, c='#ff7f0e',label="Envelope")
+        plt.xlabel("Time")
+        plt.ylabel("Amplitude")
+        plt.legend()
     
     return linenv
 
