@@ -254,7 +254,7 @@ def padsize(signal):
         temp_2 = int(2**int(temp))
         print("""The size of the signal is {}, which is a power of 2 (2^{})={}.
         \nSuggestion:\nAdd {} more zeros using the padding function"""
-              .format(siz, temp, temp_2, siz))
+              .format(siz, int(temp), temp_2, siz))
         inp = input("\nDo you want to add {} more zeros using padding function? Y/N".format(siz))
         if inp in ['y', 'Y', 'yes', 'Yes']:
             return padding(signal, size=int(siz))
@@ -267,7 +267,7 @@ def padsize(signal):
 
         if diff >= diff_1//2:
             print("""The size of the signal is {}. The closest power of 2 is 2^{}={}.
-            \nSuggestion:\nAdd {} more zeros to bring it to closest power of 2."""
+            \nSuggestion:\nAdd {} more zeros to bring it to the closest power of 2."""
                   .format(siz, temp+1, temp_2, diff))
             inp = input("\nDo you want to add {} more zeros using padding function? Y/N"
                         .format(diff))
@@ -278,7 +278,7 @@ def padsize(signal):
             temp1 = diff+2**(temp+1)
             print("""The size of the signal is {}. The closest power of 2 is 2^{}={}.
             \nSuggestion:\nAdd {} more zeros to bring it to {}. Better solution: add {} zeros."""
-                  .format(siz, int(temp+1), int(2**(temp+1)), int(2**(temp+1)), diff, temp1))
+                  .format(siz, int(temp+1), int(2**(temp+1)), diff, int(2**(temp+1)), temp1))
             inp = input("\nDo you want to add {} more zeros using the padding function? Y/N"
                         .format(temp1))
             if inp in ['y', 'Y', 'yes', 'Yes']:
