@@ -32,7 +32,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 #generate EMG signals
-emg = fn.emgsig(seed=100)
+emg = fn.emgsig(seed=100, plot='Yes')
 ```
 
 ![](docs/images/emg.png)
@@ -40,7 +40,7 @@ emg = fn.emgsig(seed=100)
 
 ```python
 #generate sine wave
-sine = fn.sinenoise(freq=100,fs=1000,noise=50,plot='No') + fn.sinenoise(freq=200,fs=1000,noise=150,plot='No') + fn.sinenoise(freq=50,fs=1000,noise=20,plot='No')
+sine = fn.sinewave(freq=100,fs=1000,plot='No') + fn.sinewave(freq=200,fs=1000,plot='No') + fn.sinewave(freq=50,fs=1000,plot='No')
 
 #zero padding
 sine_pad = fn.padding(sine,6384) #zeros calculated by padsize function
