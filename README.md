@@ -28,11 +28,11 @@ Bioproc is a signal processing library based in Python for processing biological
 
 ```python
 import bioproc.functions as fn
+import bioproc.emg as em
 import matplotlib.pyplot as plt
-import numpy as np
 
 #generate EMG signals
-emg = fn.emgsig(seed=100, plot='Yes')
+emg = em.emgsig(seed=100, plot='Yes')
 ```
 
 ![](docs/images/emg.png)
