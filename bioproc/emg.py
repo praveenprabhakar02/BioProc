@@ -161,3 +161,8 @@ def norm_emg(signal, mvic, fs=1000.0, filt='no', plot='yes'):
         plt.show()
 
     return emg_norm
+
+
+#class emgs():
+#    """
+#    """

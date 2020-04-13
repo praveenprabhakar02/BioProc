@@ -467,53 +467,6 @@ def polyfit(time, signal, degree, plot='yes', **kwargs):
     return regression
 
 
-def splinefit(time, signal, res=2000, plot='yes', **kwargs):
-    """
-    One dimensional smoothing spline fit.
-
-    Input parameters
-    ----------------
-    time: ndarray
-        time array, independent variable
-    signal: ndarray
-        signal array, dependent variable
-    res: int, optional
-        resolution, number of points; default set to 2000
-    plot: str - yes or no, optional
-        plot the spline or not; default set to yes
-    **kwargs : dict, optional
-        Additional keyword arguments are passed to the underlying
-        scipy.interpolate.UnivariateSpline function
-
-    Output
-    ------
-    Output will be in the format --> times, spline(times)
-
-    times: ndarray
-        time array
-    splines_final: ndarray
-        spline fitted array
-    """
-
-    spline = sp.interpolate.UnivariateSpline(time, signal, **kwargs)
-    times = np.linspace(np.min(time), np.max(time), res)
-    spline.set_smoothing_factor(0.5)
-    splines_final = spline(times)
-
-    #plotting
-    if plot in ['yes', 'Yes']:
-        plt.figure(figsize=(12, 4))
-        plt.plot(time, signal, label="Signal")
-        plt.plot(times, splines_final, lw=3, c='#ff7f0e', label="Spline")
-        plt.xlabel("Time")
-        plt.ylabel("Amplitude")
-        plt.title("Polynomial fitting")
-        plt.legend()
-        plt.show()
-
-    return times, splines_final
-
-
 def ccorr(sig1, sig2, **kwargs):
     """
     Calculate the cross correlation of two signals.
