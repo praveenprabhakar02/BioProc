@@ -1,4 +1,4 @@
-# <center>  Bioproc  </center>
+# <center>  BioProc  </center>
 <center>By Praveen Prabhakar KR</center>
 
 ---
@@ -8,7 +8,7 @@
 ---
 # Overview
 
-Bioproc is a signal processing library based in Python for processing biological data.
+Bioproc is a signal processing library based in Python for biological data.
 
 
  - ##### EMG
