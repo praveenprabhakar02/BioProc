@@ -5,10 +5,10 @@ Contains the functions for processing signals.
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
-#import biosppy as bsp
+import pandas as pd
 from biosppy.signals import tools
 
-def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='no', tarr='no'):
+def sinewave(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, plot='no', tarr='no'):
     """
     This function is used to generate sine waves without any noise.
 
@@ -21,14 +21,14 @@ def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='no', tarr='n
     time: int or float, optional
         time period of the sine wave; set to 10 secs by default
     fs: int or float, optional
-        sampling frequency; set to 100 Hz by default
+        sampling frequency; set to 1000 Hz by default
     phi: int or float, optional
         phase (angle); set to 0 degrees by default
     offset: int or float, optional
         bias; set to 1 by default
-    plot: str - yes or no, optional
+    plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the sine wave or not; default set to no
-    tarr: str - yes or no, optional
+    tarr: str - yes/Y or no/N (non-case sensitive), optional
         return the time array or not; default set to no
 
     Output
@@ -41,12 +41,38 @@ def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='no', tarr='n
         amplitude of the sine wave
     """
 
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    if tarr in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n']:
+        pass
+    elif isinstance(tarr, str):
+        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    try:
+        amp = float(amp)
+        freq = float(freq)
+        time = float(time)
+        fs = float(fs)
+        phi = float(phi)
+        offset = float(offset)
+    except ValueError:
+        raise ValueError("amp, freq, time, fs, phi, offset must be int or float.")
+    except TypeError:
+        raise TypeError("amp, freq, time, fs, phi, offset must be int or float.")
+
     pi = 3.14
     t = np.arange(0, time, 1/fs)
     sine = offset + amp * (np.sin((2*pi*freq*t) + phi))
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         plt.figure(figsize=(12, 4))
         plt.plot(t, sine)
         plt.title("Sine wave")
@@ -55,13 +81,13 @@ def sinewave(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, plot='no', tarr='n
         plt.show()
 
     #return time array or not
-    if tarr in ['yes', 'Yes']:
+    if tarr in ['yes', 'Yes', 'Y', 'y']:
         return t, sine
 
     return sine
 
 
-def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='no', tarr='no'):
+def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, noise=1, plot='no', tarr='no'):
     """
     This function is used to generate a sine wave with random noise.
 
@@ -81,9 +107,9 @@ def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='no
         bias; set to 1 by default
     noise: int or float, optional
         noise amplitude; default set to 1
-    plot: str - yes or no, optional
+    plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the sine wave or not; default set to no
-    tarr: str - yes or no, optional
+    tarr: str - yes/Y or no/N (non-case sensitive), optional
         return the time array or not; default set to no
 
     Output
@@ -96,12 +122,39 @@ def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='no
         amplitude of the sine wave
     """
 
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    if tarr in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n']:
+        pass
+    elif isinstance(tarr, str):
+        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    try:
+        amp = float(amp)
+        freq = float(freq)
+        time = float(time)
+        fs = float(fs)
+        phi = float(phi)
+        offset = float(offset)
+        noise = float(noise)
+    except ValueError:
+        raise ValueError("amp, freq, time, fs, phi, offset, noise must be int or float.")
+    except TypeError:
+        raise TypeError("amp, freq, time, fs, phi, offset, noise must be int or float.")
+
     pi = 3.14
     t = np.arange(0, time, 1/fs)
     sine = offset + amp * (np.sin((2*pi*freq*t) + phi)) + (noise *(np.random.randn(len(t))))
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         plt.figure(figsize=(12, 4))
         plt.plot(t, sine)
         plt.title("Sine wave with noise")
@@ -110,23 +163,23 @@ def sinenoise(amp=1, freq=1, time=10, fs=100, phi=0, offset=0, noise=1, plot='no
         plt.show()
 
     #return time array or not
-    if tarr in ['yes', 'Yes']:
+    if tarr in ['yes', 'Yes', 'Y', 'y']:
         return t, sine
 
     return sine
 
 
-def fft(sinwave, fs=1000, plot='yes', **kwargs):
+def fft(signal, fs=1000, plot='yes', **kwargs):
     """
     This function is used to calculate the discrete fourier transform of the sine wave.
 
     Input parameters
     ----------------
-    sinwave: ndarray
+    signal: ndarray
         the input signal whose DFT is to be determined
     fs: int or float, optional
         sampling frequency; default set to 1000 Hz
-    plot: str - yes or no, optional
+    plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the fourier or not; default set to yes
     **kwargs: dict, optional
         Additional keyword arguments are passed to the underlying
@@ -140,12 +193,29 @@ def fft(sinwave, fs=1000, plot='yes', **kwargs):
         FFT of the input signal
     """
 
-    fourier = np.fft.fft(sinwave, **kwargs)
-    N = sinwave.size
+    try:
+        fs = float(fs)
+    except TypeError:
+        raise TypeError("sampling frequency (fs) must be int or float")
+
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    else:
+        raise TypeError("signal should be a list or numpy array.")
+
+    fourier = np.fft.fft(signal, **kwargs)
+    N = signal.size
     amp = np.linspace(0, fs, N)
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         plt.title("FFT")
         plt.ylabel("Amplitude")
         plt.xlabel("Frequency")
@@ -174,6 +244,16 @@ def padding(signal, size=0):
         zero padded signal
     """
 
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    else:
+        raise TypeError("signal should be a list or numpy array.")
+
+    try:
+        size = int(abs(size))
+    except TypeError:
+        raise TypeError("size should be an int")
+
     padarray = np.concatenate((signal, np.zeros(size)))
 
     return padarray
@@ -197,6 +277,11 @@ def padsize(signal):
         zero padded array; size will be a power of 2
     """
 
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    else:
+        raise TypeError("signal should be a list or numpy array.")
+
     siz = signal.size
     binary = np.binary_repr(siz)
     if binary.count("1") == 1:
@@ -207,7 +292,9 @@ def padsize(signal):
               .format(siz, int(temp), temp_2, siz))
         inp = input("\nDo you want to add {} more zeros using padding function? Y/N".format(siz))
         if inp in ['y', 'Y', 'yes', 'Yes']:
-            return padding(signal, size=int(siz))
+            padarray = padding(signal, size=int(siz))
+
+            return padarray
 
     else:
         temp = np.log(siz)//np.log(2)
@@ -222,7 +309,9 @@ def padsize(signal):
             inp = input("\nDo you want to add {} more zeros using padding function? Y/N"
                         .format(diff))
             if inp in ['y', 'Y', 'yes', 'Yes']:
-                return padding(signal, size=int(diff))
+                padarray = padding(signal, size=int(diff))
+
+                return padarray
 
         else:
             temp1 = diff+2**(temp+1)
@@ -232,7 +321,9 @@ def padsize(signal):
             inp = input("\nDo you want to add {} more zeros using the padding function? Y/N"
                         .format(temp1))
             if inp in ['y', 'Y', 'yes', 'Yes']:
-                return padding(signal, size=int(temp1))
+                padarray = padding(signal, size=int(temp1))
+
+                return padarray
 
 
 def window(kernel, size, **kwargs):
@@ -256,6 +347,11 @@ def window(kernel, size, **kwargs):
     windows : ndarray
         Created window.
     """
+
+    if isinstance(kernel, str):
+        pass
+    else:
+        raise TypeError("kernel must be a string (str).")
 
     windows = tools._get_window(kernel, size, **kwargs)
 
@@ -284,7 +380,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='b
         type of IIR filter; default set to butter
         types: 'butter' (Butterworth), ‘cheby1’ (Chebyshev I), ‘cheby2’ (Chebyshev II),
         ‘ellip’ (Cauer/elliptic), ‘bessel’ (Bessel/Thomson)
-    plot:  str - yes or no, optional
+    plot:  str - yes/Y or no/N (non-case sensitive), optional
         plot the filtered signal or not; default set to yes
     **kwargs: dict, optional
         Additional keyword arguments are passed to the underlying
@@ -311,7 +407,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='b
     filtersig = filtersig['signal']
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         time = np.arange(0, len(signal)/fs, 1/fs)
         plt.figure(figsize=(12, 6))
         plt.subplot(211)
@@ -347,7 +443,7 @@ def fir(signal, ordern=2, cutoff=[50, 450], ftype='bandpass', fs=1000.0, plot='y
         types: 'lowpass','highpass', 'bandpass', 'bandstop'
     fs: int or float, optional
         sampling rate
-    plot: str - yes or no, optional
+    plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the filtered signal or not; default set to yes
     **kwargs: dict, optional
         Additional keyword arguments are passed to the underlying
@@ -374,7 +470,7 @@ def fir(signal, ordern=2, cutoff=[50, 450], ftype='bandpass', fs=1000.0, plot='y
     filtersig = filtersig['signal']
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         time = np.arange(0, len(signal)/fs, 1/fs)
         plt.figure(figsize=(12, 6))
         plt.subplot(211)
@@ -436,7 +532,7 @@ def polyfit(time, signal, degree, plot='yes', **kwargs):
         independent variable
     signal: ndarray
         dependent variable
-    plot: str - yes or no, optional
+    plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the polyfit or not; default set to yes
     **kwargs: dict, optional
         Additional keyword arguments are passed to the underlying
@@ -455,7 +551,7 @@ def polyfit(time, signal, degree, plot='yes', **kwargs):
     regression = poly_function(time)
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         plt.plot(time, signal, label="Signal")
         plt.plot(time, regression, c='#ff7f0e', label="Polynomial")
         plt.xlabel("Time")
@@ -467,7 +563,7 @@ def polyfit(time, signal, degree, plot='yes', **kwargs):
     return regression
 
 
-def ccorr(sig1, sig2, **kwargs):
+def xcorr(sig1, sig2, **kwargs):
     """
     Calculate the cross correlation of two signals.
 
@@ -515,7 +611,7 @@ def acorr(signal, **kwargs):
         signal whose auto-correlation is to be calculated
     **kwargs : dict, optional
         Additional keyword arguments are passed to the underlying
-        matplotlib.pyplot.xcorr function
+        matplotlib.pyplot.acorr function
 
     Output
     ------
@@ -528,7 +624,7 @@ def acorr(signal, **kwargs):
     """
 
     #plotting
-    corr = plt.xcorr(signal, signal, **kwargs)
+    corr = plt.acorr(signal, **kwargs)
     plt.title("Auto correlation")
     plt.xlabel("Lag")
     plt.ylabel("Correlation coefficient")
@@ -541,6 +637,28 @@ def acorr(signal, **kwargs):
     return lag, acorrarray
 
 
+def correlogram(signal, **kwargs):
+    """
+    Returns the correlogram of the signal.
+
+    Input parameters
+    ----------------
+    signal: ndarray
+        signal whose correlogram is to be returned
+    **kwargs : dict, optional
+        Additional keyword arguments are passed to the underlying
+        pandas.plotting.autocorrelation_plot function
+
+    Output
+    ------
+    Output will be the correlogram.
+    """
+
+    pd.plotting.autocorrelation_plot(signal)
+
+    return None
+
+
 def psd(signal, fs=1000.0, plot='yes', **kwargs):
     """
     Estimate Power Spectral Density using periodogram.
@@ -551,7 +669,7 @@ def psd(signal, fs=1000.0, plot='yes', **kwargs):
         input signal to compute PSD
     fs: int or float, optional
         sampling rate; default set to 1000 Hz
-    plot: str - yes or no, optional
+    plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the PSD or not; default set to yes
     **kwargs : dict, optional
         Additional keyword arguments are passed to the underlying
@@ -570,7 +688,7 @@ def psd(signal, fs=1000.0, plot='yes', **kwargs):
     freq, pxx = sp.signal.periodogram(signal, fs=fs, **kwargs)
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         plt.figure(figsize=(10, 4))
         plt.semilogy(freq, pxx)
         plt.title("Power Spectral Density")
@@ -591,7 +709,7 @@ def rectify(signal, fs=1000, plot='Yes'):
         input signal
     fs: int or float, optional
         sampling frequency; set to 1000 Hz by default
-    plt: str - yes or no, optional
+    plt: str - yes/Y or no/N (non-case sensitive), optional
         plot the rectified signal or not; default set to yes
 
     Output
@@ -605,7 +723,7 @@ def rectify(signal, fs=1000, plot='Yes'):
     rectifiedsig = np.abs(signal)
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         plt.figure(figsize=(12, 4))
         time = np.arange(0, len(signal)/fs, 1/fs)
         plt.plot(time, signal, label="Raw signal")
@@ -637,7 +755,7 @@ def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes', *
         type of IIR filter; default set to butter
         types: 'butter' (Butterworth), ‘cheby1’ (Chebyshev I), ‘cheby2’ (Chebyshev II),
         ‘ellip’ (Cauer/elliptic), ‘bessel’ (Bessel/Thomson)
-    plot:  str - yes or no, optional
+    plot:  str - yes/Y or no/N (non-case sensitive), optional
         plot the linear envelope or not; default set to yes
     **kwargs: dict, optional
         Additional keyword arguments are passed to the underlying
@@ -656,7 +774,7 @@ def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes', *
                  filter=filter, plot='No', **kwargs)
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         time = np.arange(0, len(signal)/fs, 1/fs)
         plt.figure(figsize=(12, 4))
         plt.plot(time, signal, label="Input signal")
@@ -692,7 +810,7 @@ def rms(input):
     return rmsq
 
 
-def rms_sig(signal, window=None, fs=1000, plot='yes'):
+def rms_sig(signal, window_size, fs=1000, plot='yes'):
     """
     This function returns the Root Mean Square of the signal.
 
@@ -700,12 +818,12 @@ def rms_sig(signal, window=None, fs=1000, plot='yes'):
     ----------------
     signal: ndarray
         the input signal whose RMS is to be determined
-    window: int
+    window_size: int
         the size of the window for calculation RMS
         Example: Window size of 10 will have a moving window of 10 data points
     fs: int or float, optional
         sampling rate; default set to 1000 Hz
-    plot: str - yes or no, optional
+    plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the RMS of the signal or not; default set to yes
 
     Output
@@ -716,20 +834,20 @@ def rms_sig(signal, window=None, fs=1000, plot='yes'):
         the root mean square of the input signal
     """
     try:
-        window = int(window)
+        window_size = int(window_size)
     except TypeError:
-        raise TypeError("rms_sig missing an argument: window")
+        raise TypeError("rms_sig missing an argument: wind")
 
     length = signal.size
     rms_signal = []
-    for i in range(0, length-window, window):
-        temp = rms(signal[i:(i+window)])
+    for i in range(0, length-window, window_size):
+        temp = rms(signal[i:(i+window_size)])
         rms_signal.append(temp)
 
     rms_signal = np.array(rms_signal)
 
     #plotting
-    if plot in ['yes', 'Yes']:
+    if plot in ['yes', 'Yes', 'Y', 'y']:
         time = signal.size/fs
         t = np.arange(0, time, 1/fs)
         t1 = np.linspace(0, time, rms_signal.size)
