@@ -3,6 +3,7 @@ channels:
 dependencies:
   - matplotlib
   - numpy
+  - pandas
   - autopep8
   - scipy
   - pylint
