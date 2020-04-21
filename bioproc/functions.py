@@ -158,8 +158,8 @@ def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, noise=1, plot='n
         plt.figure(figsize=(12, 4))
         plt.plot(t, sine)
         plt.title("Sine wave with noise")
-        plt.xlabel("Time (s)")
-        plt.ylabel("Amplitude (m)")
+        plt.xlabel("Time")
+        plt.ylabel("Amplitude")
         plt.show()
 
     #return time array or not
@@ -218,7 +218,7 @@ def fft(signal, fs=1000, plot='yes', **kwargs):
     if plot in ['yes', 'Yes', 'Y', 'y']:
         plt.title("FFT")
         plt.ylabel("Amplitude")
-        plt.xlabel("Frequency")
+        plt.xlabel("Frequency (Hz)")
         plt.bar(amp[:N // 2], np.abs(fourier)[:N // 2]*1/N, width=1.5)
         plt.show()
 
@@ -840,7 +840,7 @@ def rms_sig(signal, window_size, fs=1000, plot='yes'):
 
     length = signal.size
     rms_signal = []
-    for i in range(0, length-window, window_size):
+    for i in range(0, length-window_size, window_size):
         temp = rms(signal[i:(i+window_size)])
         rms_signal.append(temp)
 
