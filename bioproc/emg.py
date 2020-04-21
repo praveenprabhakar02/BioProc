@@ -136,14 +136,16 @@ def norm_emg(signal, mvic, fs=1000.0, filt='no', plot='yes'):
 
     #filter and rectify EMG signal
     if filt in ['no', 'No', 'N', 'n']:
-        emg = fn.iir(signal=signal, fs=fs, plot='No')
-        emg_rect = fn.rectify(emg, fs=fs, plot='No')
+        signal = fn.iir(signal=signal, fs=fs, plot='No')
         mvic = fn.iir(signal=mvic, fs=fs, plot='No')
-        mvic_rect = fn.rectify(mvic, fs=fs, plot='No')
 
-    maximum = mvic_rect.max()
+    emg_rect = fn.rectify(signal, fs=fs, plot='No')
+    mvic_rect = fn.rectify(mvic, fs=fs, plot='No')
+    emg_env = fn.envelope(emg_rect, fs=fs, plot='No')
+    mvic_env = fn.envelope(mvic_rect, fs=fs, plot='No')
+    maximum = mvic_env.max()
     #normalize
-    emg_norm = emg_rect/maximum
+    emg_norm = emg_env/maximum
 
     #plotting
     if plot in ['yes', 'Yes', 'Y', 'y']:
@@ -166,7 +168,7 @@ def norm_emg(signal, mvic, fs=1000.0, filt='no', plot='yes'):
     return emg_norm
 
 
-def padsize(signal):
+def padding(signal):
     """
     This function determines the size of the input signal, and zero pads
     such that total size is a power of 2.
@@ -236,7 +238,9 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
     fs: int or float, optional
         sampling rate; default set to 1000 Hz
     plot: str - yes/Y or no/N (non-case sensitive), optional
-        plot the onsets or not; default set to Yes
+        display the plots or not; default set to Yes
+    fourier: str - yes/Y or no/N (non-case sensitive), optional
+        plot the FFT or not; default set to Yes
     **kwargs: dict, optional
         Additional keyword arguments as listed:
 
@@ -262,10 +266,12 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
 
     Output
     ------
-    Output will be in the format --> emg_norm
+    Output will be in the format --> emgnorm (or) env
 
-    emg_norm: ndarray
+    emgnorm: ndarray
         MVIC normalized EMG signal
+    env: ndarray
+        linear envelope of the input signal
     """
 
     list1 = ['ordern', 'cutoff_filter', 'ftype', 'filter', 'order_env', 'cutoff_env', 'filter_env']
@@ -315,42 +321,91 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
     else:
         filter_env = 'butter'
 
-    filtered = fn.iir(signal = emg_signal, fs=fs, ordern=ordern, cutoff=cutoff_filter, ftype=ftype, filter=filter, plot='No')
+    filtered = fn.iir(signal = emg_signal, fs=fs, ordern=ordern, cutoff=cutoff_filter, 
+                      ftype=ftype, filter=filter, plot='No')
     rect = fn.rectify(filtered, fs=fs, plot='No')
     env = fn.envelope(rect, fs=fs, order=order_env, cutoff=cutoff_env, filter=filter_env, plot='N')
-
-    if plot in ['Yes', 'yes', 'Y', 'y']:
-        plt.figure(figsize=(12, 12))
-        time = np.arange(0, emg_signal.size/fs, 1/fs)
-        plt.subplot(411)
-        plt.plot(time, emg_signal)
-        plt.xlabel("Time")
-        plt.ylabel("Amplitude")
-        plt.title("Raw EMG signal")
-
-        plt.subplot(412)
-        plt.plot(time, filtered, c='#ff7f0e')
-        plt.xlabel("Time")
-        plt.ylabel("Amplitude")
-        plt.title("Filtered signal")
-
-        plt.subplot(413)
-        plt.plot(time, rect)
-        plt.xlabel("Time")
-        plt.ylabel("Amplitude")
-        plt.title("Rectified signal")
-
-        plt.subplot(414)
-        plt.plot(time, env, c='#ff7f0e')
-        plt.xlabel("Time")
-        plt.ylabel("Amplitude")
-        plt.title("Envelope")
-        plt.tight_layout(pad=3.0)
-        plt.show()
     
-    if fourier in ['Yes', 'yes', 'Y', 'y']:
-        padded = padsize(filtered)
-        fn.fft(padded, fs=fs, plot='Y')
+    if mvic_signal is None:
+        print("MVIC signal not input. Cannot normalize EMG signal.")
+    else:
+        emgnorm = norm_emg(signal=emg_signal, mvic=mvic_signal, fs=fs, filt='No', plot='No')
 
-    return None
+    if mvic_signal is None:
+        if plot in ['Yes', 'yes', 'Y', 'y']:
+            plt.figure(figsize=(12, 12))
+            time = np.arange(0, emg_signal.size/fs, 1/fs)
+            plt.subplot(411)
+            plt.plot(time, emg_signal)
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Raw EMG signal")
+
+            plt.subplot(412)
+            plt.plot(time, filtered, c='#ff7f0e')
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Filtered signal")
+
+            plt.subplot(413)
+            plt.plot(time, rect)
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Rectified signal")
+
+            plt.subplot(414)
+            plt.plot(time, env, c='#ff7f0e')
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Envelope")
+            plt.tight_layout(pad=3.0)
+            plt.show()
+
+            if fourier in ['Yes', 'yes', 'Y', 'y']:
+                padded = padding(filtered)
+                dft = fn.fft(padded, fs=fs, plot='Y')
+
+        return env
+
+    else:
+        if plot in ['Yes', 'yes', 'Y', 'y']:
+            plt.figure(figsize=(12, 18))
+            time = np.arange(0, emg_signal.size/fs, 1/fs)
+            plt.subplot(511)
+            plt.plot(time, emg_signal)
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Raw EMG signal")
+
+            plt.subplot(512)
+            plt.plot(time, filtered, c='#ff7f0e')
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Filtered EMG")
+
+            plt.subplot(513)
+            plt.plot(time, rect)
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Rectified EMG")
+
+            plt.subplot(514)
+            plt.plot(time, env, c='#ff7f0e')
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("EMG Envelope")
+            
+            plt.subplot(515)
+            plt.plot(time, emgnorm, c='#ff7f0e')
+            plt.xlabel("Time")
+            plt.ylabel("Amplitude")
+            plt.title("Normalized EMG")
+            plt.tight_layout(pad=3.0)
+            plt.show()
+
+            if fourier in ['Yes', 'yes', 'Y', 'y']:
+                padded = padding(filtered)
+                dft = fn.fft(padded, fs=fs, plot='Y')
+
+        return emgnorm
 
