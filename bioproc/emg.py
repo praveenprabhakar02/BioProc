@@ -195,7 +195,6 @@ def padding(signal):
     binary = np.binary_repr(siz)
     if binary.count("1") == 1:
         temp = np.log(siz)//np.log(2)
-        temp_2 = int(2**int(temp))
         padarray = fn.padding(signal, size=int(siz))
 
         return padarray
@@ -321,11 +320,11 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
     else:
         filter_env = 'butter'
 
-    filtered = fn.iir(signal = emg_signal, fs=fs, ordern=ordern, cutoff=cutoff_filter, 
+    filtered = fn.iir(signal=emg_signal, fs=fs, ordern=ordern, cutoff=cutoff_filter,
                       ftype=ftype, filter=filter, plot='No')
     rect = fn.rectify(filtered, fs=fs, plot='No')
     env = fn.envelope(rect, fs=fs, order=order_env, cutoff=cutoff_env, filter=filter_env, plot='N')
-    
+
     if mvic_signal is None:
         print("MVIC signal not input. Cannot normalize EMG signal.")
     else:
@@ -394,7 +393,7 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
             plt.xlabel("Time")
             plt.ylabel("Amplitude")
             plt.title("EMG Envelope")
-            
+
             plt.subplot(515)
             plt.plot(time, emgnorm, c='#ff7f0e')
             plt.xlabel("Time")
@@ -408,4 +407,3 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
                 dft = fn.fft(padded, fs=fs, plot='Y')
 
         return emgnorm
-
