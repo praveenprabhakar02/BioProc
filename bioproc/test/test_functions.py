@@ -260,7 +260,9 @@ def test_iir():
         fn.iir(signal=1+3j)
     with pytest.raises(ValueError):
         fn.iir(signal=[1, 1+3j])
-    
+    signal = fn.sinewave()
+    with pytest.raises(TypeError):
+        fn.iir(signal, fs='s')
 
 
 def test_envelope():
