@@ -241,6 +241,8 @@ def test_window():
         fn.window(kernel=[1,2], size=2)
     with pytest.raises(ValueError):
         fn.window(kernel='dummy', size=2)
+    with pytest.raises(NameError):
+        fn.window(kernel=dummy, size=2)
     with pytest.raises(ValueError):
         fn.window(kernel='hamming')
     with pytest.raises(TypeError):
@@ -248,21 +250,45 @@ def test_window():
     with pytest.raises(TypeError):
         fn.window(kernel='hamming', size=1+3j)
     with pytest.raises(TypeError):
-        fn.window(kernel='hamming', size=[1,2])
+        fn.window(kernel='hamming', size=[1, 2])
 
 
 def test_iir():
     with pytest.raises(ValueError):
-        fn.iir(signal=1)
+        fn.iir(signal=1, plot='N')
     with pytest.raises(TypeError):
-        fn.iir(signal='sa')
+        fn.iir(signal='sa', plot='N')
+    with pytest.raises(NameError):
+        fn.iir(signal=sa, plot='N')
     with pytest.raises(TypeError):
-        fn.iir(signal=1+3j)
+        fn.iir(signal=1+3j, plot='N')
     with pytest.raises(ValueError):
-        fn.iir(signal=[1, 1+3j])
+        fn.iir(signal=[1, 1+3j], plot='N')
     signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.iir(signal, fs='s', plot='N')
+    with pytest.raises(NameError):
+        fn.iir(signal, fs=s, plot='N')
     with pytest.raises(TypeError):
-        fn.iir(signal, fs='s')
+        fn.iir(signal, fs=[1, 2], plot='N')
+    with pytest.raises(TypeError):
+        fn.iir(signal, fs=1+3j, plot='N')
+    with pytest.raises(ValueError):
+        fn.iir(signal, ordern=-1, plot='N')
+    with pytest.raises(NameError):
+        fn.iir(signal, ordern=s, plot='N')
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=[1, 2, 3], plot='N')
+    with pytest.raises(TypeError):
+        fn.iir(signal, cutoff=[1+3j, 4], plot='N')
+    with pytest.raises(NameError):
+        fn.iir(signal, cutoff=s, plot='N')
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=-1, plot='N')
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff='s', plot='N')
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=1+3j, plot='N')
 
 
 def test_envelope():
