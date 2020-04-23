@@ -78,6 +78,7 @@ def sinewave(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, plot='no', tarr='
         plt.title("Sine wave")
         plt.xlabel("Time")
         plt.ylabel("Amplitude")
+        plt.tight_layout()
         plt.show()
 
     #return time array or not
@@ -87,7 +88,7 @@ def sinewave(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, plot='no', tarr='
     return sine
 
 
-def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, noise=1, plot='no', tarr='no'):
+def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, noise=1, plot='no', tarr='no', seed=1):
     """
     This function is used to generate a sine wave with random noise.
 
@@ -111,6 +112,8 @@ def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, noise=1, plot='n
         plot the sine wave or not; default set to no
     tarr: str - yes/Y or no/N (non-case sensitive), optional
         return the time array or not; default set to no
+    seed: int, optional
+        random generator seed; default set to 1
 
     Output
     ------
@@ -144,13 +147,15 @@ def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, noise=1, plot='n
         phi = float(phi)
         offset = float(offset)
         noise = float(noise)
+        seed = int(seed)
     except ValueError:
-        raise ValueError("amp, freq, time, fs, phi, offset, noise must be int or float.")
+        raise ValueError("amp, freq, time, fs, phi, offset, noise, seed must be int or float.")
     except TypeError:
-        raise TypeError("amp, freq, time, fs, phi, offset, noise must be int or float.")
+        raise TypeError("amp, freq, time, fs, phi, offset, noise, seed must be int or float.")
 
     pi = 3.14
     t = np.arange(0, time, 1/fs)
+    np.random.seed(seed=seed)
     sine = offset + amp * (np.sin((2*pi*freq*t) + phi)) + (noise *(np.random.randn(len(t))))
 
     #plotting
@@ -160,6 +165,7 @@ def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, noise=1, plot='n
         plt.title("Sine wave with noise")
         plt.xlabel("Time")
         plt.ylabel("Amplitude")
+        plt.tight_layout()
         plt.show()
 
     #return time array or not
@@ -196,7 +202,9 @@ def fft(signal, fs=1000, plot='yes', **kwargs):
     try:
         fs = float(fs)
     except TypeError:
-        raise TypeError("sampling frequency (fs) must be int or float")
+        raise TypeError("sampling frequency (fs) must be int or float.")
+    except ValueError:
+        raise ValueError("sampling frequency (fs) must be int or float.")
 
     if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n']:
         pass
@@ -207,8 +215,10 @@ def fft(signal, fs=1000, plot='yes', **kwargs):
 
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
+    elif isinstance(signal, (str, complex)):
+        raise TypeError ("signal should be a list or numpy array.")
     else:
-        raise TypeError("signal should be a list or numpy array.")
+        raise ValueError("signal should be a list or numpy array.")
 
     fourier = np.fft.fft(signal, **kwargs)
     N = signal.size
@@ -220,6 +230,7 @@ def fft(signal, fs=1000, plot='yes', **kwargs):
         plt.ylabel("Amplitude")
         plt.xlabel("Frequency (Hz)")
         plt.bar(amp[:N // 2], np.abs(fourier)[:N // 2]*1/N, width=1.5)
+        plt.tight_layout()
         plt.show()
 
     return fourier
@@ -246,8 +257,15 @@ def padding(signal, size=0):
 
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
+    elif isinstance(signal, int):
+        raise ValueError("signal should be a list or numpy array.")
     else:
         raise TypeError("signal should be a list or numpy array.")
+
+    if isinstance(size, complex):
+        raise TypeError("size cannot be a complex number. size should be an integer.")
+    elif size <= 0:
+        raise ValueError("size should be greater than zero.")
 
     try:
         size = int(abs(size))
@@ -401,6 +419,11 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='b
     except ValueError:
         raise ValueError("Cutoff can only be an int, float or numpy array")
 
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    else:
+        raise TypeError("signal should be a list or numpy array.")
+
     #filtering
     filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=ordern,
                                     frequency=cutoff, sampling_rate=fs, **kwargs)
@@ -421,6 +444,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='b
         plt.xlabel("Time")
         plt.ylabel("Amplitude")
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
     return filtersig
@@ -464,6 +488,11 @@ def fir(signal, ordern=2, cutoff=[50, 450], ftype='bandpass', fs=1000.0, plot='y
     except ValueError:
         raise ValueError("Cutoff can only be an int, float or numpy array")
 
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    else:
+        raise TypeError("signal should be a list or numpy array.")
+
     #filtering
     filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=ordern,
                                     frequency=cutoff, sampling_rate=fs, **kwargs)
@@ -484,6 +513,7 @@ def fir(signal, ordern=2, cutoff=[50, 450], ftype='bandpass', fs=1000.0, plot='y
         plt.xlabel("Time")
         plt.ylabel("Amplitude")
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
     return filtersig
@@ -507,6 +537,12 @@ def movavg(signal, window_size=3):
     movaverage: ndarray
         the moving average of the signal
     """
+
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    else:
+        raise TypeError("signal should be a list or numpy array.")
+
     count = 0
     temp = signal.size
     movaverage = []
@@ -558,6 +594,7 @@ def polyfit(time, signal, degree, plot='yes', **kwargs):
         plt.ylabel("Amplitude")
         plt.title("Polynomial fitting")
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
     return regression
@@ -592,6 +629,7 @@ def xcorr(sig1, sig2, **kwargs):
     plt.title("Cross correlation")
     plt.xlabel("Lag")
     plt.ylabel("Correlation coefficient")
+    plt.tight_layout()
     plt.show()
 
     corr = np.array(corr)
@@ -628,6 +666,7 @@ def acorr(signal, **kwargs):
     plt.title("Auto correlation")
     plt.xlabel("Lag")
     plt.ylabel("Correlation coefficient")
+    plt.tight_layout()
     plt.show()
 
     corr = np.array(corr)
@@ -694,6 +733,7 @@ def psd(signal, fs=1000.0, plot='yes', **kwargs):
         plt.title("Power Spectral Density")
         plt.xlabel("Frequency")
         plt.ylabel("Power Spectral Density")
+        plt.tight_layout()
         plt.show()
 
     return freq, pxx
@@ -732,6 +772,7 @@ def rectify(signal, fs=1000, plot='Yes'):
         plt.xlabel("Time")
         plt.ylabel("Amplitude")
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
     return rectifiedsig
@@ -783,6 +824,7 @@ def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes', *
         plt.xlabel("Time")
         plt.ylabel("Amplitude")
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
     return linenv
@@ -858,6 +900,7 @@ def rms_sig(signal, window_size, fs=1000, plot='yes'):
         plt.ylabel("Amplitude")
         plt.title("Root Mean Square")
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
     return rms_signal
