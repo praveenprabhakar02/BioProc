@@ -293,21 +293,91 @@ def test_iir():
         fn.iir(signal, plot='happy')
     with pytest.raises(TypeError):
         fn.iir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.iir(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.iir(signal, ftype='yes')
+    with pytest.raises(NameError):
+        fn.iir(signal, ftype=yes)
     with pytest.raises(TypeError):
         fn.iir(signal, ftype=12)
+    with pytest.raises(ValueError):
+        fn.iir(signal, ftype='12')
+    with pytest.raises(TypeError):
+        fn.iir(signal, filter=12)
+    with pytest.raises(ValueError):
+        fn.iir(signal, filter='yes')
+    with pytest.raises(NameError):
+        fn.iir(signal, filter=yes)
+    with pytest.raises(ValueError):
+        fn.iir(signal, filter='sa') 
+    with pytest.raises(TypeError):
+        fn.iir(signal, dummy=1)
 
-        
+
 def test_fir():
-    signal, ordern, cutoff, ftype, fs, plot
-
-
-def test_envelope():
-    return None
+    with pytest.raises(ValueError):
+        fn.fir(signal=1)
+    with pytest.raises(TypeError):
+        fn.fir(signal='sa')
+    with pytest.raises(NameError):
+        fn.fir(signal=sa)
+    with pytest.raises(TypeError):
+        fn.fir(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.fir(signal, fs='s')
+    with pytest.raises(NameError):
+        fn.fir(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.fir(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.fir(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal, ordern=-1)
+    with pytest.raises(NameError):
+        fn.fir(signal, ordern=s)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.fir(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.fir(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff='s')
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal, plot='happy')
+    with pytest.raises(TypeError):
+        fn.fir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.fir(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.fir(signal, ftype='yes')
+    with pytest.raises(NameError):
+        fn.fir(signal, ftype=yes)
+    with pytest.raises(TypeError):
+        fn.fir(signal, ftype=12)
+    with pytest.raises(ValueError):
+        fn.fir(signal, ftype='12') 
+    with pytest.raises(TypeError):
+        fn.fir(signal, dummy=1)
 
 
 def test_movavg():
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    check = np.array([2, 3, 4, 5, 6, 7, 8, 9])
+    mov = fn.movavg(signal)
+    assert np.array_equal(mov, check)
+    check = np.array([2.5, 3.5, , ])
+
+
+def test_envelope():
     return None
 
 
