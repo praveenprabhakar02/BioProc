@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.4" />
 <title>bioproc.test.test_functions API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="test_functions.py …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,56 +20,782 @@
 <h1 class="title">Module <code>bioproc.test.test_functions</code></h1>
 </header>
 <section id="section-intro">
+<p>test_functions.py</p>
+<p>Author: Praveen Prabhakar KR
+Email: praveenprabhakar02@gmail.com</p>
+<p>Module contains the tests for functions module.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .. import functions as fn
+<pre><code class="python">&#34;&#34;&#34;
+test_functions.py
 
-def test_envelope():
-    return None
+Author: Praveen Prabhakar KR
+Email: praveenprabhakar02@gmail.com
 
-def test_fft():
-    return None
+Module contains the tests for functions module.
+&#34;&#34;&#34;
 
-def test_fir():
-    return None
+import pytest
+import numpy as np
+from .. import functions as fn
 
-def test_iir():
-    return None
-
-def test_movavg():
-    return None
-
-def test_padding():
-    return None
-
-def test_padsize():
-    return None
-
-def test_polyfit():
-    return None
-
-def test_psd():
-    return None
-
-def test_rectify():
-    return None
-
-def test_rms():
-    return None
-
-def test_rms_sig():
-    return None
-
-def test_sinenoise():
-    return None
 
 def test_sinewave():
-    return None
+    &#34;&#34;&#34;
+    Test for sinewave function in the functions module.
+    &#34;&#34;&#34;
+
+    t = np.arange(0, 10, 1/1000)
+    sinearr = np.sin(2*3.14*t)
+    func = fn.sinewave()
+
+    assert np.array_equal(func, sinearr)
+    with pytest.raises(ValueError):
+        fn.sinewave(amp=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(freq=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(time=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(fs=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(offset=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(phi=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.sinewave(amp=s)
+    with pytest.raises(NameError):
+        fn.sinewave(freq=s)
+    with pytest.raises(NameError):
+        fn.sinewave(time=s)
+    with pytest.raises(NameError):
+        fn.sinewave(fs=s)
+    with pytest.raises(NameError):
+        fn.sinewave(offset=s)
+    with pytest.raises(NameError):
+        fn.sinewave(phi=s)
+    with pytest.raises(TypeError):
+        fn.sinewave(amp=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(freq=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(time=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(fs=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(offset=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(phi=[12, 12])
+    with pytest.raises(ValueError):
+        fn.sinewave(plot=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinewave(plot=123)
+    with pytest.raises(NameError):
+        fn.sinewave(plot=s)
+    with pytest.raises(ValueError):
+        fn.sinewave(tarr=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinewave(tarr=123)
+    with pytest.raises(NameError):
+        fn.sinewave(tarr=s)
+    with pytest.raises(TypeError):
+        fn.sinewave(amp=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(freq=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(time=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(fs=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(phi=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(offset=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(tarr=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(plot=1+3j)
+
+
+def test_sinenoise():
+    &#34;&#34;&#34;
+    Test for sinenoise function in the functions module.
+    &#34;&#34;&#34;
+
+    t = np.arange(0, 10, 1/1000)
+    np.random.seed(1)
+    sinearr = np.sin(2*3.14*t) + (np.random.randn(len(t)))
+    func = fn.sinenoise()
+
+    assert np.array_equal(func, sinearr)
+    with pytest.raises(ValueError):
+        fn.sinenoise(amp=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(freq=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(time=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(fs=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(offset=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(phi=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(seed=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.sinenoise(amp=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(freq=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(time=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(fs=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(offset=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(phi=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(seed=s)
+    with pytest.raises(TypeError):
+        fn.sinenoise(amp=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(freq=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(time=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(fs=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(offset=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(phi=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(seed=[12, 12])
+    with pytest.raises(ValueError):
+        fn.sinenoise(plot=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinenoise(plot=123)
+    with pytest.raises(NameError):
+        fn.sinenoise(plot=s)
+    with pytest.raises(ValueError):
+        fn.sinenoise(tarr=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinenoise(tarr=123)
+    with pytest.raises(NameError):
+        fn.sinenoise(tarr=s)
+    with pytest.raises(TypeError):
+        fn.sinewave(amp=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(freq=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(time=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(fs=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(phi=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(offset=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(noise=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(tarr=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(plot=1+3j)
+
+
+def test_fft():
+    &#34;&#34;&#34;
+    Test for fft function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(TypeError):
+        fn.fft(fn.sinewave(), fs=[21, 3])
+    with pytest.raises(ValueError):
+        fn.fft(fn.sinewave(), fs=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.fft(fn.sinewave(), fs=1+3j)
+    with pytest.raises(NameError):
+        fn.fft(fn.sinewave(), fs=sa)
+    with pytest.raises(ValueError):
+        fn.fft(signal=1)
+    with pytest.raises(TypeError):
+        fn.fft(signal=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.fft(signal=1+3j)
+    with pytest.raises(NameError):
+        fn.fft(signal=sa)
+    with pytest.raises(ValueError):
+        fn.sinenoise(plot=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinenoise(plot=123)
+    with pytest.raises(NameError):
+        fn.sinenoise(plot=s)
+
+
+def test_padding():
+    &#34;&#34;&#34;
+    Test for padding function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.padding(signal=1, size=2)
+    with pytest.raises(TypeError):
+        fn.padding(signal=&#39;sa&#39;, size=2)
+    with pytest.raises(NameError):
+        fn.padding(signal=sa, size=2)
+    with pytest.raises(TypeError):
+        fn.padding(signal=1+3j, size=2)
+    with pytest.raises(ValueError):
+        fn.padding(signal=[1+3j], size=2)
+    with pytest.raises(NameError):
+        fn.padding([1, 2, 3, 4, 5, 6], size=sa)
+    with pytest.raises(TypeError):
+        fn.padding([1, 2, 3, 4, 5], size=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.padding([1, 2, 3, 4, 5], size=[2, 4])
+    with pytest.raises(ValueError):
+        fn.padding([1, 2, 3, 4, 5], size=-1)
+    with pytest.raises(TypeError):
+        fn.padding([1, 2, 3, 4], size=1+3j)
+    a = [1, 2, 3, 4]
+    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padding(a, 4), b)
+
+
+def test_padsize():
+    &#34;&#34;&#34;
+    Test for padsize function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.padsize(signal=1)
+    with pytest.raises(ValueError):
+        fn.padsize(signal=-1)
+    with pytest.raises(TypeError):
+        fn.padsize(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.padsize(signal=sa)
+    with pytest.raises(TypeError):
+        fn.padsize(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.padsize(signal=[1+3j])
+    a = [1, 2, 3, 4]
+    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padsize(a), b)
+    assert fn.padsize(a, &#39;No&#39;) == None
+    a = np.zeros(512)
+    b = fn.padsize(a)
+    assert b.size == 1024
+    a = np.zeros(768)
+    b = fn.padsize(a)
+    assert b.size == 1024
+    a = np.zeros(769)
+    b = fn.padsize(a)
+    assert b.size == 2048
+    with pytest.raises(ValueError):
+        fn.padsize(a, &#39;asda&#39;)
+    with pytest.raises(NameError):
+        fn.padsize(a, asda)
+    with pytest.raises(TypeError):
+        fn.padsize(a, [1, 2])
+    with pytest.raises(TypeError):
+        fn.padsize(a, 1+2j)
+
 
 def test_window():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for window function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(TypeError):
+        fn.window(kernel=12, size=2)
+    with pytest.raises(TypeError):
+        fn.window(kernel=[1, 2], size=2)
+    with pytest.raises(ValueError):
+        fn.window(kernel=&#39;dummy&#39;, size=2)
+    with pytest.raises(NameError):
+        fn.window(kernel=dummy, size=2)
+    with pytest.raises(ValueError):
+        fn.window(kernel=&#39;hamming&#39;)
+    with pytest.raises(TypeError):
+        fn.window(kernel=&#39;hamming&#39;, size=&#39;as&#39;)
+    with pytest.raises(TypeError):
+        fn.window(kernel=&#39;hamming&#39;, size=1+3j)
+    with pytest.raises(TypeError):
+        fn.window(kernel=&#39;hamming&#39;, size=[1, 2])
+
+
+def test_iir():
+    &#34;&#34;&#34;
+    Test for iir function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.iir(signal=1)
+    with pytest.raises(TypeError):
+        fn.iir(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal=sa)
+    with pytest.raises(TypeError):
+        fn.iir(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.iir(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.iir(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.iir(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, order=-1)
+    with pytest.raises(NameError):
+        fn.iir(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.iir(signal, order=&#39;s&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, order=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.iir(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.iir(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.iir(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.iir(signal, ftype=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal, ftype=yes)
+    with pytest.raises(TypeError):
+        fn.iir(signal, ftype=12)
+    with pytest.raises(ValueError):
+        fn.iir(signal, ftype=&#39;12&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, filter=12)
+    with pytest.raises(ValueError):
+        fn.iir(signal, filter=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal, filter=yes)
+    with pytest.raises(ValueError):
+        fn.iir(signal, filter=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, dummy=1)
+
+
+def test_fir():
+    &#34;&#34;&#34;
+    Test for fir function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.fir(signal=1)
+    with pytest.raises(TypeError):
+        fn.fir(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal=sa)
+    with pytest.raises(TypeError):
+        fn.fir(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.fir(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.fir(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.fir(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal, order=-1)
+    with pytest.raises(NameError):
+        fn.fir(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.fir(signal, order=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.fir(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.fir(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.fir(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.fir(signal, ftype=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal, ftype=yes)
+    with pytest.raises(TypeError):
+        fn.fir(signal, ftype=12)
+    with pytest.raises(ValueError):
+        fn.fir(signal, ftype=&#39;12&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, dummy=1)
+
+
+def test_movavg():
+    &#34;&#34;&#34;
+    Test for movavg function in the functions module.
+    &#34;&#34;&#34;
+
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    check = np.array([2, 3, 4, 5, 6, 7, 8, 9])
+    mov = fn.movavg(signal)
+    assert np.array_equal(mov, check)
+    check = np.array([2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5])
+    mov = fn.movavg(signal, 4)
+    assert np.array_equal(mov, check)
+    mov = fn.movavg(signal, 4.9)
+    assert np.array_equal(mov, check)
+    with pytest.raises(ValueError):
+        fn.movavg(signal=1)
+    with pytest.raises(TypeError):
+        fn.movavg(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.movavg(signal=sa)
+    with pytest.raises(TypeError):
+        fn.movavg(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.movavg(signal=[1, 1+3j])
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.movavg(signal, -1)
+    with pytest.raises(ValueError):
+        fn.movavg(signal, &#39;a&#39;)
+    with pytest.raises(NameError):
+        fn.movavg(signal, a)
+    with pytest.raises(TypeError):
+        fn.movavg(signal, 1+3j)
+
+
+def test_polyfit():
+    &#34;&#34;&#34;
+    Test for polyfit function in the functions module.
+    &#34;&#34;&#34;
+
+    time = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    signal = [1., 2., 3., 4., 5., 6., 7., 8., 9., 10.]
+    para = np.polyfit(time, signal, 2)
+    func = np.poly1d(para)
+    reg = func(time)
+    reg1 = fn.polyfit(time, signal, 2, plot=&#39;n&#39;)
+    assert np.array_equal(reg, reg1)
+    with pytest.raises(TypeError):
+        fn.polyfit(time, signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.polyfit(time, signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.polyfit(time, signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.polyfit(time, signal, degree=-2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=time, signal=1, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=time, signal=&#39;sa&#39;, degree=2)
+    with pytest.raises(NameError):
+        fn.polyfit(time=time, signal=sa, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=time, signal=1+3j, degree=2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=time, signal=[1, 1+3j], degree=2)
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.polyfit(time=1, signal=signal, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=&#39;sa&#39;, signal=signal, degree=2)
+    with pytest.raises(NameError):
+        fn.polyfit(time=sa, signal=signal, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=1+3j, signal=signal, degree=2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=[1, 1+3j], signal=signal, degree=2)
+
+
+def test_xcorr():
+    &#34;&#34;&#34;
+    Test for xcorr function in the functions module.
+    &#34;&#34;&#34;
+
+    sig1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    sig2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1, sig2=1)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1, sig2=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.xcorr(sig1, sig2=sa)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1, sig2=1+3j)
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1, sig2=[1, 1+3j])
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1=1, sig2=sig2)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1=&#39;sa&#39;, sig2=sig2)
+    with pytest.raises(NameError):
+        fn.xcorr(sig1=sa, sig2=sig2)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1=1+3j, sig2=sig2)
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1=[1, 1+3j], sig2=sig2)
+
+
+def test_acorr():
+    &#34;&#34;&#34;
+    Test for acorr function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.acorr(signal=1)
+    with pytest.raises(TypeError):
+        fn.acorr(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.acorr(signal=sa)
+    with pytest.raises(TypeError):
+        fn.acorr(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.acorr(signal=[1, 1+3j])
+
+
+def test_correlogram():
+    &#34;&#34;&#34;
+    Test for correlogram function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.correlogram(signal=1)
+    with pytest.raises(TypeError):
+        fn.correlogram(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.correlogram(signal=sa)
+    with pytest.raises(TypeError):
+        fn.correlogram(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.correlogram(signal=[1, 1+3j])
+
+
+def test_psd():
+    &#34;&#34;&#34;
+    Test for psd function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.psd(signal=1)
+    with pytest.raises(TypeError):
+        fn.psd(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.psd(signal=sa)
+    with pytest.raises(TypeError):
+        fn.psd(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.psd(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.psd(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.psd(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.psd(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.psd(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.iir(signal, plot=yes)
+
+
+def test_rectify():
+    &#34;&#34;&#34;
+    Test for rectify function in the functions module.
+    &#34;&#34;&#34;
+
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.rectify(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.rectify(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.rectify(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.rectify(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.rectify(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.rectify(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.rectify(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.rectify(signal=1)
+    with pytest.raises(TypeError):
+        fn.rectify(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.rectify(signal=sa)
+    with pytest.raises(TypeError):
+        fn.rectify(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.rectify(signal=[1, 1+3j])
+    sample = np.array([-1, 1, -2, -5, -6, 4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot=&#39;N&#39;)
+    assert np.array_equal(ans, answer)
+    sample = np.array([-1, -1, -2, -5, -6, -4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot=&#39;N&#39;)
+    assert np.array_equal(ans, answer)
+    sample = np.array([1, 1, 2, 5, 6, 4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot=&#39;N&#39;)
+    assert np.array_equal(ans, answer)
+
+
+def test_envelope():
+    &#34;&#34;&#34;
+    Test for envelope function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.envelope(signal=1)
+    with pytest.raises(TypeError):
+        fn.envelope(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.envelope(signal=sa)
+    with pytest.raises(TypeError):
+        fn.envelope(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.envelope(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.envelope(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.envelope(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, order=-1)
+    with pytest.raises(NameError):
+        fn.envelope(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, order=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.envelope(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.envelope(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.envelope(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, filter=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.envelope(signal, filter=yes)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, filter=12)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, filter=&#39;12&#39;)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, dummy=1)
+
+
+
+def test_rms():
+    &#34;&#34;&#34;
+    Test for rms function in the functions module.
+    &#34;&#34;&#34;
+
+    sample = [0, 0, 6, 8]
+    assert fn.rms(sample) == 5
+    with pytest.raises(ValueError):
+        fn.rms(signal=1)
+    with pytest.raises(TypeError):
+        fn.rms(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.rms(signal=sa)
+    with pytest.raises(TypeError):
+        fn.rms(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.rms(signal=[1, 1+3j])
+
+
+def test_rms_sig():
+    &#34;&#34;&#34;
+    Test for rms_sig function in the functions module.
+    &#34;&#34;&#34;
+
+    sample = [0, 0, 6, 8, 0, 0, 6, 8, 0, 0, 6, 8]
+    ans = np.array([5., 5., 5., 5., 5., 5., 5., 5., 5.])
+    assert np.array_equal(fn.rms_sig(sample, window_size=4, plot=&#39;N&#39;), ans)
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=1, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=&#39;sa&#39;, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(NameError):
+        fn.rms_sig(signal=sa, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=1+3j, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=[1, 1+3j], window_size=4, plot=&#39;N&#39;)
+    sample = [0, 0, 6, 8, 0, 0, 6, 8, 0, 0, 6, 8]
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=sample, window_size=1, plot=&#39;N&#39;)
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=sample, window_size=&#39;sa&#39;, plot=&#39;N&#39;)
+    with pytest.raises(NameError):
+        fn.rms_sig(signal=sample, window_size=sa, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=sample, window_size=1+3j, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=sample, window_size=[1+3j], plot=&#39;N&#39;)
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal, window_size=4, fs=&#39;s&#39;, plot=&#39;N&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal, window_size=4, fs=s, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, window_size=4, fs=[1, 2], plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, window_size=4, fs=1+3j, plot=&#39;N&#39;)
+    with pytest.raises(ValueError):
+        fn.fir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, window_size=4, plot=1223)
+    with pytest.raises(NameError):
+        fn.fir(signal, window_size=4, plot=yes)</code></pre>
 </details>
 </section>
 <section>
@@ -79,199 +805,921 @@ def test_window():
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="bioproc.test.test_functions.test_acorr"><code class="name flex">
+<span>def <span class="ident">test_acorr</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Test for acorr function in the functions module.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_acorr():
+    &#34;&#34;&#34;
+    Test for acorr function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.acorr(signal=1)
+    with pytest.raises(TypeError):
+        fn.acorr(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.acorr(signal=sa)
+    with pytest.raises(TypeError):
+        fn.acorr(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.acorr(signal=[1, 1+3j])</code></pre>
+</details>
+</dd>
+<dt id="bioproc.test.test_functions.test_correlogram"><code class="name flex">
+<span>def <span class="ident">test_correlogram</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Test for correlogram function in the functions module.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_correlogram():
+    &#34;&#34;&#34;
+    Test for correlogram function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.correlogram(signal=1)
+    with pytest.raises(TypeError):
+        fn.correlogram(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.correlogram(signal=sa)
+    with pytest.raises(TypeError):
+        fn.correlogram(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.correlogram(signal=[1, 1+3j])</code></pre>
+</details>
+</dd>
 <dt id="bioproc.test.test_functions.test_envelope"><code class="name flex">
 <span>def <span class="ident">test_envelope</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for envelope function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_envelope():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for envelope function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.envelope(signal=1)
+    with pytest.raises(TypeError):
+        fn.envelope(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.envelope(signal=sa)
+    with pytest.raises(TypeError):
+        fn.envelope(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.envelope(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.envelope(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.envelope(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, order=-1)
+    with pytest.raises(NameError):
+        fn.envelope(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, order=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.envelope(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.envelope(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.envelope(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, filter=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.envelope(signal, filter=yes)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, filter=12)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, filter=&#39;12&#39;)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, dummy=1)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_fft"><code class="name flex">
 <span>def <span class="ident">test_fft</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for fft function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_fft():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for fft function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(TypeError):
+        fn.fft(fn.sinewave(), fs=[21, 3])
+    with pytest.raises(ValueError):
+        fn.fft(fn.sinewave(), fs=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.fft(fn.sinewave(), fs=1+3j)
+    with pytest.raises(NameError):
+        fn.fft(fn.sinewave(), fs=sa)
+    with pytest.raises(ValueError):
+        fn.fft(signal=1)
+    with pytest.raises(TypeError):
+        fn.fft(signal=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.fft(signal=1+3j)
+    with pytest.raises(NameError):
+        fn.fft(signal=sa)
+    with pytest.raises(ValueError):
+        fn.sinenoise(plot=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinenoise(plot=123)
+    with pytest.raises(NameError):
+        fn.sinenoise(plot=s)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_fir"><code class="name flex">
 <span>def <span class="ident">test_fir</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for fir function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_fir():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for fir function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.fir(signal=1)
+    with pytest.raises(TypeError):
+        fn.fir(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal=sa)
+    with pytest.raises(TypeError):
+        fn.fir(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.fir(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.fir(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.fir(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal, order=-1)
+    with pytest.raises(NameError):
+        fn.fir(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.fir(signal, order=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.fir(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.fir(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.fir(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.fir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.fir(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.fir(signal, ftype=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal, ftype=yes)
+    with pytest.raises(TypeError):
+        fn.fir(signal, ftype=12)
+    with pytest.raises(ValueError):
+        fn.fir(signal, ftype=&#39;12&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, dummy=1)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_iir"><code class="name flex">
 <span>def <span class="ident">test_iir</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for iir function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_iir():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for iir function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.iir(signal=1)
+    with pytest.raises(TypeError):
+        fn.iir(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal=sa)
+    with pytest.raises(TypeError):
+        fn.iir(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.iir(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.iir(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.iir(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, order=-1)
+    with pytest.raises(NameError):
+        fn.iir(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.iir(signal, order=&#39;s&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, order=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.iir(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.iir(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.iir(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.iir(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.iir(signal, ftype=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal, ftype=yes)
+    with pytest.raises(TypeError):
+        fn.iir(signal, ftype=12)
+    with pytest.raises(ValueError):
+        fn.iir(signal, ftype=&#39;12&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, filter=12)
+    with pytest.raises(ValueError):
+        fn.iir(signal, filter=&#39;yes&#39;)
+    with pytest.raises(NameError):
+        fn.iir(signal, filter=yes)
+    with pytest.raises(ValueError):
+        fn.iir(signal, filter=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, dummy=1)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_movavg"><code class="name flex">
 <span>def <span class="ident">test_movavg</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for movavg function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_movavg():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for movavg function in the functions module.
+    &#34;&#34;&#34;
+
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    check = np.array([2, 3, 4, 5, 6, 7, 8, 9])
+    mov = fn.movavg(signal)
+    assert np.array_equal(mov, check)
+    check = np.array([2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5])
+    mov = fn.movavg(signal, 4)
+    assert np.array_equal(mov, check)
+    mov = fn.movavg(signal, 4.9)
+    assert np.array_equal(mov, check)
+    with pytest.raises(ValueError):
+        fn.movavg(signal=1)
+    with pytest.raises(TypeError):
+        fn.movavg(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.movavg(signal=sa)
+    with pytest.raises(TypeError):
+        fn.movavg(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.movavg(signal=[1, 1+3j])
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.movavg(signal, -1)
+    with pytest.raises(ValueError):
+        fn.movavg(signal, &#39;a&#39;)
+    with pytest.raises(NameError):
+        fn.movavg(signal, a)
+    with pytest.raises(TypeError):
+        fn.movavg(signal, 1+3j)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_padding"><code class="name flex">
 <span>def <span class="ident">test_padding</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for padding function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_padding():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for padding function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.padding(signal=1, size=2)
+    with pytest.raises(TypeError):
+        fn.padding(signal=&#39;sa&#39;, size=2)
+    with pytest.raises(NameError):
+        fn.padding(signal=sa, size=2)
+    with pytest.raises(TypeError):
+        fn.padding(signal=1+3j, size=2)
+    with pytest.raises(ValueError):
+        fn.padding(signal=[1+3j], size=2)
+    with pytest.raises(NameError):
+        fn.padding([1, 2, 3, 4, 5, 6], size=sa)
+    with pytest.raises(TypeError):
+        fn.padding([1, 2, 3, 4, 5], size=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.padding([1, 2, 3, 4, 5], size=[2, 4])
+    with pytest.raises(ValueError):
+        fn.padding([1, 2, 3, 4, 5], size=-1)
+    with pytest.raises(TypeError):
+        fn.padding([1, 2, 3, 4], size=1+3j)
+    a = [1, 2, 3, 4]
+    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padding(a, 4), b)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_padsize"><code class="name flex">
 <span>def <span class="ident">test_padsize</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for padsize function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_padsize():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for padsize function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.padsize(signal=1)
+    with pytest.raises(ValueError):
+        fn.padsize(signal=-1)
+    with pytest.raises(TypeError):
+        fn.padsize(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.padsize(signal=sa)
+    with pytest.raises(TypeError):
+        fn.padsize(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.padsize(signal=[1+3j])
+    a = [1, 2, 3, 4]
+    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padsize(a), b)
+    assert fn.padsize(a, &#39;No&#39;) == None
+    a = np.zeros(512)
+    b = fn.padsize(a)
+    assert b.size == 1024
+    a = np.zeros(768)
+    b = fn.padsize(a)
+    assert b.size == 1024
+    a = np.zeros(769)
+    b = fn.padsize(a)
+    assert b.size == 2048
+    with pytest.raises(ValueError):
+        fn.padsize(a, &#39;asda&#39;)
+    with pytest.raises(NameError):
+        fn.padsize(a, asda)
+    with pytest.raises(TypeError):
+        fn.padsize(a, [1, 2])
+    with pytest.raises(TypeError):
+        fn.padsize(a, 1+2j)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_polyfit"><code class="name flex">
 <span>def <span class="ident">test_polyfit</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for polyfit function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_polyfit():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for polyfit function in the functions module.
+    &#34;&#34;&#34;
+
+    time = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    signal = [1., 2., 3., 4., 5., 6., 7., 8., 9., 10.]
+    para = np.polyfit(time, signal, 2)
+    func = np.poly1d(para)
+    reg = func(time)
+    reg1 = fn.polyfit(time, signal, 2, plot=&#39;n&#39;)
+    assert np.array_equal(reg, reg1)
+    with pytest.raises(TypeError):
+        fn.polyfit(time, signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.polyfit(time, signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.polyfit(time, signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.polyfit(time, signal, degree=-2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=time, signal=1, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=time, signal=&#39;sa&#39;, degree=2)
+    with pytest.raises(NameError):
+        fn.polyfit(time=time, signal=sa, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=time, signal=1+3j, degree=2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=time, signal=[1, 1+3j], degree=2)
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.polyfit(time=1, signal=signal, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=&#39;sa&#39;, signal=signal, degree=2)
+    with pytest.raises(NameError):
+        fn.polyfit(time=sa, signal=signal, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=1+3j, signal=signal, degree=2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=[1, 1+3j], signal=signal, degree=2)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_psd"><code class="name flex">
 <span>def <span class="ident">test_psd</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for psd function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_psd():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for psd function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(ValueError):
+        fn.psd(signal=1)
+    with pytest.raises(TypeError):
+        fn.psd(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.psd(signal=sa)
+    with pytest.raises(TypeError):
+        fn.psd(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.psd(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.psd(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.psd(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.psd(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.psd(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.iir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.iir(signal, plot=yes)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_rectify"><code class="name flex">
 <span>def <span class="ident">test_rectify</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for rectify function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_rectify():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for rectify function in the functions module.
+    &#34;&#34;&#34;
+
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.rectify(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.rectify(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.rectify(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.rectify(signal, fs=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.rectify(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.rectify(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.rectify(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.rectify(signal=1)
+    with pytest.raises(TypeError):
+        fn.rectify(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.rectify(signal=sa)
+    with pytest.raises(TypeError):
+        fn.rectify(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.rectify(signal=[1, 1+3j])
+    sample = np.array([-1, 1, -2, -5, -6, 4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot=&#39;N&#39;)
+    assert np.array_equal(ans, answer)
+    sample = np.array([-1, -1, -2, -5, -6, -4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot=&#39;N&#39;)
+    assert np.array_equal(ans, answer)
+    sample = np.array([1, 1, 2, 5, 6, 4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot=&#39;N&#39;)
+    assert np.array_equal(ans, answer)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_rms"><code class="name flex">
 <span>def <span class="ident">test_rms</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for rms function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_rms():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for rms function in the functions module.
+    &#34;&#34;&#34;
+
+    sample = [0, 0, 6, 8]
+    assert fn.rms(sample) == 5
+    with pytest.raises(ValueError):
+        fn.rms(signal=1)
+    with pytest.raises(TypeError):
+        fn.rms(signal=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.rms(signal=sa)
+    with pytest.raises(TypeError):
+        fn.rms(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.rms(signal=[1, 1+3j])</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_rms_sig"><code class="name flex">
 <span>def <span class="ident">test_rms_sig</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for rms_sig function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_rms_sig():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for rms_sig function in the functions module.
+    &#34;&#34;&#34;
+
+    sample = [0, 0, 6, 8, 0, 0, 6, 8, 0, 0, 6, 8]
+    ans = np.array([5., 5., 5., 5., 5., 5., 5., 5., 5.])
+    assert np.array_equal(fn.rms_sig(sample, window_size=4, plot=&#39;N&#39;), ans)
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=1, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=&#39;sa&#39;, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(NameError):
+        fn.rms_sig(signal=sa, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=1+3j, window_size=4, plot=&#39;N&#39;)
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=[1, 1+3j], window_size=4, plot=&#39;N&#39;)
+    sample = [0, 0, 6, 8, 0, 0, 6, 8, 0, 0, 6, 8]
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=sample, window_size=1, plot=&#39;N&#39;)
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal=sample, window_size=&#39;sa&#39;, plot=&#39;N&#39;)
+    with pytest.raises(NameError):
+        fn.rms_sig(signal=sample, window_size=sa, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=sample, window_size=1+3j, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.rms_sig(signal=sample, window_size=[1+3j], plot=&#39;N&#39;)
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.rms_sig(signal, window_size=4, fs=&#39;s&#39;, plot=&#39;N&#39;)
+    with pytest.raises(NameError):
+        fn.fir(signal, window_size=4, fs=s, plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, window_size=4, fs=[1, 2], plot=&#39;N&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, window_size=4, fs=1+3j, plot=&#39;N&#39;)
+    with pytest.raises(ValueError):
+        fn.fir(signal, plot=&#39;happy&#39;)
+    with pytest.raises(TypeError):
+        fn.fir(signal, window_size=4, plot=1223)
+    with pytest.raises(NameError):
+        fn.fir(signal, window_size=4, plot=yes)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_sinenoise"><code class="name flex">
 <span>def <span class="ident">test_sinenoise</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for sinenoise function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_sinenoise():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for sinenoise function in the functions module.
+    &#34;&#34;&#34;
+
+    t = np.arange(0, 10, 1/1000)
+    np.random.seed(1)
+    sinearr = np.sin(2*3.14*t) + (np.random.randn(len(t)))
+    func = fn.sinenoise()
+
+    assert np.array_equal(func, sinearr)
+    with pytest.raises(ValueError):
+        fn.sinenoise(amp=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(freq=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(time=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(fs=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(offset=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(phi=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinenoise(seed=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.sinenoise(amp=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(freq=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(time=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(fs=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(offset=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(phi=s)
+    with pytest.raises(NameError):
+        fn.sinenoise(seed=s)
+    with pytest.raises(TypeError):
+        fn.sinenoise(amp=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(freq=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(time=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(fs=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(offset=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(phi=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinenoise(seed=[12, 12])
+    with pytest.raises(ValueError):
+        fn.sinenoise(plot=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinenoise(plot=123)
+    with pytest.raises(NameError):
+        fn.sinenoise(plot=s)
+    with pytest.raises(ValueError):
+        fn.sinenoise(tarr=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinenoise(tarr=123)
+    with pytest.raises(NameError):
+        fn.sinenoise(tarr=s)
+    with pytest.raises(TypeError):
+        fn.sinewave(amp=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(freq=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(time=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(fs=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(phi=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(offset=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(noise=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(tarr=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(plot=1+3j)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_sinewave"><code class="name flex">
 <span>def <span class="ident">test_sinewave</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for sinewave function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_sinewave():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for sinewave function in the functions module.
+    &#34;&#34;&#34;
+
+    t = np.arange(0, 10, 1/1000)
+    sinearr = np.sin(2*3.14*t)
+    func = fn.sinewave()
+
+    assert np.array_equal(func, sinearr)
+    with pytest.raises(ValueError):
+        fn.sinewave(amp=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(freq=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(time=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(fs=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(offset=&#39;s&#39;)
+    with pytest.raises(ValueError):
+        fn.sinewave(phi=&#39;s&#39;)
+    with pytest.raises(NameError):
+        fn.sinewave(amp=s)
+    with pytest.raises(NameError):
+        fn.sinewave(freq=s)
+    with pytest.raises(NameError):
+        fn.sinewave(time=s)
+    with pytest.raises(NameError):
+        fn.sinewave(fs=s)
+    with pytest.raises(NameError):
+        fn.sinewave(offset=s)
+    with pytest.raises(NameError):
+        fn.sinewave(phi=s)
+    with pytest.raises(TypeError):
+        fn.sinewave(amp=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(freq=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(time=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(fs=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(offset=[12, 12])
+    with pytest.raises(TypeError):
+        fn.sinewave(phi=[12, 12])
+    with pytest.raises(ValueError):
+        fn.sinewave(plot=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinewave(plot=123)
+    with pytest.raises(NameError):
+        fn.sinewave(plot=s)
+    with pytest.raises(ValueError):
+        fn.sinewave(tarr=&#39;sa&#39;)
+    with pytest.raises(TypeError):
+        fn.sinewave(tarr=123)
+    with pytest.raises(NameError):
+        fn.sinewave(tarr=s)
+    with pytest.raises(TypeError):
+        fn.sinewave(amp=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(freq=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(time=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(fs=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(phi=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(offset=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(tarr=1+3j)
+    with pytest.raises(TypeError):
+        fn.sinewave(plot=1+3j)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_window"><code class="name flex">
 <span>def <span class="ident">test_window</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test for window function in the functions module.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_window():
-    return None</code></pre>
+    &#34;&#34;&#34;
+    Test for window function in the functions module.
+    &#34;&#34;&#34;
+
+    with pytest.raises(TypeError):
+        fn.window(kernel=12, size=2)
+    with pytest.raises(TypeError):
+        fn.window(kernel=[1, 2], size=2)
+    with pytest.raises(ValueError):
+        fn.window(kernel=&#39;dummy&#39;, size=2)
+    with pytest.raises(NameError):
+        fn.window(kernel=dummy, size=2)
+    with pytest.raises(ValueError):
+        fn.window(kernel=&#39;hamming&#39;)
+    with pytest.raises(TypeError):
+        fn.window(kernel=&#39;hamming&#39;, size=&#39;as&#39;)
+    with pytest.raises(TypeError):
+        fn.window(kernel=&#39;hamming&#39;, size=1+3j)
+    with pytest.raises(TypeError):
+        fn.window(kernel=&#39;hamming&#39;, size=[1, 2])</code></pre>
+</details>
+</dd>
+<dt id="bioproc.test.test_functions.test_xcorr"><code class="name flex">
+<span>def <span class="ident">test_xcorr</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Test for xcorr function in the functions module.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_xcorr():
+    &#34;&#34;&#34;
+    Test for xcorr function in the functions module.
+    &#34;&#34;&#34;
+
+    sig1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    sig2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1, sig2=1)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1, sig2=&#39;sa&#39;)
+    with pytest.raises(NameError):
+        fn.xcorr(sig1, sig2=sa)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1, sig2=1+3j)
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1, sig2=[1, 1+3j])
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1=1, sig2=sig2)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1=&#39;sa&#39;, sig2=sig2)
+    with pytest.raises(NameError):
+        fn.xcorr(sig1=sa, sig2=sig2)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1=1+3j, sig2=sig2)
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1=[1, 1+3j], sig2=sig2)</code></pre>
 </details>
 </dd>
 </dl>
@@ -292,6 +1740,8 @@ def test_window():
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="two-column">
+<li><code><a title="bioproc.test.test_functions.test_acorr" href="#bioproc.test.test_functions.test_acorr">test_acorr</a></code></li>
+<li><code><a title="bioproc.test.test_functions.test_correlogram" href="#bioproc.test.test_functions.test_correlogram">test_correlogram</a></code></li>
 <li><code><a title="bioproc.test.test_functions.test_envelope" href="#bioproc.test.test_functions.test_envelope">test_envelope</a></code></li>
 <li><code><a title="bioproc.test.test_functions.test_fft" href="#bioproc.test.test_functions.test_fft">test_fft</a></code></li>
 <li><code><a title="bioproc.test.test_functions.test_fir" href="#bioproc.test.test_functions.test_fir">test_fir</a></code></li>
@@ -307,6 +1757,7 @@ def test_window():
 <li><code><a title="bioproc.test.test_functions.test_sinenoise" href="#bioproc.test.test_functions.test_sinenoise">test_sinenoise</a></code></li>
 <li><code><a title="bioproc.test.test_functions.test_sinewave" href="#bioproc.test.test_functions.test_sinewave">test_sinewave</a></code></li>
 <li><code><a title="bioproc.test.test_functions.test_window" href="#bioproc.test.test_functions.test_window">test_window</a></code></li>
+<li><code><a title="bioproc.test.test_functions.test_xcorr" href="#bioproc.test.test_functions.test_xcorr">test_xcorr</a></code></li>
 </ul>
 </li>
 </ul>
