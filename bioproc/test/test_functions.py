@@ -478,14 +478,141 @@ def test_acorr():
         fn.acorr(signal=[1, 1+3j])
 
 
-def test_envelope():
-    return None
+def test_correlogram():
+    with pytest.raises(ValueError):
+        fn.correlogram(signal=1)
+    with pytest.raises(TypeError):
+        fn.correlogram(signal='sa')
+    with pytest.raises(NameError):
+        fn.correlogram(signal=sa)
+    with pytest.raises(TypeError):
+        fn.correlogram(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.correlogram(signal=[1, 1+3j])
+
 
 def test_psd():
-    return None
+    with pytest.raises(ValueError):
+        fn.psd(signal=1)
+    with pytest.raises(TypeError):
+        fn.psd(signal='sa')
+    with pytest.raises(NameError):
+        fn.psd(signal=sa)
+    with pytest.raises(TypeError):
+        fn.psd(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.psd(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.psd(signal, fs='s')
+    with pytest.raises(NameError):
+        fn.psd(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.psd(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.psd(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.iir(signal, plot='happy')
+    with pytest.raises(TypeError):
+        fn.iir(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.iir(signal, plot=yes)
+
 
 def test_rectify():
-    return None
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.rectify(signal, plot='happy')
+    with pytest.raises(TypeError):
+        fn.rectify(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.rectify(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.rectify(signal, fs='s')
+    with pytest.raises(NameError):
+        fn.rectify(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.rectify(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.rectify(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.rectify(signal=1)
+    with pytest.raises(TypeError):
+        fn.rectify(signal='sa')
+    with pytest.raises(NameError):
+        fn.rectify(signal=sa)
+    with pytest.raises(TypeError):
+        fn.rectify(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.rectify(signal=[1, 1+3j])
+    sample = np.array([-1, 1, -2, -5, -6, 4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot='N')
+    assert np.array_equal(ans, answer)
+    sample = np.array([-1, -1, -2, -5, -6, -4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot='N')
+    assert np.array_equal(ans, answer)
+    sample = np.array([1, 1, 2, 5, 6, 4])
+    answer = np.array([1, 1, 2, 5, 6, 4])
+    ans = fn.rectify(sample, plot='N')
+    assert np.array_equal(ans, answer)
+
+
+def test_envelope():
+    with pytest.raises(ValueError):
+        fn.envelope(signal=1)
+    with pytest.raises(TypeError):
+        fn.envelope(signal='sa')
+    with pytest.raises(NameError):
+        fn.envelope(signal=sa)
+    with pytest.raises(TypeError):
+        fn.envelope(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal=[1, 1+3j])
+    signal = fn.sinewave()
+    with pytest.raises(ValueError):
+        fn.envelope(signal, fs='s')
+    with pytest.raises(NameError):
+        fn.envelope(signal, fs=s)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, fs=[1, 2])
+    with pytest.raises(TypeError):
+        fn.envelope(signal, fs=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, ordern=-1)
+    with pytest.raises(NameError):
+        fn.envelope(signal, ordern=s)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=[1, 2, 3])
+    with pytest.raises(TypeError):
+        fn.envelope(signal, cutoff=[1+3j, 4])
+    with pytest.raises(NameError):
+        fn.envelope(signal, cutoff=s)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=-1)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff='s')
+    with pytest.raises(ValueError):
+        fn.envelope(signal, cutoff=1+3j)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, plot='happy')
+    with pytest.raises(TypeError):
+        fn.envelope(signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.envelope(signal, plot=yes)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, filter='yes')
+    with pytest.raises(NameError):
+        fn.envelope(signal, filter=yes)
+    with pytest.raises(TypeError):
+        fn.envelope(signal, filter=12)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, filter='12') 
+    with pytest.raises(TypeError):
+        fn.envelope(signal, dummy=1)
+    
+
 
 def test_rms():
     return None
