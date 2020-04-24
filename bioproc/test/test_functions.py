@@ -374,14 +374,66 @@ def test_movavg():
     check = np.array([2, 3, 4, 5, 6, 7, 8, 9])
     mov = fn.movavg(signal)
     assert np.array_equal(mov, check)
-    check = np.array([2.5, 3.5, , ])
-
-
-def test_envelope():
-    return None
+    check = np.array([2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5])
+    mov = fn.movavg(signal, 4)
+    assert np.array_equal(mov, check)
+    mov = fn.movavg(signal, 4.9)
+    assert np.array_equal(mov, check)
+    with pytest.raises(ValueError):
+        fn.movavg(signal=1)
+    with pytest.raises(TypeError):
+        fn.movavg(signal='sa')
+    with pytest.raises(NameError):
+        fn.movavg(signal=sa)
+    with pytest.raises(TypeError):
+        fn.movavg(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.movavg(signal=[1, 1+3j])
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.movavg(signal, -1)
+    with pytest.raises(ValueError):
+        fn.movavg(signal, 'a')
+    with pytest.raises(NameError):
+        fn.movavg(signal, a)
+    with pytest.raises(TypeError):
+        fn.movavg(signal, 1+3j)    
 
 
 def test_polyfit():
+    time = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    signal = [1., 2., 3., 4., 5., 6., 7., 8., 9., 10.]
+    para = np.polyfit(time,signal,2)
+    func = np.poly1d(para)
+    reg = func(time)
+    reg1 = fn.polyfit(time, signal, 2, plot='n')
+    assert np.array_equal(reg, reg1)
+    with pytest.raises(ValueError):
+        fn.polyfit(time, signal, -2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=time, signal=1, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=time, signal='sa', degree=2)
+    with pytest.raises(NameError):
+        fn.polyfit(time=time, signal=sa, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=time, signal=1+3j, degree=2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=time, signal=[1, 1+3j], degree= 2)
+    signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.polyfit(time=1,signal=signal, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time='sa', signal=signal, degree=2)
+    with pytest.raises(NameError):
+        fn.polyfit(time=sa, signal=signal, degree=2)
+    with pytest.raises(TypeError):
+        fn.polyfit(time=1+3j, signal=signal, degree=2)
+    with pytest.raises(ValueError):
+        fn.polyfit(time=[1, 1+3j], signal=signal, degree=2)    
+
+
+def test_envelope():
     return None
 
 def test_psd():
