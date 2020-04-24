@@ -1,5 +1,6 @@
 """
 test_functions.py
+
 Author: Praveen Prabhakar KR
 Email: praveenprabhakar02@gmail.com
 
@@ -261,6 +262,14 @@ def test_padsize():
     a = np.zeros(769)
     b = fn.padsize(a)
     assert b.size == 2048
+    with pytest.raises(ValueError):
+        fn.padsize(a, 'asda')
+    with pytest.raises(NameError):
+        fn.padsize(a, asda)
+    with pytest.raises(TypeError):
+        fn.padsize(a, [1, 2])
+    with pytest.raises(TypeError):
+        fn.padsize(a, 1+2j)
 
 
 def test_window():
