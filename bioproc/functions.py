@@ -994,7 +994,7 @@ def psd(signal, fs=1000.0, plot='yes', **kwargs):
         if isinstance(i, complex):
             raise ValueError("Signal cannot contain complex elements.")
 
-     #sampling frequency error
+    #sampling frequency error
     try:
         fs = float(fs)
     except TypeError:
@@ -1279,11 +1279,34 @@ def rms_sig(signal, window_size, fs=1000, plot='yes'):
         if isinstance(i, complex):
             raise ValueError("Signal cannot contain complex elements.")
 
+    #window size error
     try:
         window_size = int(window_size)
     except TypeError:
-        raise TypeError("Rms_sig missing an argument: wind")
+        raise TypeError("Window size must be an int.")
+    except ValueError:
+        raise ValueError("Window size must be an int.")
 
+    if window_size <= 1:
+        raise ValueError("Window size must be greater than 1.")
+
+    #sampling frequency error
+    try:
+        fs = float(fs)
+    except TypeError:
+        raise TypeError("Sampling frequency (fs) must be int or float.")
+    except ValueError:
+        raise ValueError("Sampling frequency (fs) must be int or float.")
+
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #rms of the signal
     length = signal.size
     rms_signal = []
     for i in range(0, length-window_size+1):
