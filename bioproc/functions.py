@@ -1,5 +1,6 @@
 """
 functions.py
+
 Author: Praveen Prabhakar KR
 Email: praveenprabhakar02@gmail.com
 
@@ -235,6 +236,10 @@ def fft(signal, fs=1000, plot='yes', **kwargs):
         raise TypeError("Signal should be a list or numpy array.")
     else:
         raise ValueError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
 
     #fft
     fourier = np.fft.fft(signal, **kwargs)

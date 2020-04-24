@@ -1,12 +1,17 @@
 """
-EMG signal processing.
+emg.py
+
+Author: Praveen Prabhakar KR
+Email: praveenprabhakar02@gmail.com
+
+Module contains the functions for EMG signals.
 """
 
 import numpy as np
 #import scipy as sp
 import matplotlib.pyplot as plt
 from biosppy.signals import emg
-import functions as fn
+from . import functions as fn
 #import biosppy as bsp
 #from biosppy.signals import tools
 
@@ -34,6 +39,22 @@ def emgsig(seed=None, plot='no', tarr='no'):
        simulated emg signal
     """
 
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #time error
+    if tarr in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
+        pass
+    elif isinstance(tarr, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
     #checking for random seed
     if seed is not None:
         np.random.seed(seed)
@@ -45,7 +66,7 @@ def emgsig(seed=None, plot='no', tarr='no'):
     emg_signal = np.concatenate([quiet, burst1, quiet, burst2, quiet])
 
     #plotting
-    if plot in ['yes', 'Yes', 'Y', 'y']:
+    if plot in ['yes', 'Yes', 'Y', 'y', 'YES']:
         time = np.arange(0, 3.5, 1/1000)
         plt.figure(figsize=(12, 4))
         plt.plot(time, emg_signal)
@@ -54,7 +75,7 @@ def emgsig(seed=None, plot='no', tarr='no'):
         plt.ylabel("Amplitude")
         plt.show()
 
-    if tarr in ['yes', 'Yes', 'Y', 'y']:
+    if tarr in ['yes', 'Yes', 'Y', 'y', 'YES']:
         return time, emg_signal
 
     return emg_signal
@@ -86,14 +107,52 @@ def find_onset(signal, fs=1000.0, filt='No', plot='Yes', **kwargs):
         the onset of the EMG signal
     """
 
-    if filt in ['no', 'No', 'N', 'n']:
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (str, complex)):
+        raise TypeError("Signal should be a list or numpy array.")
+    else:
+        raise ValueError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #sampling frequency error
+    try:
+        fs = float(fs)
+    except TypeError:
+        raise TypeError("Sampling frequency (fs) must be int or float.")
+    except ValueError:
+        raise ValueError("Sampling frequency (fs) must be int or float.")
+
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #filt error
+    if filt in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
+        pass
+    elif isinstance(filt, str):
+        raise ValueError("Filt must be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Filt must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #filtering
+    if filt in ['no', 'No', 'N', 'n', 'NO']:
         signal = fn.iir(signal, plot='No')
 
+    #find onsets
     onsets = emg.find_onsets(signal=signal, sampling_rate=fs, **kwargs)
     onset = np.array(onsets[0])/fs
 
     #plotting
-    if plot in ['yes', 'Yes', 'Y', 'y']:
+    if plot in ['yes', 'Yes', 'Y', 'y', 'YES']:
         t = np.arange(0, (len(signal)/fs), 1/fs)
         plt.figure(figsize=(12, 6))
         plt.plot(t, signal)
@@ -134,8 +193,52 @@ def norm_emg(signal, mvic, fs=1000.0, filt='no', plot='yes'):
         MVIC normalized EMG signal
     """
 
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (str, complex)):
+        raise TypeError("Signal should be a list or numpy array.")
+    else:
+        raise ValueError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #mvic error
+    if isinstance(mvic, (list, np.ndarray)):
+        mvic = np.array(mvic)
+    elif isinstance(mvic, (str, complex)):
+        raise TypeError("MVIC should be a list or numpy array.")
+    else:
+        raise ValueError("MVIC should be a list or numpy array.")
+
+    #sampling frequency error
+    try:
+        fs = float(fs)
+    except TypeError:
+        raise TypeError("Sampling frequency (fs) must be int or float.")
+    except ValueError:
+        raise ValueError("Sampling frequency (fs) must be int or float.")
+
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #filt error
+    if filt in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
+        pass
+    elif isinstance(filt, str):
+        raise ValueError("Filt must be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Filt must be a string - Yes/Y or No/N (non-case sensitive).")
+
     #filter and rectify EMG signal
-    if filt in ['no', 'No', 'N', 'n']:
+    if filt in ['no', 'No', 'N', 'n', 'NO']:
         signal = fn.iir(signal=signal, fs=fs, plot='No')
         mvic = fn.iir(signal=mvic, fs=fs, plot='No')
 
@@ -148,7 +251,7 @@ def norm_emg(signal, mvic, fs=1000.0, filt='no', plot='yes'):
     emg_norm = emg_env/maximum
 
     #plotting
-    if plot in ['yes', 'Yes', 'Y', 'y']:
+    if plot in ['yes', 'Yes', 'Y', 'y', 'YES']:
         t = np.arange(0, (len(signal)/fs), 1/fs)
 
         plt.figure(figsize=(12, 6))
@@ -186,11 +289,19 @@ def padding(signal):
         zero padded array; size will be a power of 2
     """
 
+    #signal error
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
+    elif isinstance(signal, (str, complex)):
+        raise TypeError("Signal should be a list or numpy array.")
     else:
-        raise TypeError("signal should be a list or numpy array.")
+        raise ValueError("Signal should be a list or numpy array.")
 
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #pad size and zero padding
     siz = signal.size
     binary = np.binary_repr(siz)
     if binary.count("1") == 1:
@@ -245,7 +356,7 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
 
         ordern: int, optional
             the order of the filter; default set to 2
-        cutoff_filter: scalar (int or float) or 2 length sequence (for band-pass and band-stop filter)
+        cutoff_filter: scalar (int or float) or 2 length sequence (for band-pass, band-stop filter)
             the critical frequency; default set to [50,450]
         ftype: str, optional
             type of filter to be used; default set to 'bandpass'
@@ -273,6 +384,32 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
         linear envelope of the input signal
     """
 
+    #EMG signal error
+    if isinstance(emg_signal, (list, np.ndarray)):
+        emg_signal = np.array(emg_signal)
+    elif isinstance(emg_signal, (str, complex)):
+        raise TypeError("EMG signal should be a list or numpy array.")
+    else:
+        raise ValueError("EMG signal should be a list or numpy array.")
+
+    for i in emg_signal:
+        if isinstance(i, complex):
+            raise ValueError("EMG signal cannot contain complex elements.")
+
+    #MVIC signal error
+    if mvic_signal is not None:
+        if isinstance(mvic_signal, (list, np.ndarray)):
+            mvic_signal = np.array(mvic_signal)
+        elif isinstance(mvic_signal, (str, complex)):
+            raise TypeError("MVIC signal should be a list or numpy array.")
+        else:
+            raise ValueError("MVIC signal should be a list or numpy array.")
+
+        for i in mvic_signal:
+            if isinstance(i, complex):
+                raise ValueError("MVIC signal cannot contain complex elements.")
+
+    #kwargs
     list1 = ['ordern', 'cutoff_filter', 'ftype', 'filter', 'order_env', 'cutoff_env', 'filter_env']
     keyl = []
     assign = []
@@ -320,6 +457,7 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
     else:
         filter_env = 'butter'
 
+    #processing
     filtered = fn.iir(signal=emg_signal, fs=fs, ordern=ordern, cutoff=cutoff_filter,
                       ftype=ftype, filter=filter, plot='No')
     rect = fn.rectify(filtered, fs=fs, plot='No')
@@ -331,7 +469,7 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
         emgnorm = norm_emg(signal=emg_signal, mvic=mvic_signal, fs=fs, filt='No', plot='No')
 
     if mvic_signal is None:
-        if plot in ['Yes', 'yes', 'Y', 'y']:
+        if plot in ['Yes', 'yes', 'Y', 'y', 'YES']:
             plt.figure(figsize=(12, 12))
             time = np.arange(0, emg_signal.size/fs, 1/fs)
             plt.subplot(411)
@@ -360,14 +498,14 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
             plt.tight_layout(pad=3.0)
             plt.show()
 
-            if fourier in ['Yes', 'yes', 'Y', 'y']:
+            if fourier in ['Yes', 'yes', 'Y', 'y', 'YES']:
                 padded = padding(filtered)
                 dft = fn.fft(padded, fs=fs, plot='Y')
 
         return env
 
     else:
-        if plot in ['Yes', 'yes', 'Y', 'y']:
+        if plot in ['Yes', 'yes', 'Y', 'y', 'YES']:
             plt.figure(figsize=(12, 18))
             time = np.arange(0, emg_signal.size/fs, 1/fs)
             plt.subplot(511)
@@ -402,8 +540,8 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
             plt.tight_layout(pad=3.0)
             plt.show()
 
-            if fourier in ['Yes', 'yes', 'Y', 'y']:
+            if fourier in ['Yes', 'yes', 'Y', 'y', 'YES']:
                 padded = padding(filtered)
-                dft = fn.fft(padded, fs=fs, plot='Y')
+                fn.fft(padded, fs=fs, plot='Y')
 
         return emgnorm
