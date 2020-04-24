@@ -275,9 +275,13 @@ def test_iir():
     with pytest.raises(TypeError):
         fn.iir(signal, fs=1+3j)
     with pytest.raises(ValueError):
-        fn.iir(signal, ordern=-1)
+        fn.iir(signal, order=-1)
     with pytest.raises(NameError):
-        fn.iir(signal, ordern=s)
+        fn.iir(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.iir(signal, order='s')
+    with pytest.raises(TypeError):
+        fn.iir(signal, order=1+3j)
     with pytest.raises(ValueError):
         fn.iir(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
@@ -337,9 +341,11 @@ def test_fir():
     with pytest.raises(TypeError):
         fn.fir(signal, fs=1+3j)
     with pytest.raises(ValueError):
-        fn.fir(signal, ordern=-1)
+        fn.fir(signal, order=-1)
     with pytest.raises(NameError):
-        fn.fir(signal, ordern=s)
+        fn.fir(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.fir(signal, order='s')
     with pytest.raises(ValueError):
         fn.fir(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
@@ -580,9 +586,11 @@ def test_envelope():
     with pytest.raises(TypeError):
         fn.envelope(signal, fs=1+3j)
     with pytest.raises(ValueError):
-        fn.envelope(signal, ordern=-1)
+        fn.envelope(signal, order=-1)
     with pytest.raises(NameError):
-        fn.envelope(signal, ordern=s)
+        fn.envelope(signal, order=s)
+    with pytest.raises(ValueError):
+        fn.envelope(signal, order='s')
     with pytest.raises(ValueError):
         fn.envelope(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
