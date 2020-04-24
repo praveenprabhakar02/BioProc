@@ -1,5 +1,9 @@
 """
-Contains the functions for processing signals.
+functions.py
+Author: Praveen Prabhakar KR
+Email: praveenprabhakar02@gmail.com
+
+Module contains the functions for processing signals.
 """
 
 import numpy as np
@@ -45,17 +49,17 @@ def sinewave(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, plot='no', tarr='
     if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
         pass
     elif isinstance(plot, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #time error
     if tarr in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'NO', 'YES']:
         pass
     elif isinstance(tarr, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #error for other variables
     try:
@@ -66,9 +70,9 @@ def sinewave(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0, plot='no', tarr='
         phi = float(phi)
         offset = float(offset)
     except ValueError:
-        raise ValueError("amp, freq, time, fs, phi, offset must be int or float.")
+        raise ValueError("Amp, freq, time, fs, phi, offset must be int or float.")
     except TypeError:
-        raise TypeError("amp, freq, time, fs, phi, offset must be int or float.")
+        raise TypeError("Amp, freq, time, fs, phi, offset must be int or float.")
 
     #function
     pi = 3.14
@@ -134,17 +138,17 @@ def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0,
     if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
         pass
     elif isinstance(plot, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #time error
     if tarr in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
         pass
     elif isinstance(tarr, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #error for other variables
     try:
@@ -157,9 +161,9 @@ def sinenoise(amp=1, freq=1, time=10, fs=1000, phi=0, offset=0,
         noise = float(noise)
         seed = int(seed)
     except ValueError:
-        raise ValueError("amp, freq, time, fs, phi, offset, noise, seed must be int or float.")
+        raise ValueError("Amp, freq, time, fs, phi, offset, noise, seed must be int or float.")
     except TypeError:
-        raise TypeError("amp, freq, time, fs, phi, offset, noise, seed must be int or float.")
+        raise TypeError("Amp, freq, time, fs, phi, offset, noise, seed must be int or float.")
 
     #function
     pi = 3.14
@@ -212,25 +216,25 @@ def fft(signal, fs=1000, plot='yes', **kwargs):
     try:
         fs = float(fs)
     except TypeError:
-        raise TypeError("sampling frequency (fs) must be int or float.")
+        raise TypeError("Sampling frequency (fs) must be int or float.")
     except ValueError:
-        raise ValueError("sampling frequency (fs) must be int or float.")
+        raise ValueError("Sampling frequency (fs) must be int or float.")
 
     #plot error
     if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
         pass
     elif isinstance(plot, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #signal error
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
     elif isinstance(signal, (str, complex)):
-        raise TypeError("signal should be a list or numpy array.")
+        raise TypeError("Signal should be a list or numpy array.")
     else:
-        raise ValueError("signal should be a list or numpy array.")
+        raise ValueError("Signal should be a list or numpy array.")
 
     #fft
     fourier = np.fft.fft(signal, **kwargs)
@@ -272,22 +276,22 @@ def padding(signal, size=0):
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
     elif isinstance(signal, int):
-        raise ValueError("signal should be a list or numpy array.")
+        raise ValueError("Signal should be a list or numpy array.")
     else:
-        raise TypeError("signal should be a list or numpy array.")
+        raise TypeError("Signal should be a list or numpy array.")
 
     for i in signal:
         if isinstance(i, complex):
-            raise ValueError("signal cannot contain complex elements.")
+            raise ValueError("Signal cannot contain complex elements.")
 
     #size error
     if size <= 0:
-        raise ValueError("size should be greater than zero.")
+        raise ValueError("Size should be greater than zero.")
 
     try:
         size = int(abs(size))
     except TypeError:
-        raise TypeError("size should be an int")
+        raise TypeError("Size should be an int.")
 
     #padding
     padarray = np.concatenate((signal, np.zeros(size)))
@@ -319,21 +323,21 @@ def padsize(signal, returnarr='Yes'):
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
     elif isinstance(signal, (int, float)):
-        raise ValueError("signal should be a list or numpy array.")
+        raise ValueError("Signal should be a list or numpy array.")
     else:
-        raise TypeError("signal should be a list or numpy array.")
+        raise TypeError("Signal should be a list or numpy array.")
 
     for i in signal:
         if isinstance(i, complex):
-            raise ValueError("signal cannot contain complex elements.")
+            raise ValueError("Signal cannot contain complex elements.")
 
     #return array error
     if returnarr in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
         pass
     elif isinstance(returnarr, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #determine size for padding and zero pad
     siz = signal.size
@@ -404,16 +408,16 @@ def window(kernel, size=0, **kwargs):
     if isinstance(kernel, str):
         pass
     else:
-        raise TypeError("kernel must be a string (str).")
+        raise TypeError("Kernel must be a string (str).")
 
     #size error
     if size <= 0:
-        raise ValueError("size should be greater than zero.")
+        raise ValueError("Size should be greater than zero.")
 
     try:
         size = int(abs(size))
     except TypeError:
-        raise TypeError("size should be an int")
+        raise TypeError("Size should be an int.")
 
     #get window
     windows = tools._get_window(kernel, size, **kwargs)
@@ -421,7 +425,7 @@ def window(kernel, size=0, **kwargs):
     return windows
 
 
-def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='butter',
+def iir(signal, fs=1000, order=2, cutoff=[50, 450], ftype='bandpass', filter='butter',
         plot='yes', **kwargs):
     """
     This function applies a digital IIR filter to the input signal and returns the filtered signal.
@@ -432,7 +436,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='b
         the input signal to be filter
     fs: int or float, optional
         sampling rate
-    ordern: int, optional
+    order: int, optional
         the order of the filter; default set to 2
     cutoff: scalar (int or float) or 2 length sequence (for band-pass and band-stop filter)
         the critical frequency; default set to [50,450]
@@ -463,71 +467,71 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='b
     except TypeError:
         cutoff = np.array(cutoff)
     except ValueError:
-        raise ValueError("Cutoff can only be an int, float or numpy array")
+        raise ValueError("Cutoff can only be an int, float or numpy array.")
 
     if isinstance(cutoff, np.ndarray):
         if cutoff.size == 2:
             if isinstance(cutoff[0], complex):
-                raise TypeError("cutoff frequency cannot be complex")
+                raise TypeError("Cutoff frequency cannot be complex.")
             if isinstance(cutoff[-1], complex):
-                raise TypeError("cutoff frequency cannot be complex")
+                raise TypeError("Cutoff frequency cannot be complex.")
         else:
-            raise ValueError("cutoff must be a scalar (int or float) or 2 length sequence (list or numpy array)")
+            raise ValueError("Cutoff must be a scalar (int or float) or 2 length sequence (list or numpy array).")
 
     #sampling frequency error
     try:
         fs = float(fs)
     except TypeError:
-        raise TypeError("sampling frequency (fs) must be int or float")
+        raise TypeError("Sampling frequency (fs) must be int or float.")
     except ValueError:
-        raise ValueError("sampling frequency (fs) must be int or float")
+        raise ValueError("Sampling frequency (fs) must be int or float.")
 
     #signal error
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
     elif isinstance(signal, (int, float)):
-        raise ValueError("signal should be a list or numpy array")
+        raise ValueError("Signal should be a list or numpy array.")
     else:
-        raise TypeError("signal should be a list or numpy array")
+        raise TypeError("Signal should be a list or numpy array.")
 
     for i in signal:
         if isinstance(i, complex):
-            raise ValueError("signal cannot contain complex elements")
+            raise ValueError("Signal cannot contain complex elements.")
 
     #order error
     try:
-        ordern = int(ordern)
+        order = int(order)
     except TypeError:
-        raise TypeError("order must be an int")
+        raise TypeError("Order must be an int.")
     except ValueError:
-        raise ValueError("order must be an int")
+        raise ValueError("Order must be an int.")
 
     #filter type error
     if ftype in ['lowpass', 'highpass', 'bandpass', 'bandstop']:
         pass
     elif isinstance(ftype, str):
-        raise ValueError("filter type must be 'lowpass', 'highpass', 'bandpass', 'bandstop'")
+        raise ValueError("Filter type must be 'lowpass', 'highpass', 'bandpass', 'bandstop'.")
     else:
-        raise TypeError("filter type must be a string")
+        raise TypeError("Filter type must be a string.")
 
     #IIR filter type error
     if filter in ['butter', 'cheby1', 'cheby2', 'ellip', 'bessel']:
         pass
     elif isinstance(filter, str):
-        raise ValueError("IIR filter type must be 'butter', 'cheby1', 'cheby2', 'ellip', 'bessel'")
+        raise ValueError("IIR filter type must be 'butter', 'cheby1', 'cheby2', 'ellip', 'bessel'.")
     else:
-        raise TypeError("IIR filter type must be a string")
+        raise TypeError("IIR filter type must be a string.")
 
     #plot error
     if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
         pass
     elif isinstance(plot, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #filtering
-    filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=ordern,
+    filtersig = tools.filter_signal(signal, ftype=filter, band=ftype, order=order,
                                     frequency=cutoff, sampling_rate=fs, **kwargs)
     filtersig = filtersig['signal']
 
@@ -552,7 +556,7 @@ def iir(signal, fs=1000, ordern=2, cutoff=[50, 450], ftype='bandpass', filter='b
     return filtersig
 
 
-def fir(signal, ordern=2, cutoff=[50, 450], ftype='bandpass', fs=1000.0, plot='yes', **kwargs):
+def fir(signal, order=2, cutoff=[50, 450], ftype='bandpass', fs=1000.0, plot='yes', **kwargs):
     """
     Apply a FIR filter to the input signal.
 
@@ -589,63 +593,63 @@ def fir(signal, ordern=2, cutoff=[50, 450], ftype='bandpass', fs=1000.0, plot='y
     except TypeError:
         cutoff = np.array(cutoff)
     except ValueError:
-        raise ValueError("Cutoff can only be an int, float or numpy array")
+        raise ValueError("Cutoff can only be an int, float or numpy array.")
 
     if isinstance(cutoff, np.ndarray):
         if cutoff.size == 2:
             if isinstance(cutoff[0], complex):
-                raise TypeError("cutoff frequency cannot be complex")
+                raise TypeError("Cutoff frequency cannot be complex.")
             if isinstance(cutoff[-1], complex):
-                raise TypeError("cutoff frequency cannot be complex")
+                raise TypeError("Cutoff frequency cannot be complex.")
         else:
-            raise ValueError("cutoff must be a scalar (int or float) or 2 length sequence (list or numpy array)")
+            raise ValueError("Cutoff must be a scalar (int or float) or 2 length sequence (list or numpy array).")
 
     #sampling frequency error
     try:
         fs = float(fs)
     except TypeError:
-        raise TypeError("sampling frequency (fs) must be int or float")
+        raise TypeError("Sampling frequency (fs) must be int or float.")
     except ValueError:
-        raise ValueError("sampling frequency (fs) must be int or float")
+        raise ValueError("Sampling frequency (fs) must be int or float.")
 
     #signal error
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
     elif isinstance(signal, (int, float)):
-        raise ValueError("signal should be a list or numpy array")
+        raise ValueError("Signal should be a list or numpy array.")
     else:
-        raise TypeError("signal should be a list or numpy array")
+        raise TypeError("Signal should be a list or numpy array.")
 
     for i in signal:
         if isinstance(i, complex):
-            raise ValueError("signal cannot contain complex elements")
+            raise ValueError("Signal cannot contain complex elements.")
 
     #order error
     try:
-        ordern = int(ordern)
+        order = int(order)
     except TypeError:
-        raise TypeError("order must be an int")
+        raise TypeError("Order must be an int.")
     except ValueError:
-        raise ValueError("order must be an int")
+        raise ValueError("Order must be an int.")
 
     #filter type error
     if ftype in ['lowpass', 'highpass', 'bandpass', 'bandstop']:
         pass
     elif isinstance(ftype, str):
-        raise ValueError("filter type must be 'lowpass', 'highpass', 'bandpass', 'bandstop'")
+        raise ValueError("Filter type must be 'lowpass', 'highpass', 'bandpass', 'bandstop'.")
     else:
-        raise TypeError("filter type must be a string")
+        raise TypeError("Filter type must be a string.")
 
     #plot error
     if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
         pass
     elif isinstance(plot, str):
-        raise ValueError("plot can be Yes/Y or No/N (non-case sensitive).")
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
     else:
-        raise TypeError("plot must be a string - Yes/Y or No/N (non-case sensitive).")
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
 
     #filtering
-    filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=ordern,
+    filtersig = tools.filter_signal(signal, ftype='FIR', band=ftype, order=order,
                                     frequency=cutoff, sampling_rate=fs, **kwargs)
     filtersig = filtersig['signal']
 
@@ -689,11 +693,30 @@ def movavg(signal, window_size=3):
         the moving average of the signal
     """
 
+    #signal error
     if isinstance(signal, (list, np.ndarray)):
         signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
     else:
-        raise TypeError("signal should be a list or numpy array.")
+        raise TypeError("Signal should be a list or numpy array.")
 
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #window size error
+    try:
+        window_size = int(window_size)
+    except ValueError:
+        raise ValueError("Window size must be a positive int.")
+    except TypeError:
+        raise TypeError("Window size must be a positive int.")
+
+    if window_size <= 1:
+        raise ValueError("Window size must be greater than 1.")
+
+    #moving average
     count = 0
     temp = signal.size
     movaverage = []
@@ -719,6 +742,8 @@ def polyfit(time, signal, degree, plot='yes', **kwargs):
         independent variable
     signal: ndarray
         dependent variable
+    degree: int
+        degree of the polynomial
     plot: str - yes/Y or no/N (non-case sensitive), optional
         plot the polyfit or not; default set to yes
     **kwargs: dict, optional
@@ -733,6 +758,39 @@ def polyfit(time, signal, degree, plot='yes', **kwargs):
         polynomial regression array
     """
 
+    #time error
+    if isinstance(time, (list, np.ndarray)):
+        time = np.array(time)
+    elif isinstance(time, (int, float)):
+        raise ValueError("Time should be a list or numpy array.")
+    else:
+        raise TypeError("Time should be a list or numpy array.")
+
+    for i in time:
+        if isinstance(i, complex):
+            raise ValueError("Time cannot contain complex elements.")
+
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #polynomial fitting
     parameters = np.polyfit(time, signal, degree, **kwargs)
     poly_function = np.poly1d(parameters)
     regression = poly_function(time)
@@ -775,6 +833,30 @@ def xcorr(sig1, sig2, **kwargs):
         cross correlation
     """
 
+    #signal1 error
+    if isinstance(sig1, (list, np.ndarray)):
+        sig1 = np.array(sig1)
+    elif isinstance(sig1, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in sig1:
+        if isinstance(i, complex):
+            raise ValueError("Time cannot contain complex elements.")
+
+    #signal2 error
+    if isinstance(sig2, (list, np.ndarray)):
+        sig2 = np.array(sig2)
+    elif isinstance(sig2, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in sig2:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
     #plotting
     corr = plt.xcorr(sig1, sig2, **kwargs)
     plt.title("Cross correlation")
@@ -812,6 +894,18 @@ def acorr(signal, **kwargs):
         auto correlation
     """
 
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
     #plotting
     corr = plt.acorr(signal, **kwargs)
     plt.title("Auto correlation")
@@ -844,6 +938,19 @@ def correlogram(signal, **kwargs):
     Output will be the correlogram.
     """
 
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #correlogram
     pd.plotting.autocorrelation_plot(signal)
 
     return None
@@ -875,6 +982,35 @@ def psd(signal, fs=1000.0, plot='yes', **kwargs):
         power spectral density of signal
     """
 
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+     #sampling frequency error
+    try:
+        fs = float(fs)
+    except TypeError:
+        raise TypeError("Sampling frequency (fs) must be int or float.")
+    except ValueError:
+        raise ValueError("Sampling frequency (fs) must be int or float.")
+
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #periodogram
     freq, pxx = sp.signal.periodogram(signal, fs=fs, **kwargs)
 
     #plotting
@@ -911,6 +1047,35 @@ def rectify(signal, fs=1000, plot='Yes'):
         rectified signal array
     """
 
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+     #sampling frequency error
+    try:
+        fs = float(fs)
+    except TypeError:
+        raise TypeError("Sampling frequency (fs) must be int or float.")
+    except ValueError:
+        raise ValueError("Sampling frequency (fs) must be int or float.")
+
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #full wave rectification
     rectifiedsig = np.abs(signal)
 
     #plotting
@@ -961,8 +1126,70 @@ def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes', *
         linear envelope of the input signal
     """
 
+    #cutoff error
+    try:
+        cutoff = float(cutoff)
+    except TypeError:
+        cutoff = np.array(cutoff)
+    except ValueError:
+        raise ValueError("Cutoff can only be an int, float or numpy array.")
+
+    if isinstance(cutoff, np.ndarray):
+        if cutoff.size == 2:
+            if isinstance(cutoff[0], complex):
+                raise TypeError("Cutoff frequency cannot be complex.")
+            if isinstance(cutoff[-1], complex):
+                raise TypeError("Cutoff frequency cannot be complex.")
+        else:
+            raise ValueError("Cutoff must be a scalar (int or float) or 2 length sequence (list or numpy array).")
+
+    #sampling frequency error
+    try:
+        fs = float(fs)
+    except TypeError:
+        raise TypeError("Sampling frequency (fs) must be int or float.")
+    except ValueError:
+        raise ValueError("Sampling frequency (fs) must be int or float.")
+
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #order error
+    try:
+        order = int(order)
+    except TypeError:
+        raise TypeError("Order must be an int.")
+    except ValueError:
+        raise ValueError("Order must be an int.")
+
+    #IIR filter type error
+    if filter in ['butter', 'cheby1', 'cheby2', 'ellip', 'bessel']:
+        pass
+    elif isinstance(filter, str):
+        raise ValueError("IIR filter type must be 'butter', 'cheby1', 'cheby2', 'ellip', 'bessel'.")
+    else:
+        raise TypeError("IIR filter type must be a string.")
+
+    #plot error
+    if plot in ['Yes', 'yes', 'No', 'no', 'Y', 'y', 'N', 'n', 'YES', 'NO']:
+        pass
+    elif isinstance(plot, str):
+        raise ValueError("Plot can be Yes/Y or No/N (non-case sensitive).")
+    else:
+        raise TypeError("Plot must be a string - Yes/Y or No/N (non-case sensitive).")
+
+    #rectify and filter
     temp = rectify(signal, plot='No')
-    linenv = iir(temp, fs=fs, ordern=order, cutoff=cutoff/2, ftype='lowpass',
+    linenv = iir(temp, fs=fs, order=order, cutoff=cutoff/2, ftype='lowpass',
                  filter=filter, plot='No', **kwargs)
 
     #plotting
@@ -981,7 +1208,7 @@ def envelope(signal, fs=1000, order=2, cutoff=10, filter='butter', plot='Yes', *
     return linenv
 
 
-def rms(input):
+def rms(signal):
     """
     This function returns the Root Mean Square of the input.
 
@@ -998,7 +1225,20 @@ def rms(input):
         the root mean square of the input
     """
 
-    rmsq = np.sqrt(np.sum(input**2)/input.size)
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
+    #root mean sqaure
+    rmsq = np.sqrt(np.sum(signal**2)/signal.size)
 
     return rmsq
 
@@ -1026,14 +1266,27 @@ def rms_sig(signal, window_size, fs=1000, plot='yes'):
     rms_signal: ndarray
         the root mean square of the input signal
     """
+
+    #signal error
+    if isinstance(signal, (list, np.ndarray)):
+        signal = np.array(signal)
+    elif isinstance(signal, (int, float)):
+        raise ValueError("Signal should be a list or numpy array.")
+    else:
+        raise TypeError("Signal should be a list or numpy array.")
+
+    for i in signal:
+        if isinstance(i, complex):
+            raise ValueError("Signal cannot contain complex elements.")
+
     try:
         window_size = int(window_size)
     except TypeError:
-        raise TypeError("rms_sig missing an argument: wind")
+        raise TypeError("Rms_sig missing an argument: wind")
 
     length = signal.size
     rms_signal = []
-    for i in range(0, length-window_size, window_size):
+    for i in range(0, length-window_size+1):
         temp = rms(signal[i:(i+window_size)])
         rms_signal.append(temp)
 
