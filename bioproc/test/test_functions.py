@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 from .. import functions as fn
 
+
 def test_sinewave():
     t = np.arange(0,10,1/1000)
     sinearr = np.sin(2*3.14*t)
@@ -437,6 +438,44 @@ def test_polyfit():
         fn.polyfit(time=1+3j, signal=signal, degree=2)
     with pytest.raises(ValueError):
         fn.polyfit(time=[1, 1+3j], signal=signal, degree=2)    
+
+
+def test_xcorr():
+    sig1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    sig2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1, sig2=1)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1, sig2='sa')
+    with pytest.raises(NameError):
+        fn.xcorr(sig1, sig2=sa)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1, sig2=1+3j)
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1, sig2=[1, 1+3j])
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1=1, sig2=sig2)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1='sa', sig2=sig2)
+    with pytest.raises(NameError):
+        fn.xcorr(sig1=sa, sig2=sig2)
+    with pytest.raises(TypeError):
+        fn.xcorr(sig1=1+3j, sig2=sig2)
+    with pytest.raises(ValueError):
+        fn.xcorr(sig1=[1, 1+3j], sig2=sig2)
+
+
+def test_acorr():
+    with pytest.raises(ValueError):
+        fn.acorr(signal=1)
+    with pytest.raises(TypeError):
+        fn.acorr(signal='sa')
+    with pytest.raises(NameError):
+        fn.acorr(signal=sa)
+    with pytest.raises(TypeError):
+        fn.acorr(signal=1+3j)
+    with pytest.raises(ValueError):
+        fn.acorr(signal=[1, 1+3j])
 
 
 def test_envelope():
