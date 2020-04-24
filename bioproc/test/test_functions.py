@@ -408,8 +408,14 @@ def test_polyfit():
     reg = func(time)
     reg1 = fn.polyfit(time, signal, 2, plot='n')
     assert np.array_equal(reg, reg1)
+    with pytest.raises(TypeError):
+        fn.polyfit(time, signal, plot='happy')
+    with pytest.raises(TypeError):
+        fn.polyfit(time, signal, plot=1223)
+    with pytest.raises(NameError):
+        fn.polyfit(time, signal, plot=yes)
     with pytest.raises(ValueError):
-        fn.polyfit(time, signal, -2)
+        fn.polyfit(time, signal, degree=-2)
     with pytest.raises(ValueError):
         fn.polyfit(time=time, signal=1, degree=2)
     with pytest.raises(TypeError):
