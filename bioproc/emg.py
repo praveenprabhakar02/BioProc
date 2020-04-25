@@ -454,7 +454,7 @@ def emg_process(emg_signal, mvic_signal=None, fs=1000, plot='Yes', fourier='Yes'
         filter_env = 'butter'
 
     #processing
-    filtered = fn.iir(signal=emg_signal, fs=fs, ordern=ordern, cutoff=cutoff_filter,
+    filtered = fn.iir(signal=emg_signal, fs=fs, order=ordern, cutoff=cutoff_filter,
                       ftype=ftype, filter=filter, plot='No')
     rect = fn.rectify(filtered, fs=fs, plot='No')
     env = fn.envelope(rect, fs=fs, order=order_env, cutoff=cutoff_env, filter=filter_env, plot='N')
