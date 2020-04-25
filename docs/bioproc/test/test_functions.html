@@ -22,7 +22,7 @@
 <section id="section-intro">
 <p>test_functions.py</p>
 <p>Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com</p>
+Email: praveenp@msu.edu</p>
 <p>Module contains the tests for functions module.</p>
 <details class="source">
 <summary>
@@ -32,7 +32,7 @@ Email: praveenprabhakar02@gmail.com</p>
 test_functions.py
 
 Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com
+Email: praveenp@msu.edu
 
 Module contains the tests for functions module.
 &#34;&#34;&#34;
@@ -47,10 +47,9 @@ def test_sinewave():
     Test for sinewave function in the functions module.
     &#34;&#34;&#34;
 
-    t = np.arange(0, 10, 1/1000)
-    sinearr = np.sin(2*3.14*t)
+    time = np.arange(0, 10, 1/1000)
+    sinearr = np.sin(2*3.14*time)
     func = fn.sinewave()
-
     assert np.array_equal(func, sinearr)
     with pytest.raises(ValueError):
         fn.sinewave(amp=&#39;s&#39;)
@@ -60,22 +59,6 @@ def test_sinewave():
         fn.sinewave(time=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.sinewave(fs=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinewave(offset=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinewave(phi=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.sinewave(amp=s)
-    with pytest.raises(NameError):
-        fn.sinewave(freq=s)
-    with pytest.raises(NameError):
-        fn.sinewave(time=s)
-    with pytest.raises(NameError):
-        fn.sinewave(fs=s)
-    with pytest.raises(NameError):
-        fn.sinewave(offset=s)
-    with pytest.raises(NameError):
-        fn.sinewave(phi=s)
     with pytest.raises(TypeError):
         fn.sinewave(amp=[12, 12])
     with pytest.raises(TypeError):
@@ -92,14 +75,10 @@ def test_sinewave():
         fn.sinewave(plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinewave(plot=123)
-    with pytest.raises(NameError):
-        fn.sinewave(plot=s)
     with pytest.raises(ValueError):
         fn.sinewave(tarr=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinewave(tarr=123)
-    with pytest.raises(NameError):
-        fn.sinewave(tarr=s)
     with pytest.raises(TypeError):
         fn.sinewave(amp=1+3j)
     with pytest.raises(TypeError):
@@ -123,9 +102,9 @@ def test_sinenoise():
     Test for sinenoise function in the functions module.
     &#34;&#34;&#34;
 
-    t = np.arange(0, 10, 1/1000)
+    time = np.arange(0, 10, 1/1000)
     np.random.seed(1)
-    sinearr = np.sin(2*3.14*t) + (np.random.randn(len(t)))
+    sinearr = np.sin(2*3.14*time) + (np.random.randn(len(time)))
     func = fn.sinenoise()
 
     assert np.array_equal(func, sinearr)
@@ -137,26 +116,6 @@ def test_sinenoise():
         fn.sinenoise(time=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.sinenoise(fs=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinenoise(offset=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinenoise(phi=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinenoise(seed=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.sinenoise(amp=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(freq=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(time=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(fs=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(offset=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(phi=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(seed=s)
     with pytest.raises(TypeError):
         fn.sinenoise(amp=[12, 12])
     with pytest.raises(TypeError):
@@ -166,41 +125,33 @@ def test_sinenoise():
     with pytest.raises(TypeError):
         fn.sinenoise(fs=[12, 12])
     with pytest.raises(TypeError):
-        fn.sinenoise(offset=[12, 12])
-    with pytest.raises(TypeError):
-        fn.sinenoise(phi=[12, 12])
-    with pytest.raises(TypeError):
         fn.sinenoise(seed=[12, 12])
     with pytest.raises(ValueError):
         fn.sinenoise(plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinenoise(plot=123)
-    with pytest.raises(NameError):
-        fn.sinenoise(plot=s)
     with pytest.raises(ValueError):
         fn.sinenoise(tarr=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinenoise(tarr=123)
-    with pytest.raises(NameError):
-        fn.sinenoise(tarr=s)
     with pytest.raises(TypeError):
-        fn.sinewave(amp=1+3j)
+        fn.sinenoise(amp=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(freq=1+3j)
+        fn.sinenoise(freq=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(time=1+3j)
+        fn.sinenoise(time=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(fs=1+3j)
+        fn.sinenoise(fs=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(phi=1+3j)
+        fn.sinenoise(phi=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(offset=1+3j)
+        fn.sinenoise(offset=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(noise=1+3j)
+        fn.sinenoise(noise=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(tarr=1+3j)
+        fn.sinenoise(tarr=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(plot=1+3j)
+        fn.sinenoise(plot=1+3j)
 
 
 def test_fft():
@@ -214,22 +165,16 @@ def test_fft():
         fn.fft(fn.sinewave(), fs=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.fft(fn.sinewave(), fs=1+3j)
-    with pytest.raises(NameError):
-        fn.fft(fn.sinewave(), fs=sa)
     with pytest.raises(ValueError):
         fn.fft(signal=1)
     with pytest.raises(TypeError):
         fn.fft(signal=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.fft(signal=1+3j)
-    with pytest.raises(NameError):
-        fn.fft(signal=sa)
     with pytest.raises(ValueError):
-        fn.sinenoise(plot=&#39;sa&#39;)
+        fn.fft(signal=fn.sinewave(), plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
-        fn.sinenoise(plot=123)
-    with pytest.raises(NameError):
-        fn.sinenoise(plot=s)
+        fn.fft(signal=fn.sinewave(), plot=123)
 
 
 def test_padding():
@@ -241,14 +186,10 @@ def test_padding():
         fn.padding(signal=1, size=2)
     with pytest.raises(TypeError):
         fn.padding(signal=&#39;sa&#39;, size=2)
-    with pytest.raises(NameError):
-        fn.padding(signal=sa, size=2)
     with pytest.raises(TypeError):
         fn.padding(signal=1+3j, size=2)
     with pytest.raises(ValueError):
         fn.padding(signal=[1+3j], size=2)
-    with pytest.raises(NameError):
-        fn.padding([1, 2, 3, 4, 5, 6], size=sa)
     with pytest.raises(TypeError):
         fn.padding([1, 2, 3, 4, 5], size=&#39;sa&#39;)
     with pytest.raises(TypeError):
@@ -257,9 +198,9 @@ def test_padding():
         fn.padding([1, 2, 3, 4, 5], size=-1)
     with pytest.raises(TypeError):
         fn.padding([1, 2, 3, 4], size=1+3j)
-    a = [1, 2, 3, 4]
-    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
-    assert np.array_equal(fn.padding(a, 4), b)
+    abab = [1, 2, 3, 4]
+    baba = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padding(abab, 4), baba)
 
 
 def test_padsize():
@@ -273,33 +214,29 @@ def test_padsize():
         fn.padsize(signal=-1)
     with pytest.raises(TypeError):
         fn.padsize(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.padsize(signal=sa)
     with pytest.raises(TypeError):
         fn.padsize(signal=1+3j)
     with pytest.raises(ValueError):
         fn.padsize(signal=[1+3j])
-    a = [1, 2, 3, 4]
-    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
-    assert np.array_equal(fn.padsize(a), b)
-    assert fn.padsize(a, &#39;No&#39;) == None
-    a = np.zeros(512)
-    b = fn.padsize(a)
-    assert b.size == 1024
-    a = np.zeros(768)
-    b = fn.padsize(a)
-    assert b.size == 1024
-    a = np.zeros(769)
-    b = fn.padsize(a)
-    assert b.size == 2048
+    abab = [1, 2, 3, 4]
+    baba = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padsize(abab), baba)
+    assert fn.padsize(abab, &#39;No&#39;) is None
+    abab = np.zeros(512)
+    baba = fn.padsize(abab)
+    assert baba.size == 1024
+    abab = np.zeros(768)
+    baba = fn.padsize(abab)
+    assert baba.size == 1024
+    abab = np.zeros(769)
+    baba = fn.padsize(abab)
+    assert baba.size == 2048
     with pytest.raises(ValueError):
-        fn.padsize(a, &#39;asda&#39;)
-    with pytest.raises(NameError):
-        fn.padsize(a, asda)
+        fn.padsize(abab, &#39;asda&#39;)
     with pytest.raises(TypeError):
-        fn.padsize(a, [1, 2])
+        fn.padsize(abab, [1, 2])
     with pytest.raises(TypeError):
-        fn.padsize(a, 1+2j)
+        fn.padsize(abab, 1+2j)
 
 
 def test_window():
@@ -313,8 +250,6 @@ def test_window():
         fn.window(kernel=[1, 2], size=2)
     with pytest.raises(ValueError):
         fn.window(kernel=&#39;dummy&#39;, size=2)
-    with pytest.raises(NameError):
-        fn.window(kernel=dummy, size=2)
     with pytest.raises(ValueError):
         fn.window(kernel=&#39;hamming&#39;)
     with pytest.raises(TypeError):
@@ -334,8 +269,6 @@ def test_iir():
         fn.iir(signal=1)
     with pytest.raises(TypeError):
         fn.iir(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal=sa)
     with pytest.raises(TypeError):
         fn.iir(signal=1+3j)
     with pytest.raises(ValueError):
@@ -343,16 +276,12 @@ def test_iir():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.iir(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal, fs=s)
     with pytest.raises(TypeError):
         fn.iir(signal, fs=[1, 2])
     with pytest.raises(TypeError):
         fn.iir(signal, fs=1+3j)
     with pytest.raises(ValueError):
         fn.iir(signal, order=-1)
-    with pytest.raises(NameError):
-        fn.iir(signal, order=s)
     with pytest.raises(ValueError):
         fn.iir(signal, order=&#39;s&#39;)
     with pytest.raises(TypeError):
@@ -361,8 +290,6 @@ def test_iir():
         fn.iir(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
         fn.iir(signal, cutoff=[1+3j, 4])
-    with pytest.raises(NameError):
-        fn.iir(signal, cutoff=s)
     with pytest.raises(ValueError):
         fn.iir(signal, cutoff=-1)
     with pytest.raises(ValueError):
@@ -373,12 +300,8 @@ def test_iir():
         fn.iir(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.iir(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.iir(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.iir(signal, ftype=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal, ftype=yes)
     with pytest.raises(TypeError):
         fn.iir(signal, ftype=12)
     with pytest.raises(ValueError):
@@ -387,8 +310,6 @@ def test_iir():
         fn.iir(signal, filter=12)
     with pytest.raises(ValueError):
         fn.iir(signal, filter=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal, filter=yes)
     with pytest.raises(ValueError):
         fn.iir(signal, filter=&#39;sa&#39;)
     with pytest.raises(TypeError):
@@ -404,8 +325,6 @@ def test_fir():
         fn.fir(signal=1)
     with pytest.raises(TypeError):
         fn.fir(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal=sa)
     with pytest.raises(TypeError):
         fn.fir(signal=1+3j)
     with pytest.raises(ValueError):
@@ -413,24 +332,18 @@ def test_fir():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.fir(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal, fs=s)
     with pytest.raises(TypeError):
         fn.fir(signal, fs=[1, 2])
     with pytest.raises(TypeError):
         fn.fir(signal, fs=1+3j)
     with pytest.raises(ValueError):
         fn.fir(signal, order=-1)
-    with pytest.raises(NameError):
-        fn.fir(signal, order=s)
     with pytest.raises(ValueError):
         fn.fir(signal, order=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.fir(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
         fn.fir(signal, cutoff=[1+3j, 4])
-    with pytest.raises(NameError):
-        fn.fir(signal, cutoff=s)
     with pytest.raises(ValueError):
         fn.fir(signal, cutoff=-1)
     with pytest.raises(ValueError):
@@ -441,12 +354,8 @@ def test_fir():
         fn.fir(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.fir(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.fir(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.fir(signal, ftype=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal, ftype=yes)
     with pytest.raises(TypeError):
         fn.fir(signal, ftype=12)
     with pytest.raises(ValueError):
@@ -473,8 +382,6 @@ def test_movavg():
         fn.movavg(signal=1)
     with pytest.raises(TypeError):
         fn.movavg(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.movavg(signal=sa)
     with pytest.raises(TypeError):
         fn.movavg(signal=1+3j)
     with pytest.raises(ValueError):
@@ -484,8 +391,6 @@ def test_movavg():
         fn.movavg(signal, -1)
     with pytest.raises(ValueError):
         fn.movavg(signal, &#39;a&#39;)
-    with pytest.raises(NameError):
-        fn.movavg(signal, a)
     with pytest.raises(TypeError):
         fn.movavg(signal, 1+3j)
 
@@ -502,20 +407,16 @@ def test_polyfit():
     reg = func(time)
     reg1 = fn.polyfit(time, signal, 2, plot=&#39;n&#39;)
     assert np.array_equal(reg, reg1)
+    with pytest.raises(ValueError):
+        fn.polyfit(time, signal, degree=2, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
-        fn.polyfit(time, signal, plot=&#39;happy&#39;)
-    with pytest.raises(TypeError):
-        fn.polyfit(time, signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.polyfit(time, signal, plot=yes)
+        fn.polyfit(time, signal, degree=2, plot=1223)
     with pytest.raises(ValueError):
         fn.polyfit(time, signal, degree=-2)
     with pytest.raises(ValueError):
         fn.polyfit(time=time, signal=1, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=time, signal=&#39;sa&#39;, degree=2)
-    with pytest.raises(NameError):
-        fn.polyfit(time=time, signal=sa, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=time, signal=1+3j, degree=2)
     with pytest.raises(ValueError):
@@ -525,8 +426,6 @@ def test_polyfit():
         fn.polyfit(time=1, signal=signal, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=&#39;sa&#39;, signal=signal, degree=2)
-    with pytest.raises(NameError):
-        fn.polyfit(time=sa, signal=signal, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=1+3j, signal=signal, degree=2)
     with pytest.raises(ValueError):
@@ -544,8 +443,6 @@ def test_xcorr():
         fn.xcorr(sig1, sig2=1)
     with pytest.raises(TypeError):
         fn.xcorr(sig1, sig2=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.xcorr(sig1, sig2=sa)
     with pytest.raises(TypeError):
         fn.xcorr(sig1, sig2=1+3j)
     with pytest.raises(ValueError):
@@ -554,8 +451,6 @@ def test_xcorr():
         fn.xcorr(sig1=1, sig2=sig2)
     with pytest.raises(TypeError):
         fn.xcorr(sig1=&#39;sa&#39;, sig2=sig2)
-    with pytest.raises(NameError):
-        fn.xcorr(sig1=sa, sig2=sig2)
     with pytest.raises(TypeError):
         fn.xcorr(sig1=1+3j, sig2=sig2)
     with pytest.raises(ValueError):
@@ -571,8 +466,6 @@ def test_acorr():
         fn.acorr(signal=1)
     with pytest.raises(TypeError):
         fn.acorr(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.acorr(signal=sa)
     with pytest.raises(TypeError):
         fn.acorr(signal=1+3j)
     with pytest.raises(ValueError):
@@ -588,8 +481,6 @@ def test_correlogram():
         fn.correlogram(signal=1)
     with pytest.raises(TypeError):
         fn.correlogram(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.correlogram(signal=sa)
     with pytest.raises(TypeError):
         fn.correlogram(signal=1+3j)
     with pytest.raises(ValueError):
@@ -605,8 +496,6 @@ def test_psd():
         fn.psd(signal=1)
     with pytest.raises(TypeError):
         fn.psd(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.psd(signal=sa)
     with pytest.raises(TypeError):
         fn.psd(signal=1+3j)
     with pytest.raises(ValueError):
@@ -614,8 +503,6 @@ def test_psd():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.psd(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.psd(signal, fs=s)
     with pytest.raises(TypeError):
         fn.psd(signal, fs=[1, 2])
     with pytest.raises(TypeError):
@@ -624,8 +511,6 @@ def test_psd():
         fn.iir(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.iir(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.iir(signal, plot=yes)
 
 
 def test_rectify():
@@ -638,12 +523,8 @@ def test_rectify():
         fn.rectify(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.rectify(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.rectify(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.rectify(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.rectify(signal, fs=s)
     with pytest.raises(TypeError):
         fn.rectify(signal, fs=[1, 2])
     with pytest.raises(TypeError):
@@ -652,8 +533,6 @@ def test_rectify():
         fn.rectify(signal=1)
     with pytest.raises(TypeError):
         fn.rectify(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.rectify(signal=sa)
     with pytest.raises(TypeError):
         fn.rectify(signal=1+3j)
     with pytest.raises(ValueError):
@@ -681,8 +560,6 @@ def test_envelope():
         fn.envelope(signal=1)
     with pytest.raises(TypeError):
         fn.envelope(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.envelope(signal=sa)
     with pytest.raises(TypeError):
         fn.envelope(signal=1+3j)
     with pytest.raises(ValueError):
@@ -690,24 +567,18 @@ def test_envelope():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.envelope(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.envelope(signal, fs=s)
     with pytest.raises(TypeError):
         fn.envelope(signal, fs=[1, 2])
     with pytest.raises(TypeError):
         fn.envelope(signal, fs=1+3j)
     with pytest.raises(ValueError):
         fn.envelope(signal, order=-1)
-    with pytest.raises(NameError):
-        fn.envelope(signal, order=s)
     with pytest.raises(ValueError):
         fn.envelope(signal, order=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.envelope(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
         fn.envelope(signal, cutoff=[1+3j, 4])
-    with pytest.raises(NameError):
-        fn.envelope(signal, cutoff=s)
     with pytest.raises(ValueError):
         fn.envelope(signal, cutoff=-1)
     with pytest.raises(ValueError):
@@ -718,12 +589,8 @@ def test_envelope():
         fn.envelope(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.envelope(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.envelope(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.envelope(signal, filter=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.envelope(signal, filter=yes)
     with pytest.raises(TypeError):
         fn.envelope(signal, filter=12)
     with pytest.raises(ValueError):
@@ -744,8 +611,6 @@ def test_rms():
         fn.rms(signal=1)
     with pytest.raises(TypeError):
         fn.rms(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.rms(signal=sa)
     with pytest.raises(TypeError):
         fn.rms(signal=1+3j)
     with pytest.raises(ValueError):
@@ -764,8 +629,6 @@ def test_rms_sig():
         fn.rms_sig(signal=1, window_size=4, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         fn.rms_sig(signal=&#39;sa&#39;, window_size=4, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        fn.rms_sig(signal=sa, window_size=4, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         fn.rms_sig(signal=1+3j, window_size=4, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -775,8 +638,6 @@ def test_rms_sig():
         fn.rms_sig(signal=sample, window_size=1, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
         fn.rms_sig(signal=sample, window_size=&#39;sa&#39;, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        fn.rms_sig(signal=sample, window_size=sa, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         fn.rms_sig(signal=sample, window_size=1+3j, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -784,18 +645,14 @@ def test_rms_sig():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.rms_sig(signal, window_size=4, fs=&#39;s&#39;, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal, window_size=4, fs=s, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
-        fn.fir(signal, window_size=4, fs=[1, 2], plot=&#39;N&#39;)
+        fn.rms_sig(signal, window_size=4, fs=[1, 2], plot=&#39;N&#39;)
     with pytest.raises(TypeError):
-        fn.fir(signal, window_size=4, fs=1+3j, plot=&#39;N&#39;)
+        fn.rms_sig(signal, window_size=4, fs=1+3j, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
-        fn.fir(signal, plot=&#39;happy&#39;)
+        fn.rms_sig(signal, window_size=4, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
-        fn.fir(signal, window_size=4, plot=1223)
-    with pytest.raises(NameError):
-        fn.fir(signal, window_size=4, plot=yes)</code></pre>
+        fn.rms_sig(signal, window_size=4, plot=1223)</code></pre>
 </details>
 </section>
 <section>
@@ -823,8 +680,6 @@ def test_rms_sig():
         fn.acorr(signal=1)
     with pytest.raises(TypeError):
         fn.acorr(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.acorr(signal=sa)
     with pytest.raises(TypeError):
         fn.acorr(signal=1+3j)
     with pytest.raises(ValueError):
@@ -849,8 +704,6 @@ def test_rms_sig():
         fn.correlogram(signal=1)
     with pytest.raises(TypeError):
         fn.correlogram(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.correlogram(signal=sa)
     with pytest.raises(TypeError):
         fn.correlogram(signal=1+3j)
     with pytest.raises(ValueError):
@@ -875,8 +728,6 @@ def test_rms_sig():
         fn.envelope(signal=1)
     with pytest.raises(TypeError):
         fn.envelope(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.envelope(signal=sa)
     with pytest.raises(TypeError):
         fn.envelope(signal=1+3j)
     with pytest.raises(ValueError):
@@ -884,24 +735,18 @@ def test_rms_sig():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.envelope(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.envelope(signal, fs=s)
     with pytest.raises(TypeError):
         fn.envelope(signal, fs=[1, 2])
     with pytest.raises(TypeError):
         fn.envelope(signal, fs=1+3j)
     with pytest.raises(ValueError):
         fn.envelope(signal, order=-1)
-    with pytest.raises(NameError):
-        fn.envelope(signal, order=s)
     with pytest.raises(ValueError):
         fn.envelope(signal, order=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.envelope(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
         fn.envelope(signal, cutoff=[1+3j, 4])
-    with pytest.raises(NameError):
-        fn.envelope(signal, cutoff=s)
     with pytest.raises(ValueError):
         fn.envelope(signal, cutoff=-1)
     with pytest.raises(ValueError):
@@ -912,12 +757,8 @@ def test_rms_sig():
         fn.envelope(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.envelope(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.envelope(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.envelope(signal, filter=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.envelope(signal, filter=yes)
     with pytest.raises(TypeError):
         fn.envelope(signal, filter=12)
     with pytest.raises(ValueError):
@@ -946,22 +787,16 @@ def test_rms_sig():
         fn.fft(fn.sinewave(), fs=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.fft(fn.sinewave(), fs=1+3j)
-    with pytest.raises(NameError):
-        fn.fft(fn.sinewave(), fs=sa)
     with pytest.raises(ValueError):
         fn.fft(signal=1)
     with pytest.raises(TypeError):
         fn.fft(signal=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.fft(signal=1+3j)
-    with pytest.raises(NameError):
-        fn.fft(signal=sa)
     with pytest.raises(ValueError):
-        fn.sinenoise(plot=&#39;sa&#39;)
+        fn.fft(signal=fn.sinewave(), plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
-        fn.sinenoise(plot=123)
-    with pytest.raises(NameError):
-        fn.sinenoise(plot=s)</code></pre>
+        fn.fft(signal=fn.sinewave(), plot=123)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_fir"><code class="name flex">
@@ -982,8 +817,6 @@ def test_rms_sig():
         fn.fir(signal=1)
     with pytest.raises(TypeError):
         fn.fir(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal=sa)
     with pytest.raises(TypeError):
         fn.fir(signal=1+3j)
     with pytest.raises(ValueError):
@@ -991,24 +824,18 @@ def test_rms_sig():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.fir(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal, fs=s)
     with pytest.raises(TypeError):
         fn.fir(signal, fs=[1, 2])
     with pytest.raises(TypeError):
         fn.fir(signal, fs=1+3j)
     with pytest.raises(ValueError):
         fn.fir(signal, order=-1)
-    with pytest.raises(NameError):
-        fn.fir(signal, order=s)
     with pytest.raises(ValueError):
         fn.fir(signal, order=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.fir(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
         fn.fir(signal, cutoff=[1+3j, 4])
-    with pytest.raises(NameError):
-        fn.fir(signal, cutoff=s)
     with pytest.raises(ValueError):
         fn.fir(signal, cutoff=-1)
     with pytest.raises(ValueError):
@@ -1019,12 +846,8 @@ def test_rms_sig():
         fn.fir(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.fir(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.fir(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.fir(signal, ftype=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal, ftype=yes)
     with pytest.raises(TypeError):
         fn.fir(signal, ftype=12)
     with pytest.raises(ValueError):
@@ -1051,8 +874,6 @@ def test_rms_sig():
         fn.iir(signal=1)
     with pytest.raises(TypeError):
         fn.iir(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal=sa)
     with pytest.raises(TypeError):
         fn.iir(signal=1+3j)
     with pytest.raises(ValueError):
@@ -1060,16 +881,12 @@ def test_rms_sig():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.iir(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal, fs=s)
     with pytest.raises(TypeError):
         fn.iir(signal, fs=[1, 2])
     with pytest.raises(TypeError):
         fn.iir(signal, fs=1+3j)
     with pytest.raises(ValueError):
         fn.iir(signal, order=-1)
-    with pytest.raises(NameError):
-        fn.iir(signal, order=s)
     with pytest.raises(ValueError):
         fn.iir(signal, order=&#39;s&#39;)
     with pytest.raises(TypeError):
@@ -1078,8 +895,6 @@ def test_rms_sig():
         fn.iir(signal, cutoff=[1, 2, 3])
     with pytest.raises(TypeError):
         fn.iir(signal, cutoff=[1+3j, 4])
-    with pytest.raises(NameError):
-        fn.iir(signal, cutoff=s)
     with pytest.raises(ValueError):
         fn.iir(signal, cutoff=-1)
     with pytest.raises(ValueError):
@@ -1090,12 +905,8 @@ def test_rms_sig():
         fn.iir(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.iir(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.iir(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.iir(signal, ftype=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal, ftype=yes)
     with pytest.raises(TypeError):
         fn.iir(signal, ftype=12)
     with pytest.raises(ValueError):
@@ -1104,8 +915,6 @@ def test_rms_sig():
         fn.iir(signal, filter=12)
     with pytest.raises(ValueError):
         fn.iir(signal, filter=&#39;yes&#39;)
-    with pytest.raises(NameError):
-        fn.iir(signal, filter=yes)
     with pytest.raises(ValueError):
         fn.iir(signal, filter=&#39;sa&#39;)
     with pytest.raises(TypeError):
@@ -1139,8 +948,6 @@ def test_rms_sig():
         fn.movavg(signal=1)
     with pytest.raises(TypeError):
         fn.movavg(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.movavg(signal=sa)
     with pytest.raises(TypeError):
         fn.movavg(signal=1+3j)
     with pytest.raises(ValueError):
@@ -1150,8 +957,6 @@ def test_rms_sig():
         fn.movavg(signal, -1)
     with pytest.raises(ValueError):
         fn.movavg(signal, &#39;a&#39;)
-    with pytest.raises(NameError):
-        fn.movavg(signal, a)
     with pytest.raises(TypeError):
         fn.movavg(signal, 1+3j)</code></pre>
 </details>
@@ -1174,14 +979,10 @@ def test_rms_sig():
         fn.padding(signal=1, size=2)
     with pytest.raises(TypeError):
         fn.padding(signal=&#39;sa&#39;, size=2)
-    with pytest.raises(NameError):
-        fn.padding(signal=sa, size=2)
     with pytest.raises(TypeError):
         fn.padding(signal=1+3j, size=2)
     with pytest.raises(ValueError):
         fn.padding(signal=[1+3j], size=2)
-    with pytest.raises(NameError):
-        fn.padding([1, 2, 3, 4, 5, 6], size=sa)
     with pytest.raises(TypeError):
         fn.padding([1, 2, 3, 4, 5], size=&#39;sa&#39;)
     with pytest.raises(TypeError):
@@ -1190,9 +991,9 @@ def test_rms_sig():
         fn.padding([1, 2, 3, 4, 5], size=-1)
     with pytest.raises(TypeError):
         fn.padding([1, 2, 3, 4], size=1+3j)
-    a = [1, 2, 3, 4]
-    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
-    assert np.array_equal(fn.padding(a, 4), b)</code></pre>
+    abab = [1, 2, 3, 4]
+    baba = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padding(abab, 4), baba)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_padsize"><code class="name flex">
@@ -1215,33 +1016,29 @@ def test_rms_sig():
         fn.padsize(signal=-1)
     with pytest.raises(TypeError):
         fn.padsize(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.padsize(signal=sa)
     with pytest.raises(TypeError):
         fn.padsize(signal=1+3j)
     with pytest.raises(ValueError):
         fn.padsize(signal=[1+3j])
-    a = [1, 2, 3, 4]
-    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
-    assert np.array_equal(fn.padsize(a), b)
-    assert fn.padsize(a, &#39;No&#39;) == None
-    a = np.zeros(512)
-    b = fn.padsize(a)
-    assert b.size == 1024
-    a = np.zeros(768)
-    b = fn.padsize(a)
-    assert b.size == 1024
-    a = np.zeros(769)
-    b = fn.padsize(a)
-    assert b.size == 2048
+    abab = [1, 2, 3, 4]
+    baba = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(fn.padsize(abab), baba)
+    assert fn.padsize(abab, &#39;No&#39;) is None
+    abab = np.zeros(512)
+    baba = fn.padsize(abab)
+    assert baba.size == 1024
+    abab = np.zeros(768)
+    baba = fn.padsize(abab)
+    assert baba.size == 1024
+    abab = np.zeros(769)
+    baba = fn.padsize(abab)
+    assert baba.size == 2048
     with pytest.raises(ValueError):
-        fn.padsize(a, &#39;asda&#39;)
-    with pytest.raises(NameError):
-        fn.padsize(a, asda)
+        fn.padsize(abab, &#39;asda&#39;)
     with pytest.raises(TypeError):
-        fn.padsize(a, [1, 2])
+        fn.padsize(abab, [1, 2])
     with pytest.raises(TypeError):
-        fn.padsize(a, 1+2j)</code></pre>
+        fn.padsize(abab, 1+2j)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_polyfit"><code class="name flex">
@@ -1265,20 +1062,16 @@ def test_rms_sig():
     reg = func(time)
     reg1 = fn.polyfit(time, signal, 2, plot=&#39;n&#39;)
     assert np.array_equal(reg, reg1)
+    with pytest.raises(ValueError):
+        fn.polyfit(time, signal, degree=2, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
-        fn.polyfit(time, signal, plot=&#39;happy&#39;)
-    with pytest.raises(TypeError):
-        fn.polyfit(time, signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.polyfit(time, signal, plot=yes)
+        fn.polyfit(time, signal, degree=2, plot=1223)
     with pytest.raises(ValueError):
         fn.polyfit(time, signal, degree=-2)
     with pytest.raises(ValueError):
         fn.polyfit(time=time, signal=1, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=time, signal=&#39;sa&#39;, degree=2)
-    with pytest.raises(NameError):
-        fn.polyfit(time=time, signal=sa, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=time, signal=1+3j, degree=2)
     with pytest.raises(ValueError):
@@ -1288,8 +1081,6 @@ def test_rms_sig():
         fn.polyfit(time=1, signal=signal, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=&#39;sa&#39;, signal=signal, degree=2)
-    with pytest.raises(NameError):
-        fn.polyfit(time=sa, signal=signal, degree=2)
     with pytest.raises(TypeError):
         fn.polyfit(time=1+3j, signal=signal, degree=2)
     with pytest.raises(ValueError):
@@ -1314,8 +1105,6 @@ def test_rms_sig():
         fn.psd(signal=1)
     with pytest.raises(TypeError):
         fn.psd(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.psd(signal=sa)
     with pytest.raises(TypeError):
         fn.psd(signal=1+3j)
     with pytest.raises(ValueError):
@@ -1323,8 +1112,6 @@ def test_rms_sig():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.psd(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.psd(signal, fs=s)
     with pytest.raises(TypeError):
         fn.psd(signal, fs=[1, 2])
     with pytest.raises(TypeError):
@@ -1332,9 +1119,7 @@ def test_rms_sig():
     with pytest.raises(ValueError):
         fn.iir(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
-        fn.iir(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.iir(signal, plot=yes)</code></pre>
+        fn.iir(signal, plot=1223)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_rectify"><code class="name flex">
@@ -1356,12 +1141,8 @@ def test_rms_sig():
         fn.rectify(signal, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
         fn.rectify(signal, plot=1223)
-    with pytest.raises(NameError):
-        fn.rectify(signal, plot=yes)
     with pytest.raises(ValueError):
         fn.rectify(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.rectify(signal, fs=s)
     with pytest.raises(TypeError):
         fn.rectify(signal, fs=[1, 2])
     with pytest.raises(TypeError):
@@ -1370,8 +1151,6 @@ def test_rms_sig():
         fn.rectify(signal=1)
     with pytest.raises(TypeError):
         fn.rectify(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.rectify(signal=sa)
     with pytest.raises(TypeError):
         fn.rectify(signal=1+3j)
     with pytest.raises(ValueError):
@@ -1410,8 +1189,6 @@ def test_rms_sig():
         fn.rms(signal=1)
     with pytest.raises(TypeError):
         fn.rms(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.rms(signal=sa)
     with pytest.raises(TypeError):
         fn.rms(signal=1+3j)
     with pytest.raises(ValueError):
@@ -1439,8 +1216,6 @@ def test_rms_sig():
         fn.rms_sig(signal=1, window_size=4, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         fn.rms_sig(signal=&#39;sa&#39;, window_size=4, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        fn.rms_sig(signal=sa, window_size=4, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         fn.rms_sig(signal=1+3j, window_size=4, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -1450,8 +1225,6 @@ def test_rms_sig():
         fn.rms_sig(signal=sample, window_size=1, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
         fn.rms_sig(signal=sample, window_size=&#39;sa&#39;, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        fn.rms_sig(signal=sample, window_size=sa, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         fn.rms_sig(signal=sample, window_size=1+3j, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -1459,18 +1232,14 @@ def test_rms_sig():
     signal = fn.sinewave()
     with pytest.raises(ValueError):
         fn.rms_sig(signal, window_size=4, fs=&#39;s&#39;, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        fn.fir(signal, window_size=4, fs=s, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
-        fn.fir(signal, window_size=4, fs=[1, 2], plot=&#39;N&#39;)
+        fn.rms_sig(signal, window_size=4, fs=[1, 2], plot=&#39;N&#39;)
     with pytest.raises(TypeError):
-        fn.fir(signal, window_size=4, fs=1+3j, plot=&#39;N&#39;)
+        fn.rms_sig(signal, window_size=4, fs=1+3j, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
-        fn.fir(signal, plot=&#39;happy&#39;)
+        fn.rms_sig(signal, window_size=4, plot=&#39;happy&#39;)
     with pytest.raises(TypeError):
-        fn.fir(signal, window_size=4, plot=1223)
-    with pytest.raises(NameError):
-        fn.fir(signal, window_size=4, plot=yes)</code></pre>
+        fn.rms_sig(signal, window_size=4, plot=1223)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_sinenoise"><code class="name flex">
@@ -1487,9 +1256,9 @@ def test_rms_sig():
     Test for sinenoise function in the functions module.
     &#34;&#34;&#34;
 
-    t = np.arange(0, 10, 1/1000)
+    time = np.arange(0, 10, 1/1000)
     np.random.seed(1)
-    sinearr = np.sin(2*3.14*t) + (np.random.randn(len(t)))
+    sinearr = np.sin(2*3.14*time) + (np.random.randn(len(time)))
     func = fn.sinenoise()
 
     assert np.array_equal(func, sinearr)
@@ -1501,26 +1270,6 @@ def test_rms_sig():
         fn.sinenoise(time=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.sinenoise(fs=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinenoise(offset=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinenoise(phi=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinenoise(seed=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.sinenoise(amp=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(freq=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(time=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(fs=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(offset=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(phi=s)
-    with pytest.raises(NameError):
-        fn.sinenoise(seed=s)
     with pytest.raises(TypeError):
         fn.sinenoise(amp=[12, 12])
     with pytest.raises(TypeError):
@@ -1530,41 +1279,33 @@ def test_rms_sig():
     with pytest.raises(TypeError):
         fn.sinenoise(fs=[12, 12])
     with pytest.raises(TypeError):
-        fn.sinenoise(offset=[12, 12])
-    with pytest.raises(TypeError):
-        fn.sinenoise(phi=[12, 12])
-    with pytest.raises(TypeError):
         fn.sinenoise(seed=[12, 12])
     with pytest.raises(ValueError):
         fn.sinenoise(plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinenoise(plot=123)
-    with pytest.raises(NameError):
-        fn.sinenoise(plot=s)
     with pytest.raises(ValueError):
         fn.sinenoise(tarr=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinenoise(tarr=123)
-    with pytest.raises(NameError):
-        fn.sinenoise(tarr=s)
     with pytest.raises(TypeError):
-        fn.sinewave(amp=1+3j)
+        fn.sinenoise(amp=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(freq=1+3j)
+        fn.sinenoise(freq=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(time=1+3j)
+        fn.sinenoise(time=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(fs=1+3j)
+        fn.sinenoise(fs=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(phi=1+3j)
+        fn.sinenoise(phi=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(offset=1+3j)
+        fn.sinenoise(offset=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(noise=1+3j)
+        fn.sinenoise(noise=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(tarr=1+3j)
+        fn.sinenoise(tarr=1+3j)
     with pytest.raises(TypeError):
-        fn.sinewave(plot=1+3j)</code></pre>
+        fn.sinenoise(plot=1+3j)</code></pre>
 </details>
 </dd>
 <dt id="bioproc.test.test_functions.test_sinewave"><code class="name flex">
@@ -1581,10 +1322,9 @@ def test_rms_sig():
     Test for sinewave function in the functions module.
     &#34;&#34;&#34;
 
-    t = np.arange(0, 10, 1/1000)
-    sinearr = np.sin(2*3.14*t)
+    time = np.arange(0, 10, 1/1000)
+    sinearr = np.sin(2*3.14*time)
     func = fn.sinewave()
-
     assert np.array_equal(func, sinearr)
     with pytest.raises(ValueError):
         fn.sinewave(amp=&#39;s&#39;)
@@ -1594,22 +1334,6 @@ def test_rms_sig():
         fn.sinewave(time=&#39;s&#39;)
     with pytest.raises(ValueError):
         fn.sinewave(fs=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinewave(offset=&#39;s&#39;)
-    with pytest.raises(ValueError):
-        fn.sinewave(phi=&#39;s&#39;)
-    with pytest.raises(NameError):
-        fn.sinewave(amp=s)
-    with pytest.raises(NameError):
-        fn.sinewave(freq=s)
-    with pytest.raises(NameError):
-        fn.sinewave(time=s)
-    with pytest.raises(NameError):
-        fn.sinewave(fs=s)
-    with pytest.raises(NameError):
-        fn.sinewave(offset=s)
-    with pytest.raises(NameError):
-        fn.sinewave(phi=s)
     with pytest.raises(TypeError):
         fn.sinewave(amp=[12, 12])
     with pytest.raises(TypeError):
@@ -1626,14 +1350,10 @@ def test_rms_sig():
         fn.sinewave(plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinewave(plot=123)
-    with pytest.raises(NameError):
-        fn.sinewave(plot=s)
     with pytest.raises(ValueError):
         fn.sinewave(tarr=&#39;sa&#39;)
     with pytest.raises(TypeError):
         fn.sinewave(tarr=123)
-    with pytest.raises(NameError):
-        fn.sinewave(tarr=s)
     with pytest.raises(TypeError):
         fn.sinewave(amp=1+3j)
     with pytest.raises(TypeError):
@@ -1672,8 +1392,6 @@ def test_rms_sig():
         fn.window(kernel=[1, 2], size=2)
     with pytest.raises(ValueError):
         fn.window(kernel=&#39;dummy&#39;, size=2)
-    with pytest.raises(NameError):
-        fn.window(kernel=dummy, size=2)
     with pytest.raises(ValueError):
         fn.window(kernel=&#39;hamming&#39;)
     with pytest.raises(TypeError):
@@ -1704,8 +1422,6 @@ def test_rms_sig():
         fn.xcorr(sig1, sig2=1)
     with pytest.raises(TypeError):
         fn.xcorr(sig1, sig2=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        fn.xcorr(sig1, sig2=sa)
     with pytest.raises(TypeError):
         fn.xcorr(sig1, sig2=1+3j)
     with pytest.raises(ValueError):
@@ -1714,8 +1430,6 @@ def test_rms_sig():
         fn.xcorr(sig1=1, sig2=sig2)
     with pytest.raises(TypeError):
         fn.xcorr(sig1=&#39;sa&#39;, sig2=sig2)
-    with pytest.raises(NameError):
-        fn.xcorr(sig1=sa, sig2=sig2)
     with pytest.raises(TypeError):
         fn.xcorr(sig1=1+3j, sig2=sig2)
     with pytest.raises(ValueError):

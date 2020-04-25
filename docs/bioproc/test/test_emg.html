@@ -22,7 +22,7 @@
 <section id="section-intro">
 <p>test_emg.py</p>
 <p>Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com</p>
+Email: praveenp@msu.edu</p>
 <p>Module contains the tests for emg module.</p>
 <details class="source">
 <summary>
@@ -32,7 +32,7 @@ Email: praveenprabhakar02@gmail.com</p>
 test_emg.py
 
 Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com
+Email: praveenp@msu.edu
 
 Module contains the tests for emg module.
 &#34;&#34;&#34;
@@ -46,8 +46,6 @@ def test_emgsig():
     Test for emgsig function in the emg module.
     &#34;&#34;&#34;
 
-    with pytest.raises(NameError):
-        em.emgsig(seed=s)
     with pytest.raises(TypeError):
         em.emgsig(seed=&#39;s&#39;)
     with pytest.raises(ValueError):
@@ -60,14 +58,10 @@ def test_emgsig():
         em.emgsig(plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.emgsig(plot=123)
-    with pytest.raises(NameError):
-        em.emgsig(plot=s)
     with pytest.raises(ValueError):
         em.emgsig(tarr=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.emgsig(tarr=123)
-    with pytest.raises(NameError):
-        em.emgsig(tarr=s)
     with pytest.raises(TypeError):
         em.emgsig(tarr=1+3j)
     with pytest.raises(TypeError):
@@ -83,8 +77,6 @@ def test_find_onset():
         em.find_onset(signal=1)
     with pytest.raises(TypeError):
         em.find_onset(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        em.find_onset(signal=sa)
     with pytest.raises(TypeError):
         em.find_onset(signal=1+3j)
     with pytest.raises(ValueError):
@@ -92,8 +84,6 @@ def test_find_onset():
     signal = em.emgsig()
     with pytest.raises(ValueError):
         em.find_onset(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        em.find_onset(signal, fs=s)
     with pytest.raises(TypeError):
         em.find_onset(signal, fs=[1, 2])
     with pytest.raises(TypeError):
@@ -104,8 +94,6 @@ def test_find_onset():
         em.find_onset(signal, plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.find_onset(signal, plot=123)
-    with pytest.raises(NameError):
-        em.find_onset(signal, plot=s)
     with pytest.raises(TypeError):
         em.find_onset(signal, plot=1+3j)
     with pytest.raises(TypeError):
@@ -114,8 +102,6 @@ def test_find_onset():
         em.find_onset(signal, filt=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.find_onset(signal, filt=123)
-    with pytest.raises(NameError):
-        em.find_onset(signal, filt=s)
     with pytest.raises(TypeError):
         em.find_onset(signal, filt=1+3j)
     with pytest.raises(TypeError):
@@ -127,13 +113,11 @@ def test_norm_emg():
     Test for norm_emg function in the emg module.
     &#34;&#34;&#34;
 
-    sig= em.emgsig()
+    sig = em.emgsig()
     with pytest.raises(ValueError):
         em.norm_emg(signal=sig, mvic=1, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=&#39;sa&#39;, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, mvic=sa, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=1+3j, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -143,8 +127,6 @@ def test_norm_emg():
         em.norm_emg(signal=1, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=&#39;sa&#39;, mvic=mvic, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sa, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=1+3j, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -153,8 +135,6 @@ def test_norm_emg():
     mvic = em.emgsig(seed=10)
     with pytest.raises(ValueError):
         em.norm_emg(signal=sig, fs=&#39;s&#39;, mvic=mvic, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, fs=s, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, fs=[1, 2], mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -165,8 +145,6 @@ def test_norm_emg():
         em.norm_emg(signal=sig, mvic=mvic, plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=mvic, plot=123)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, mvic=mvic, plot=s)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=mvic, plot=1+3j)
     with pytest.raises(TypeError):
@@ -175,8 +153,6 @@ def test_norm_emg():
         em.norm_emg(signal=sig, filt=&#39;sa&#39;, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, filt=123, mvic=mvic, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, filt=s, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, filt=1+3j, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -194,24 +170,22 @@ def test_padding():
         em.padding(signal=-1)
     with pytest.raises(TypeError):
         em.padding(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        em.padding(signal=sa)
     with pytest.raises(TypeError):
         em.padding(signal=1+3j)
     with pytest.raises(ValueError):
         em.padding(signal=[1+3j])
-    a = [1, 2, 3, 4]
-    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
-    assert np.array_equal(em.padding(a), b)
-    a = np.zeros(512)
-    b = em.padding(a)
-    assert b.size == 1024
-    a = np.zeros(768)
-    b = em.padding(a)
-    assert b.size == 1024
-    a = np.zeros(769)
-    b = em.padding(a)
-    assert b.size == 2048
+    abab = [1, 2, 3, 4]
+    baba = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(em.padding(abab), baba)
+    abab = np.zeros(512)
+    baba = em.padding(abab)
+    assert baba.size == 1024
+    abab = np.zeros(768)
+    baba = em.padding(abab)
+    assert baba.size == 1024
+    abab = np.zeros(769)
+    baba = em.padding(abab)
+    assert baba.size == 2048
 
 
 def test_emg_process():
@@ -225,8 +199,6 @@ def test_emg_process():
         em.emg_process(emg_signal=-1, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=&#39;sa&#39;, plot=&#39;N&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sa, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=1+3j, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -238,8 +210,6 @@ def test_emg_process():
         em.emg_process(emg_signal=sig, mvic_signal=-1, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic_signal=&#39;sa&#39;, plot=&#39;N&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, mvic_signal=sa, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic_signal=1+3j, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -248,8 +218,6 @@ def test_emg_process():
     mvic = em.emgsig(seed=10)
     with pytest.raises(ValueError):
         em.emg_process(emg_signal=sig, fs=&#39;s&#39;, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, fs=s, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, fs=[1, 2], mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -258,16 +226,12 @@ def test_emg_process():
         em.emg_process(emg_signal=sig, fs=[1+3j], mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;Nasasd&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, mvic=mvic, plot=Nasasd, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=123, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=1+3j, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
-        em.norm_emg(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;Nasas&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=Na)
+        em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;Nasas&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=123)
     with pytest.raises(TypeError):
@@ -301,8 +265,6 @@ def test_emg_process():
         em.emg_process(emg_signal=-1, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=&#39;sa&#39;, plot=&#39;N&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sa, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=1+3j, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -314,8 +276,6 @@ def test_emg_process():
         em.emg_process(emg_signal=sig, mvic_signal=-1, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic_signal=&#39;sa&#39;, plot=&#39;N&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, mvic_signal=sa, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic_signal=1+3j, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -324,8 +284,6 @@ def test_emg_process():
     mvic = em.emgsig(seed=10)
     with pytest.raises(ValueError):
         em.emg_process(emg_signal=sig, fs=&#39;s&#39;, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, fs=s, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, fs=[1, 2], mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -334,16 +292,12 @@ def test_emg_process():
         em.emg_process(emg_signal=sig, fs=[1+3j], mvic=mvic, plot=&#39;N&#39;, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;Nasasd&#39;, fourier=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, mvic=mvic, plot=Nasasd, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=123, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=1+3j, fourier=&#39;N&#39;)
     with pytest.raises(TypeError):
-        em.norm_emg(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;Nasas&#39;)
-    with pytest.raises(NameError):
-        em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=Na)
+        em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=&#39;Nasas&#39;)
     with pytest.raises(TypeError):
         em.emg_process(emg_signal=sig, mvic=mvic, plot=&#39;N&#39;, fourier=123)
     with pytest.raises(TypeError):
@@ -364,8 +318,6 @@ def test_emg_process():
     Test for emgsig function in the emg module.
     &#34;&#34;&#34;
 
-    with pytest.raises(NameError):
-        em.emgsig(seed=s)
     with pytest.raises(TypeError):
         em.emgsig(seed=&#39;s&#39;)
     with pytest.raises(ValueError):
@@ -378,14 +330,10 @@ def test_emg_process():
         em.emgsig(plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.emgsig(plot=123)
-    with pytest.raises(NameError):
-        em.emgsig(plot=s)
     with pytest.raises(ValueError):
         em.emgsig(tarr=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.emgsig(tarr=123)
-    with pytest.raises(NameError):
-        em.emgsig(tarr=s)
     with pytest.raises(TypeError):
         em.emgsig(tarr=1+3j)
     with pytest.raises(TypeError):
@@ -410,8 +358,6 @@ def test_emg_process():
         em.find_onset(signal=1)
     with pytest.raises(TypeError):
         em.find_onset(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        em.find_onset(signal=sa)
     with pytest.raises(TypeError):
         em.find_onset(signal=1+3j)
     with pytest.raises(ValueError):
@@ -419,8 +365,6 @@ def test_emg_process():
     signal = em.emgsig()
     with pytest.raises(ValueError):
         em.find_onset(signal, fs=&#39;s&#39;)
-    with pytest.raises(NameError):
-        em.find_onset(signal, fs=s)
     with pytest.raises(TypeError):
         em.find_onset(signal, fs=[1, 2])
     with pytest.raises(TypeError):
@@ -431,8 +375,6 @@ def test_emg_process():
         em.find_onset(signal, plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.find_onset(signal, plot=123)
-    with pytest.raises(NameError):
-        em.find_onset(signal, plot=s)
     with pytest.raises(TypeError):
         em.find_onset(signal, plot=1+3j)
     with pytest.raises(TypeError):
@@ -441,8 +383,6 @@ def test_emg_process():
         em.find_onset(signal, filt=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.find_onset(signal, filt=123)
-    with pytest.raises(NameError):
-        em.find_onset(signal, filt=s)
     with pytest.raises(TypeError):
         em.find_onset(signal, filt=1+3j)
     with pytest.raises(TypeError):
@@ -463,13 +403,11 @@ def test_emg_process():
     Test for norm_emg function in the emg module.
     &#34;&#34;&#34;
 
-    sig= em.emgsig()
+    sig = em.emgsig()
     with pytest.raises(ValueError):
         em.norm_emg(signal=sig, mvic=1, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=&#39;sa&#39;, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, mvic=sa, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=1+3j, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -479,8 +417,6 @@ def test_emg_process():
         em.norm_emg(signal=1, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=&#39;sa&#39;, mvic=mvic, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sa, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=1+3j, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(ValueError):
@@ -489,8 +425,6 @@ def test_emg_process():
     mvic = em.emgsig(seed=10)
     with pytest.raises(ValueError):
         em.norm_emg(signal=sig, fs=&#39;s&#39;, mvic=mvic, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, fs=s, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, fs=[1, 2], mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -501,8 +435,6 @@ def test_emg_process():
         em.norm_emg(signal=sig, mvic=mvic, plot=&#39;sa&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=mvic, plot=123)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, mvic=mvic, plot=s)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, mvic=mvic, plot=1+3j)
     with pytest.raises(TypeError):
@@ -511,8 +443,6 @@ def test_emg_process():
         em.norm_emg(signal=sig, filt=&#39;sa&#39;, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, filt=123, mvic=mvic, plot=&#39;N&#39;)
-    with pytest.raises(NameError):
-        em.norm_emg(signal=sig, filt=s, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
         em.norm_emg(signal=sig, filt=1+3j, mvic=mvic, plot=&#39;N&#39;)
     with pytest.raises(TypeError):
@@ -539,24 +469,22 @@ def test_emg_process():
         em.padding(signal=-1)
     with pytest.raises(TypeError):
         em.padding(signal=&#39;sa&#39;)
-    with pytest.raises(NameError):
-        em.padding(signal=sa)
     with pytest.raises(TypeError):
         em.padding(signal=1+3j)
     with pytest.raises(ValueError):
         em.padding(signal=[1+3j])
-    a = [1, 2, 3, 4]
-    b = np.array([1, 2, 3, 4, 0, 0, 0, 0])
-    assert np.array_equal(em.padding(a), b)
-    a = np.zeros(512)
-    b = em.padding(a)
-    assert b.size == 1024
-    a = np.zeros(768)
-    b = em.padding(a)
-    assert b.size == 1024
-    a = np.zeros(769)
-    b = em.padding(a)
-    assert b.size == 2048</code></pre>
+    abab = [1, 2, 3, 4]
+    baba = np.array([1, 2, 3, 4, 0, 0, 0, 0])
+    assert np.array_equal(em.padding(abab), baba)
+    abab = np.zeros(512)
+    baba = em.padding(abab)
+    assert baba.size == 1024
+    abab = np.zeros(768)
+    baba = em.padding(abab)
+    assert baba.size == 1024
+    abab = np.zeros(769)
+    baba = em.padding(abab)
+    assert baba.size == 2048</code></pre>
 </details>
 </dd>
 </dl>

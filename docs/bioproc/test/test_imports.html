@@ -22,7 +22,7 @@
 <section id="section-intro">
 <p>test_imports.py</p>
 <p>Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com</p>
+Email: praveenp@msu.edu</p>
 <p>Module contains the test for imports.</p>
 <details class="source">
 <summary>
@@ -32,21 +32,51 @@ Email: praveenprabhakar02@gmail.com</p>
 test_imports.py
 
 Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com
+Email: praveenp@msu.edu
 
 Module contains the test for imports.
 &#34;&#34;&#34;
 
+import matplotlib.pyplot as plt
+import scipy as sp
+from scipy import signal
+import biosppy as bsp
+from biosppy.signals import tools
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras as k
+from .. import functions as fn
+from .. import emg as em
+
 def test_imports():
-    import matplotlib.pyplot as plt
-    import scipy as sp
-    from scipy import signal
-    import biosppy as bsp
-    from biosppy.signals import tools
-    import numpy as np
-    import tensorflow
-    from tensorflow import keras
-    </code></pre>
+    &#34;&#34;&#34;
+    Test to check import of libraries.
+    &#34;&#34;&#34;
+
+    #checking scipy, keras, numpy, biosppy
+    dummy = sp.__version__
+    dummy3 = k.__version__
+    dummy4 = np.__version__
+    dummy5 = bsp.__version__
+
+    sine = fn.sinewave()
+    emg = em.emgsig()
+
+    #checking matplotlib.pyplot
+    if plt.plot(sine):
+        pass
+
+    #checking tensorflow
+    help(tf.keras.Sequential)
+
+    #checking scipy.signal
+    if signal.correlate(emg, sine) is not None:
+        pass
+
+    #checking biosppy.signals.tools
+    if tools.filter_signal(emg, ftype=&#39;butter&#39;, band=&#39;lowpass&#39;, order=2,
+                           frequency=50, sampling_rate=1000) is not None:
+        pass</code></pre>
 </details>
 </section>
 <section>
@@ -60,20 +90,40 @@ def test_imports():
 <span>def <span class="ident">test_imports</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Test to check import of libraries.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def test_imports():
-    import matplotlib.pyplot as plt
-    import scipy as sp
-    from scipy import signal
-    import biosppy as bsp
-    from biosppy.signals import tools
-    import numpy as np
-    import tensorflow
-    from tensorflow import keras</code></pre>
+    &#34;&#34;&#34;
+    Test to check import of libraries.
+    &#34;&#34;&#34;
+
+    #checking scipy, keras, numpy, biosppy
+    dummy = sp.__version__
+    dummy3 = k.__version__
+    dummy4 = np.__version__
+    dummy5 = bsp.__version__
+
+    sine = fn.sinewave()
+    emg = em.emgsig()
+
+    #checking matplotlib.pyplot
+    if plt.plot(sine):
+        pass
+
+    #checking tensorflow
+    help(tf.keras.Sequential)
+
+    #checking scipy.signal
+    if signal.correlate(emg, sine) is not None:
+        pass
+
+    #checking biosppy.signals.tools
+    if tools.filter_signal(emg, ftype=&#39;butter&#39;, band=&#39;lowpass&#39;, order=2,
+                           frequency=50, sampling_rate=1000) is not None:
+        pass</code></pre>
 </details>
 </dd>
 </dl>
