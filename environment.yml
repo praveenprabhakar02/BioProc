@@ -9,6 +9,8 @@ dependencies:
   - pylint
   - pytest
   - pdoc3
+  - tensorflow
+  - keras
   - pip:
     - biosppy
-    - gsutil
+    - wfdb
