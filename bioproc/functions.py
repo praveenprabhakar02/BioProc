@@ -2,7 +2,7 @@
 functions.py
 
 Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com
+Email: praveenp@msu.edu
 
 Module contains the functions for processing signals.
 """

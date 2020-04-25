@@ -2,19 +2,15 @@
 emg.py
 
 Author: Praveen Prabhakar KR
-Email: praveenprabhakar02@gmail.com
+Email: praveenp@msu.edu
 
 Module contains the functions for EMG signals.
 """
 
 import numpy as np
-#import scipy as sp
 import matplotlib.pyplot as plt
 from biosppy.signals import emg
 from . import functions as fn
-#import biosppy as bsp
-#from biosppy.signals import tools
-
 
 def emgsig(seed=None, plot='no', tarr='no'):
     """
