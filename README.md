@@ -18,9 +18,15 @@ Bioproc is a signal processing library based in Python for biological data.
 ---
 # Highlights
 
-1. Signal processing essentials - filtering, frequency, power analysis.
-2. Classification of healthy and diseased individuals using biological data by ANN.
+1. Signal processing essentials - filtering, frequency, power analysis, etc.
+2. Signal processing essentials for EMG - find onsets, normalize EMG, etc.
+3. Classification of healthy and diseased individuals using biological data by ANN - upcoming.
 
+
+---
+# Testing
+
+Tests can be run with 'pytest -v' in the 'bioproc' module.
 
 ---
 # Examples
@@ -103,8 +109,18 @@ linenv = fn.envelope(rect_emg)
 - scikit-learn
 - keras
 - tensorflow
+- wfdb
 
 ---
 # Citations
 
 1. Carreiras C, Alves AP, Lourenço A, Canento F, Silva H, Fred A, et al. BioSPPy - Biosignal Processing in Python, 2015-, https://github.com/PIA-Group/BioSPPy/ [Online; accessed 2020-04-06.
+
+2. Www1.udel.edu. 2020. [online] Available at: <https://www1.udel.edu/biology/rosewc/kaap686/notes/EMG%20analysis.pdf> [Accessed 25 April 2020].
+
+3. Micera, S., Sabatini, A. M., Dario, P., & Rossi, B. (1999). A hybrid approach to EMG pattern analysis for classification of arm movements using statistical and fuzzy techniques. Medical Engineering & Physics, 21(5), 303–311. https://doi.org/10.1016/S1350-4533(99)00055-7
+
+4. Pattichis, C. S., Schizas, C. N., & Middleton, L. T. (1995). Neural network models in EMG diagnosis. IEEE Transactions on Biomedical Engineering, 42(5), 486–496. https://doi.org/10.1109/10.376153
+
+5. Abel, E. W., Zacharia, P. C., Forster, A., & Farrow, T. L. (1996). Neural network analysis of the EMG interference pattern. Medical Engineering & Physics, 18(1), 12–17. https://doi.org/10.1016/1350-4533(95)00032-1
+
