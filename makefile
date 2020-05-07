@@ -22,13 +22,12 @@ init:
 	conda env create --prefix ./envs --file environment.yml
 
 doc:
-	pdoc --force --html --output-dir ./docs bioproc
+	pdoc --force --html --output-dir ./docs $(MODULENAME) 
 
 lint:
-	pylint bioproc
+	pylint $(MODULENAME) 
 
 test:
-	pytest test 
+	pytest -v $(MODULENAME) 
 
 .PHONY: init doc lint test 
-
